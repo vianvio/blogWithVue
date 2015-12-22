@@ -1,10 +1,17 @@
 <template>
-	<h2>Hello World!</h2>
+	<navBar></navBar>
+	<h2>hello with font-awesome</h2>
+	<i class='fa fa-plus-circle'></i>
+	<router-view></router-view>
 </template>
 
 <script>
-var sub = require('../shared/sub');
-sub.generateText();
+'use strict';
+var navBar = require('../shared/navBar.vue');
+
+module.exports = {
+	components: navBar
+};
 </script>
 
 <style lang="sass">
@@ -13,6 +20,5 @@ sub.generateText();
 h2 {
   color: $red;
 }
-
 
 </style>

@@ -4,7 +4,6 @@ var App = require('./components/App.vue');
 // import NewsView from './components/NewsView.vue'
 // import ItemView from './components/ItemView.vue'
 // import UserView from './components/UserView.vue'
-
 // install router
 Vue.use(Router);
 
