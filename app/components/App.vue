@@ -6,7 +6,6 @@
 </template>
 
 <script>
-'use strict';
 var navBar = require('../shared/navBar.vue');
 
 module.exports = {
