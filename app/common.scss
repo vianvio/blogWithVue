@@ -1,0 +1,75 @@
+$prefix-for-webkit: true !default;
+$prefix-for-mozilla: true !default;
+$prefix-for-microsoft: true !default;
+$prefix-for-opera: true !default;
+$prefix-for-spec: true !default;
+@mixin prefixer ($property, $value, $prefixes) {
+    @each $prefix in $prefixes {
+        @if $prefix==webkit and $prefix-for-webkit==true {
+            -webkit-#{$property}: $value;
+        }
+        @else if $prefix==moz and $prefix-for-mozilla==true {
+            -moz-#{$property}: $value;
+        }
+        @else if $prefix==ms and $prefix-for-microsoft==true {
+            -ms-#{$property}: $value;
+        }
+        @else if $prefix==o and $prefix-for-opera==true {
+            -o-#{$property}: $value;
+        }
+        @else if $prefix==spec and $prefix-for-spec==true {
+            #{$property}: $value;
+        }
+        @else {
+            @warn "Unrecognized prefix: #{$prefix}";
+        }
+    }
+}
+
+@mixin box-shadow($shadow...) {
+    @include prefixer(box-shadow, $shadow, webkit moz o ms spec);
+}
+
+@mixin box-sizing($type:border-box) {
+    // border-box | padding-box | content-box
+    @include prefixer(box-sizing, $type, webkit moz o ms spec);
+}
+
+@mixin transform($property...) {
+    @include prefixer(transform, $property, webkit moz o ms spec);
+}
+
+@mixin transition($property...) {
+    @include prefixer(transition, $property, webkit moz o ms spec);
+}
+
+@mixin border-radius($width...) {
+    @include prefixer(border-radius, $width, webkit moz o ms spec);
+}
+
+@mixin screen-center($selfWidth, $selfHeight, $horizontalOffset, $verticalOffset) {
+    @include vertical-center($selfHeight, $verticalOffset);
+    @include horizontal-center($selfWidth, $horizontalOffset);
+}
+
+@mixin vertical-center($selfHeight, $verticalOffset) {
+    position: relative;
+    top: 50%;
+    margin-top: -($selfHeight + $verticalOffset)/2;
+}
+
+@mixin horizontal-center($selfWith, $horizontalOffset) {
+    position: relative;
+    left: 50%;
+    margin-left: -($selfWith + $horizontalOffset)/2; // self.width/2
+}
+
+@mixin screen($res-min, $res-max) {
+    @media screen and ( min-width: $res-min) and ( max-width: $res-max) {
+        @content;
+    }
+}
+
+%material-shadow {
+    @include box-shadow(0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12));
+}

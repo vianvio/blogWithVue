@@ -3,14 +3,14 @@ var webpack = require('webpack');
 var vueLoader = require('vue-loader');
 var HtmlwebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-//定义了一些文件夹的路径
+// define some file paths.
 var ROOT_PATH = path.resolve(__dirname);
 var APP_PATH = path.resolve(ROOT_PATH, 'app');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 var VENDER_PATH = path.resolve(ROOT_PATH, 'node_modules');
 
 module.exports = {
-  // define 2 entries, one for app, one for vender
+  // define 2 entries, one for app, one for venders
   entry: {
     fontAwesome: "font-awesome-webpack!./font-awesome.config.js",
     vblog: path.resolve(APP_PATH, 'index.js'),
@@ -27,6 +27,10 @@ module.exports = {
     hot: true,
     inline: true,
     progress: true,
+    // make api call redirect to other server
+    proxy: {
+      "/api/*": "http://localhost:3000"
+    }
   },
   module: {
     loaders: [{
@@ -38,7 +42,7 @@ module.exports = {
       include: APP_PATH
     }, {
       test: /\.css$/,
-      loaders: ['css'],
+      loaders: ['style', 'css'],
       include: ROOT_PATH
     }, {
       test: /\.(png|jpg)$/,
@@ -56,14 +60,15 @@ module.exports = {
   },
   // open this for production, or make a new webpack.config.js
   vue: {
-    loaders: {
-      css: ExtractTextPlugin.extract('css'),
-      sass: ExtractTextPlugin.extract('css!sass')
-    }
+    // loaders: {
+    //   css: ExtractTextPlugin.extract('css'),
+    //   sass: ExtractTextPlugin.extract('css!sass')
+    // }
   },
   plugins: [
     new ExtractTextPlugin('[name].css'),
     new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.js"),
+    // if need jquery, open here to make jquery globaly available. also add jquery to vendor
     // new webpack.ProvidePlugin({
     //   "$": "jquery",
     //   "jQuery": 'jquery'
@@ -72,11 +77,5 @@ module.exports = {
       template: 'indexTemplate.html', // Load a custom template
       inject: 'body' // Inject all scripts into the body
     })
-  ],
-  // make api call redirect to other server
-  devServer: {
-    proxy: {
-      "/api/*": "http://localhost:3000"
-    },
-  }
+  ]
 };

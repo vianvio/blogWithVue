@@ -1,23 +1,32 @@
 <template>
-	<navBar></navBar>
-	<h2>hello with font-awesome</h2>
-	<i class='fa fa-plus-circle'></i>
+	<sidebar></sidebar>
+	<div class='content-holder full-height'>
+		<navbar></navbar>
+	</div>
 	<router-view></router-view>
 </template>
 
 <script>
-var navBar = require('../shared/navBar.vue');
+
+var sidebar = require('../shared/sidebar.vue');
+var navbar = require('../shared/navbar.vue');
 
 module.exports = {
-	components: navBar
+	components: {
+		navbar,
+		sidebar
+	}
 };
 </script>
 
-<style lang="sass">
-@import "../shared/variables.scss";
+<style lang='sass'>
+@import '../variables.scss';
+@import '../common.scss';
 
-h2 {
-  color: $red;
+.content-holder {
+	padding-left: $side-width;
+	overflow-x: hidden;
+	overflow-y: auto;
 }
 
 </style>

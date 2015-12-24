@@ -1,4 +1,4 @@
-//我们这里使用CommonJS的风格
+// some tests
 function generateText() {
   console.log('test');
 }

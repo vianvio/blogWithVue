@@ -1,3 +1,5 @@
+require('./index.scss');
+
 var Vue = require('vue');
 var Router = require('vue-router');
 var App = require('./components/App.vue');
@@ -31,7 +33,7 @@ var router = new Router();
 // })
 
 // router.redirect({
-//   '*': '/news/1'
+//   '*': '/'
 // });
 
 router.start(App, '#app');

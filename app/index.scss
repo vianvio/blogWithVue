@@ -1,0 +1,60 @@
+@import './variables.scss';
+@import './common.scss';
+* {
+    vertical-align: baseline;
+    box-sizing: border-box;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 16px;
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+    outline: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+html {
+    font-size: 62.5%;
+    /*prepare for rem*/
+    height: 100%;
+    color: $font-dark;
+}
+
+body {
+    min-width: 1024px;
+    height: 100%;
+}
+
+hr {
+    margin: 0.5rem 1rem;
+    border-bottom: 1px solid $shadow-dark;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.display-inline-block {
+    display: inline-block;
+    vertical-align: top;
+    font-size: 16px;
+    /*usually parent will set font-size 0*/
+}
+
+.text-ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
