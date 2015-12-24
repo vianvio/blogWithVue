@@ -8,7 +8,7 @@
     "clean": "rm -r ./build/* && rm ./index.html",
     "prestart": "NODE_ENV=development webpack",
     "start": "webpack-dev-server --hot --inline --quiet",
-    "predeploy": "NODE_ENV=production webpack",
+    "predeploy": "NODE_ENV=production webpack --progress --hide-modules",
     "deploy": "mv build/* /Users/vshen008/Documents/Projects/blogWithVueBackend/client/build && mv index.html /Users/vshen008/Documents/Projects/blogWithVueBackend/client"
   },
   "author": "Vian",

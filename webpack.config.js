@@ -58,13 +58,6 @@ module.exports = {
       loader: 'strict'
     }]
   },
-  // open this for production, or make a new webpack.config.js
-  vue: {
-    // loaders: {
-    //   css: ExtractTextPlugin.extract('css'),
-    //   sass: ExtractTextPlugin.extract('css!sass')
-    // }
-  },
   plugins: [
     new ExtractTextPlugin('[name].css'),
     new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.js"),
@@ -81,17 +74,25 @@ module.exports = {
   ]
 };
 
-// if (process.env.NODE_ENV === 'production') {
-//   module.exports.plugins = [
-//     new webpack.DefinePlugin({
-//       'process.env': {
-//         NODE_ENV: '"production"'
-//       }
-//     }),
-//     new webpack.optimize.UglifyJsPlugin({
-//       compress: {
-//         warnings: false
-//       }
-//     })
-//   ]
-// }
+if (process.env.NODE_ENV === 'production') {
+  module.exports.vue = {
+    loaders: {
+      css: ExtractTextPlugin.extract('css'),
+      sass: ExtractTextPlugin.extract('css!sass')
+    }
+  };
+  // not able to use array.concat, use push instead
+  module.exports.plugins.push(
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"production"'
+      }
+    }));
+  module.exports.plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    }));
+  module.exports.plugins.push(new webpack.optimize.OccurenceOrderPlugin());
+}
