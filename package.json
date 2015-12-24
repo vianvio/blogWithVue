@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm -r ./build/*",
-    "prestart": "webpack",
-    "start": "webpack-dev-server --hot --inline --quiet"
+    "clean": "rm -r ./build/* && rm ./index.html",
+    "prestart": "NODE_ENV=development webpack",
+    "start": "webpack-dev-server --hot --inline --quiet",
+    "predeploy": "NODE_ENV=production webpack",
+    "deploy": "mv build/* /Users/vshen008/Documents/Projects/blogWithVueBackend/client/build && mv index.html /Users/vshen008/Documents/Projects/blogWithVueBackend/client"
   },
   "author": "Vian",
   "license": "MIT",

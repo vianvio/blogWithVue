@@ -75,7 +75,23 @@ module.exports = {
     // }),
     new HtmlwebpackPlugin({
       template: 'indexTemplate.html', // Load a custom template
-      inject: 'body' // Inject all scripts into the body
+      inject: 'body', // Inject all scripts into the body
+      filename: '../index.html'
     })
   ]
 };
+
+// if (process.env.NODE_ENV === 'production') {
+//   module.exports.plugins = [
+//     new webpack.DefinePlugin({
+//       'process.env': {
+//         NODE_ENV: '"production"'
+//       }
+//     }),
+//     new webpack.optimize.UglifyJsPlugin({
+//       compress: {
+//         warnings: false
+//       }
+//     })
+//   ]
+// }
