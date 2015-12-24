@@ -2,12 +2,13 @@ require('./index.scss');
 
 var Vue = require('vue');
 var Router = require('vue-router');
-var App = require('./components/App.vue');
-// import NewsView from './components/NewsView.vue'
-// import ItemView from './components/ItemView.vue'
-// import UserView from './components/UserView.vue'
+var Resource = require('vue-resource');
 // install router
 Vue.use(Router);
+Vue.use(Resource);
+
+// components
+var App = require('./components/App.vue');
 
 // register filters globally
 // Vue.filter('fromNow', fromNow);

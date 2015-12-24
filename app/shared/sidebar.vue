@@ -4,7 +4,7 @@
 			<img src="../images/logo.png">
 		</div>
 		<hr/>
-		<ntree :node='treeTest'></ntree>
+		<ntree :node='contentTree'></ntree>
 	</div>
 </template>
 
@@ -18,8 +18,8 @@ module.exports = {
 	},
 	data: function(){
 		return {
-			treeTest: {
-				name: '目录',
+			contentTree: {
+				name: '',
 				forceOpen: true,
 				open: true,
 				nodeClass: 'root-node',
@@ -35,6 +35,11 @@ module.exports = {
 					nodes: []
 				}]
 			}
+		}
+	},
+	events: {
+		'update-content-title': function(contentTitle){
+			this.$data.contentTree.name = contentTitle;
 		}
 	}
 };
