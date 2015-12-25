@@ -1,10 +1,10 @@
 <template>
 	<nav class='nav'>
 		<!-- <a href="/" class='float-left nav-tab'>首页</a> -->
-		<a href="#" class='float-right nav-tab' v-bind:class='currentTab === "babyRecord" ? "current-tab": ""' v-on:click='switchTab("babyRecord")'>成长记录</a>
-		<a href="#" class='float-right nav-tab' v-bind:class='currentTab === "test" ? "current-tab": ""' v-on:click='switchTab("test")'>试验田</a>
-		<a href="#" class='float-right nav-tab' v-bind:class='currentTab === "resume" ? "current-tab": ""' v-on:click='switchTab("resume")'>简历</a>
-		<a href="#" class='float-right nav-tab' v-bind:class='currentTab === "passage" ? "current-tab": ""' v-on:click='switchTab("passage")'>文章</a>
+		<a v-link='' class='float-right nav-tab' v-bind:class='currentTab === "babyRecord" ? "current-tab": ""' v-on:click='switchTab("babyRecord")'>成长记录</a>
+		<a v-link="" class='float-right nav-tab' v-bind:class='currentTab === "test" ? "current-tab": ""' v-on:click='switchTab("test")'>试验田</a>
+		<a v-link="" class='float-right nav-tab' v-bind:class='currentTab === "resume" ? "current-tab": ""' v-on:click='switchTab("resume")'>简历</a>
+		<a v-link='"/passages"' class='float-right nav-tab' v-bind:class='currentTab === "passage" ? "current-tab": ""' v-on:click='switchTab("passage")'>文章</a>
 	</nav>
 </template>
 
@@ -22,6 +22,7 @@ module.exports = {
 		switchTab: function(tabName){
 			this.$data.currentTab = tabName;
 			this.$dispatch('nav-tab-swich', tabName);
+			this.$dispatch('show-hide-side-nav');
 		}
 	},
 	created: function(){
@@ -46,6 +47,7 @@ module.exports = {
 	line-height: 20px;
 	text-decoration: none;
 	color: $shadow-dark;
+	cursor: pointer;
 	&:hover {
 		background-color: $basic-blue;
 		color: #fff;

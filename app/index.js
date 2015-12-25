@@ -9,6 +9,8 @@ Vue.use(Resource);
 
 // components
 var App = require('./components/App.vue');
+var Login = require('./components/Login.vue');
+var PassageList = require('./components/PassageList.vue');
 
 // register filters globally
 // Vue.filter('fromNow', fromNow);
@@ -17,21 +19,18 @@ var App = require('./components/App.vue');
 // routing
 var router = new Router();
 
-// router.map({
-//   '/news/:page': {
-//     component: NewsView
-//   },
-//   '/user/:id': {
-//     component: UserView
-//   },
-//   '/item/:id': {
-//     component: ItemView
-//   }
-// });
+router.map({
+  '/login': {
+    component: Login
+  },
+  '/passages': {
+  	component: PassageList
+  }
+});
 
-// router.beforeEach(function () {
-//   window.scrollTo(0, 0)
-// })
+router.beforeEach(function() {
+  window.scrollTo(0, 0);
+});
 
 // router.redirect({
 //   '*': '/'

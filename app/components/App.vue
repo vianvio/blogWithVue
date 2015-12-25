@@ -1,9 +1,9 @@
 <template>
-	<sidebar></sidebar>
-	<div class='content-holder full-height'>
+	<sidebar v-if='!bLoginPage'></sidebar>
+	<div class='content-holder full-height' v-bind:class='bLoginPage ? "content-holder-noside" : ""'>
 		<navbar></navbar>
+		<router-view></router-view>
 	</div>
-	<router-view></router-view>
 </template>
 
 <script>
@@ -21,10 +21,22 @@ module.exports = {
 		navbar,
 		sidebar
 	},
-	events:{
-		'nav-tab-swich': function(tabName){
+	data: function() {
+		return {
+			bLoginPage: false
+		}
+	},
+	events: {
+		'nav-tab-swich': function(tabName) {
 			if(mapTabContent[tabName]){
 				this.$broadcast('update-content-title', mapTabContent[tabName]);
+			}
+		},
+		'show-hide-side-nav': function() {
+			if(this.$route.path === '/login') {
+				this.$set('bLoginPage', true);
+			} else {
+				this.$set('bLoginPage', false);
 			}
 		}
 	}
@@ -39,6 +51,10 @@ module.exports = {
 	padding-left: $side-width;
 	overflow-x: hidden;
 	overflow-y: auto;
+}
+
+.content-holder.content-holder-noside {
+	padding-left: 0;
 }
 
 </style>
