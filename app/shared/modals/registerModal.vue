@@ -1,8 +1,9 @@
 <template>
 	<modal-holder modal-title='注 册' modal-class='register-modal'>
 		<div slot='modal-body' class='modal-body'>
-			<input type='text' placeholder='username' class='register-input' v-model='registerObj.username' />
-			<input type='password' placeholder='password' class='register-input' v-model='registerObj.password' />
+			<message-box :message-content='registerMessage' message-type='message' v-if='bShowMessage'></message-box>
+			<input type='text' placeholder='用户名' class='register-input' v-model='registerObj.username' />
+			<input type='password' placeholder='密码' class='register-input' v-model='registerObj.password' />
 			<button class='register-btn' v-on:click='register()'>确 认</button>
 		</div>
 	</modal-holder>
@@ -10,22 +11,35 @@
 
 <script>
 var modalHolder = require('../modalHolder.vue');
+var messageBox = require('../messageBox.vue');
 
 module.exports = {
 	components: {
-		modalHolder
+		modalHolder,
+		messageBox
 	},
 	data: function(){
 		return {
 			registerObj: {
 				username: '',
 				password: ''
-			}
+			},
+			bShowMessage: false,
+			registerMessage: ''
 		}
 	},
 	methods: {
 		register: function(){
-			console.log(this.$get('registerObj'));
+			this.$http.post('/api/userModels', this.registerObj).then(function(resp){
+				this.$data.bShowMessage = true;
+				this.$data.registerMessage = resp.data.message;
+				var that = this;
+				setTimeout(function() {
+					that.$dispatch('close-modal');
+				}, 1000);
+			}, function(err){
+				console.log(err);
+			});
 		}
 	},
 	ready: function(){
@@ -59,10 +73,10 @@ module.exports = {
 	.show-modal-transition {
 		transition: all .3s ease;
 		opacity: 1;
-		top: 20rem;
+		top: 22rem;
 	}
 	.show-modal-enter, .show-modal-leave {
-		top: 18rem;
+		top: 20rem;
 	  	opacity: 0;
 	}
 	.register-btn {
@@ -70,7 +84,7 @@ module.exports = {
 		background-color: $basic-blue;
 		color: #fff;
 		width: 100%;
-		margin: 1rem 0;
+		margin: 2rem 0 0 0;
 	}
 }
 
