@@ -12,7 +12,6 @@
 var ntree = require('../shared/ntree.vue');
 
 module.exports = {
-	name: 'sidebar',
 	components:{
 		ntree
 	},

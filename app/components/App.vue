@@ -1,6 +1,6 @@
 <template>
 	<sidebar v-if='!bLoginPage'></sidebar>
-	<div class='content-holder full-height' v-bind:class='bLoginPage ? "content-holder-noside" : ""'>
+	<div class='content-holder' v-bind:class='bLoginPage ? "content-holder-noside" : ""'>
 		<navbar></navbar>
 		<router-view></router-view>
 	</div>

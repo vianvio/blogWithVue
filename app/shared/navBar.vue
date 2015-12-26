@@ -12,7 +12,6 @@
 console.log('from nav bar~');
 
 module.exports = {
-	name: 'navbar',
 	data: function(){
 		return {
 			currentTab: ''

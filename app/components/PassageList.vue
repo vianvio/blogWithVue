@@ -4,7 +4,6 @@
 
 <script>
 module.exports = {
-	name: 'passageList',
 	data: function(){
 		return {
 			

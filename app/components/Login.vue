@@ -12,22 +12,30 @@
 			<input type='password' class='login-input' />
 		</div>
 		<button class='login-btn float-left'>确 认</button>
-		<button class='register-btn float-right'>注 册</button>
+		<button class='register-btn float-right' v-on:click='showRegisterModal()'>注 册</button>
 	</div>
+	<register-modal v-if='bShowRegisterModal' v-on:close-modal='closeModal'></register-modal>
 </template>
 
 <script>
-console.log('from login~');
+var registerModal = require('../shared/modals/registerModal.vue');
 
 module.exports = {
-	name: 'login',
+	components: {
+		registerModal
+	},
 	data: function(){
 		return {
-			
+			bShowRegisterModal: false
 		}
 	},
-	methods:{
-		
+	methods: {
+		showRegisterModal: function(){
+			this.$data.bShowRegisterModal = true;
+		},
+		closeModal: function(){
+			this.$data.bShowRegisterModal = false;	
+		}
 	},
 	ready: function(){
 		this.$dispatch('show-hide-side-nav');
@@ -42,10 +50,22 @@ module.exports = {
 .login-holder {
 	width: 40rem;
 	height: 28rem;
-	/*border: 1px solid $basic-dark;*/
 	margin: 10rem auto;
 	padding: 3rem;
 	@extend %material-shadow;
+	.login-btn {
+		@extend %blog-btn;
+		background-color: $basic-blue;
+		color: #fff;
+		margin: 2rem 0;
+	}
+
+	.register-btn {
+		@extend %blog-btn;
+		background-color: $light-coffee;
+		color: #fff;
+		margin: 2rem 0;
+	}
 }
 
 .login-label-holder {
@@ -62,6 +82,7 @@ module.exports = {
 	height: 4rem;
 	border: 1px solid $shadow-dark;
 	margin-top: 2rem;
+	overflow: hidden;
 	@include border-radius(4px);
 }
 
@@ -81,19 +102,4 @@ module.exports = {
 	padding: 1rem 1rem 0 5rem;
 	color: $font-dark;
 }
-
-.login-btn {
-	@extend %blog-btn;
-	background-color: $basic-blue;
-	color: #fff;
-	margin: 2rem 0;
-}
-
-.register-btn {
-	@extend %blog-btn;
-	background-color: $light-coffee;
-	color: #fff;
-	margin: 2rem 0;
-}
-
 </style>
