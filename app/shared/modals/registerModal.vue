@@ -1,10 +1,10 @@
 <template>
 	<modal-holder modal-title='注 册' modal-class='register-modal'>
 		<div slot='modal-body' class='modal-body'>
-			<message-box :message-content='registerMessage' message-type='message' v-if='bShowMessage'></message-box>
+			<message-box :message-content='registerMessage' :message-type='messageType' :closable='true' v-if='bShowMessage' v-on:close-message-box='closeMessageBox'></message-box>
 			<input type='text' placeholder='用户名' class='register-input' v-model='registerObj.username' />
 			<input type='password' placeholder='密码' class='register-input' v-model='registerObj.password' />
-			<button class='register-btn' v-on:click='register()'>确 认</button>
+			<button class='register-btn' v-on:click='register'>确 认</button>
 		</div>
 	</modal-holder>
 </template>
@@ -25,21 +25,32 @@ module.exports = {
 				password: ''
 			},
 			bShowMessage: false,
-			registerMessage: ''
+			registerMessage: '',
+			messageType: 'message'
 		}
 	},
 	methods: {
 		register: function(){
 			this.$http.post('/api/userModels', this.registerObj).then(function(resp){
 				this.$data.bShowMessage = true;
+				this.$data.messageType = 'message';
 				this.$data.registerMessage = resp.data.message;
 				var that = this;
 				setTimeout(function() {
 					that.$dispatch('close-modal');
 				}, 1000);
 			}, function(err){
-				console.log(err);
+				this.$data.bShowMessage = true;
+				this.$data.messageType = 'error';
+				if(err.status === 422){
+					this.$data.registerMessage = '用户名已存在';
+				} else {
+					this.$data.registerMessage = '服务器崩了';
+				}
 			});
+		},
+		closeMessageBox: function(){
+			this.$data.bShowMessage = false;
 		}
 	},
 	ready: function(){

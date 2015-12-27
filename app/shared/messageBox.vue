@@ -2,6 +2,7 @@
 	<div class='message-box-holder' v-bind:class='messageBoxClass'>
 		<slot name='message-content'>
 			{{messageContent}}
+			<div class='fa fa-remove message-box-closer float-right' v-if='closable' v-on:click='close'></div>
 		</slot>
 	</div>
 </template>
@@ -23,7 +24,11 @@ module.exports = {
 			type: String,
 			default: 'message'
 		},
-		messageContent: String
+		messageContent: String,
+		closable: {
+			type: Boolean,
+			default: false
+		}
 	},
 	methods:{
 		close: function(){
@@ -57,5 +62,17 @@ module.exports = {
 	border-color: $basic-red;
 	color: $dark-red;
 	background-color: $light-red;
+}
+.message-box-closer {
+	cursor: pointer;
+	font-size: 12px;
+	text-align: center;
+	padding-top: 0.2rem;
+	/*line-height: 15px;*/
+	color: $light-dark;
+	&:hover {
+		@include border-radius(50%);
+		color: $basic-dark;
+	}
 }
 </style>

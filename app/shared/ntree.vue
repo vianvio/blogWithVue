@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class='tree-node' v-bind:class='node.nodeClass' v-on:click='openChild()'>
+		<div class='tree-node' v-bind:class='node.nodeClass' v-on:click='openChild'>
 			{{node.name}}
 		</div>
 		<ntree v-for='childNode in node.nodes' :node='childNode' v-if='node.open'></ntree>

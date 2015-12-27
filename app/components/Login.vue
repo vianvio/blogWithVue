@@ -12,7 +12,7 @@
 			<input type='password' class='login-input' />
 		</div>
 		<button class='login-btn float-left'>确 认</button>
-		<button class='register-btn float-right' v-on:click='showRegisterModal()'>注 册</button>
+		<button class='register-btn float-right' v-on:click='showRegisterModal'>注 册</button>
 	</div>
 	<register-modal v-if='bShowRegisterModal' v-on:close-modal='closeModal'></register-modal>
 </template>

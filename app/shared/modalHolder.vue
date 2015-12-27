@@ -4,7 +4,7 @@
 			<slot name='modal-header'>
 				<div class='modal-header'>
 					<span class='modal-title'>{{modalTitle}}</span>
-					<div class='fa fa-remove modal-closer float-right' v-on:click='close()'></div>
+					<div class='fa fa-remove modal-closer float-right' v-on:click='close'></div>
 				</div>
 			</slot>
 			<slot name='modal-body'></slot>
