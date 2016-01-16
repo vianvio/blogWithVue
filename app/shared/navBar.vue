@@ -1,32 +1,31 @@
 <template>
 	<nav class='nav'>
-		<!-- <a href="/" class='float-left nav-tab'>首页</a> -->
-		<a v-link='' class='float-right nav-tab' v-bind:class='currentTab === "babyRecord" ? "current-tab": ""' v-on:click='switchTab("babyRecord")'>成长记录</a>
-		<a v-link="" class='float-right nav-tab' v-bind:class='currentTab === "test" ? "current-tab": ""' v-on:click='switchTab("test")'>试验田</a>
-		<a v-link="" class='float-right nav-tab' v-bind:class='currentTab === "resume" ? "current-tab": ""' v-on:click='switchTab("resume")'>简历</a>
-		<a v-link='"/passages"' class='float-right nav-tab' v-bind:class='currentTab === "passage" ? "current-tab": ""' v-on:click='switchTab("passage")'>文章</a>
+		<a v-link='"/manage"' class='float-left nav-tab' v-if='authInfo.bAuthed' v-bind:class='currentTab === "manage" ? "current-tab": ""'>管理</a>
+		<a v-link='' class='float-right nav-tab' v-bind:class='currentTab === "babyRecord" ? "current-tab": ""'>成长记录</a>
+		<a v-link="" class='float-right nav-tab' v-bind:class='currentTab === "test" ? "current-tab": ""'>试验田</a>
+		<a v-link="" class='float-right nav-tab' v-bind:class='currentTab === "resume" ? "current-tab": ""'>简历</a>
+		<a v-link='"/passages"' class='float-right nav-tab' v-bind:class='currentTab === "passage" ? "current-tab": ""'>文章</a>
 	</nav>
 </template>
 
 <script>
-console.log('from nav bar~');
+var appConfig = require('../config.service.js');
 
 module.exports = {
 	data: function(){
 		return {
-			currentTab: ''
+			currentTab: '',
+			authInfo: appConfig.authInfo
 		}
 	},
 	methods:{
-		switchTab: function(tabName){
+	},
+	events:{
+		'nav-tab-swich': function(tabName){
 			this.$data.currentTab = tabName;
-			this.$dispatch('nav-tab-swich', tabName);
-			this.$dispatch('show-hide-side-nav');
 		}
 	},
 	created: function(){
-		this.$data.currentTab = 'passage';
-		this.$dispatch('nav-tab-swich', 'passage');
 	}
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-	
+	<router-view></router-view>
 </template>
 
 <script>
@@ -19,14 +19,32 @@ module.exports = {
 	},
 	route: {
 		activate: function(transition){
+			if(!!!appConfig.authInfo.bAuthed){
+				this.$route.router.go('/login');
+			}
+			var that = this;
 			var _treeObj = {
-				name: '文章目录',
+				name: '内容列表',
 				forceOpen: true,
 				open: true,
 				nodeClass: 'root-node',
-				nodes: []
+				nodes: [
+					{
+						name: '文章',
+						nodeClass: 'child-node',
+						fnc: function(){
+							that.$route.router.go('/manage/passage');
+						},
+						nodes: []
+					},
+					{
+						name: '简历',
+						nodeClass: 'child-node',
+						nodes: []
+					}
+				]
 			};
-			this.$dispatch('nav-route-change', 'passage', _treeObj);
+			this.$dispatch('nav-route-change', 'manage', _treeObj);
 			this.$dispatch('show-hide-side-nav');
 			transition.next();
 		}

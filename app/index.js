@@ -11,6 +11,8 @@ Vue.use(Resource);
 var App = require('./components/App.vue');
 var Login = require('./components/Login.vue');
 var PassageList = require('./components/PassageList.vue');
+var ManagePage = require('./components/ManagePage.vue');
+var PassageEdit = require('./components/PassageEdit.vue');
 
 // register filters globally
 // Vue.filter('fromNow', fromNow);
@@ -24,7 +26,15 @@ router.map({
     component: Login
   },
   '/passages': {
-  	component: PassageList
+    component: PassageList
+  },
+  '/manage': {
+    component: ManagePage,
+    subRoutes: {
+      '/passage': {
+        component: PassageEdit
+      }
+    }
   }
 });
 
@@ -32,8 +42,8 @@ router.beforeEach(function() {
   window.scrollTo(0, 0);
 });
 
-// router.redirect({
-//   '*': '/'
-// });
+router.redirect({
+  '*': '/login'
+});
 
 router.start(App, '#app');

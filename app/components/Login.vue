@@ -3,15 +3,16 @@
 		<div class='login-label-holder'>
 			<STRONG class='login-label'>登 录</STRONG>
 		</div>
+		<message-box :message-content='loginMessage' :message-type='messageType' :closable='true' v-if='bShowMessage' v-on:close-message-box='closeMessageBox'></message-box>
 		<div class='login-input-holder position-relative'>
 			<span class='fa fa-user login-input-icon'></span>
-			<input type='text' class='login-input' required />
+			<input type='text' class='login-input' v-model='loginObj.username' v-on:keyup.13='login' />
 		</div>
 		<div class='login-input-holder position-relative'>
 			<span class='fa fa-lock login-input-icon'></span>
-			<input type='password' class='login-input' />
+			<input type='password' class='login-input' v-model='loginObj.password' v-on:keyup.13='login' />
 		</div>
-		<button class='login-btn float-left'>确 认</button>
+		<button class='login-btn float-left' v-on:click='login'>确 认</button>
 		<button class='register-btn float-right' v-on:click='showRegisterModal'>注 册</button>
 	</div>
 	<register-modal v-if='bShowRegisterModal' v-on:close-modal='closeModal'></register-modal>
@@ -19,14 +20,24 @@
 
 <script>
 var registerModal = require('../shared/modals/registerModal.vue');
+var messageBox = require('../shared/messageBox.vue');
+var appConfig = require('../config.service.js');
 
 module.exports = {
 	components: {
-		registerModal
+		registerModal,
+		messageBox
 	},
 	data: function(){
 		return {
-			bShowRegisterModal: false
+			bShowRegisterModal: false,
+			loginObj: {
+				username: '',
+				password: ''
+			},
+			bShowMessage: false,
+			loginMessage: '',
+			messageType: 'message'
 		}
 	},
 	methods: {
@@ -34,11 +45,45 @@ module.exports = {
 			this.$data.bShowRegisterModal = true;
 		},
 		closeModal: function(){
-			this.$data.bShowRegisterModal = false;	
+			this.$data.bShowRegisterModal = false;
+		},
+		login: function(){
+			var that = this;
+			this.$http.post('/api/userModels/login', this.loginObj).then(function(resp){
+				// set token
+				that.$http.headers.common['Authorization'] = resp.data.id;
+				appConfig.authInfo.bAuthed = true;
+				appConfig.authInfo.token = resp.data.id;
+				appConfig.authInfo.userId = resp.data.userId;
+				appConfig.authInfo.userName = resp.data.username;
+				sessionStorage.clear();
+				sessionStorage.setItem('token', resp.data.id);
+				that.$route.router.go('/manage');
+			}, function(err){
+				this.$data.bShowMessage = true;
+				this.$data.messageType = 'error';
+				if(err.status === 401){
+					this.$data.loginMessage = '用户名或密码错误';
+				} else if(err.status === 400){
+					this.$data.loginMessage = '不要留空';
+				} else {
+					this.$data.loginMessage = '服务器崩了';
+				}
+			});
+		},
+		closeMessageBox: function(){
+			this.$data.bShowMessage = false;
 		}
 	},
-	ready: function(){
-		this.$dispatch('show-hide-side-nav');
+	route: {
+		activate: function(transition){
+			appConfig.authInfo.bAuthed = false;
+			appConfig.authInfo.token = '';
+			appConfig.authInfo.userId = '';
+			appConfig.authInfo.username = '';
+			this.$dispatch('show-hide-side-nav');
+			transition.next();
+		}
 	}
 };
 </script>
@@ -49,28 +94,27 @@ module.exports = {
 
 .login-holder {
 	width: 40rem;
-	height: 28rem;
+	min-height: 28rem;
 	margin: 10rem auto;
-	padding: 3rem;
+	padding: 3rem 3rem 7rem 3rem;
 	@extend %material-shadow;
 	.login-btn {
 		@extend %blog-btn;
 		background-color: $basic-blue;
 		color: #fff;
-		margin: 2rem 0;
 	}
 
 	.register-btn {
 		@extend %blog-btn;
 		background-color: $light-coffee;
 		color: #fff;
-		margin: 2rem 0;
 	}
 }
 
 .login-label-holder {
 	text-align: right;
 	padding-right: 1rem;
+	margin-bottom: 2rem;
 }
 
 .login-label {
@@ -81,7 +125,7 @@ module.exports = {
 .login-input-holder {
 	height: 4rem;
 	border: 1px solid $shadow-dark;
-	margin-top: 2rem;
+	margin: 1rem 0 2rem 0;
 	overflow: hidden;
 	@include border-radius(4px);
 }
@@ -97,7 +141,7 @@ module.exports = {
 }
 
 .login-input {
-	border: none;
+	border: none !important;
 	width: 100%;
 	padding: 1rem 1rem 0 5rem;
 	color: $font-dark;

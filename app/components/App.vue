@@ -1,5 +1,5 @@
 <template>
-	<sidebar v-if='!bLoginPage'></sidebar>
+	<sidebar v-show='!bLoginPage'></sidebar>
 	<div class='content-holder' v-bind:class='bLoginPage ? "content-holder-noside" : ""'>
 		<navbar></navbar>
 		<router-view></router-view>
@@ -10,11 +10,6 @@
 
 var sidebar = require('../shared/sidebar.vue');
 var navbar = require('../shared/navbar.vue');
-
-var mapTabContent = {
-	'passage': '文章目录',
-	'test': '实验列表'
-}
 
 module.exports = {
 	components: {
@@ -27,10 +22,9 @@ module.exports = {
 		}
 	},
 	events: {
-		'nav-tab-swich': function(tabName) {
-			if(mapTabContent[tabName]){
-				this.$broadcast('update-content-title', mapTabContent[tabName]);
-			}
+		'nav-route-change': function(tabName, treeObj) {
+			this.$broadcast('nav-tab-swich', tabName);
+			this.$broadcast('update-tree', treeObj);
 		},
 		'show-hide-side-nav': function() {
 			if(this.$route.path === '/login') {

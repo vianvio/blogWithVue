@@ -30,6 +30,12 @@ hr {
     border-bottom: 1px solid $shadow-dark;
 }
 
+input[type=text],
+input[type=password],
+textarea {
+    border: 1px solid $shadow-dark;
+}
+
 .position-relative {
     position: relative;
 }

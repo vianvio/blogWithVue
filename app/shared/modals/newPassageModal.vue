@@ -1,10 +1,10 @@
 <template>
-	<modal-holder modal-title='注 册' modal-class='register-modal'>
+	<modal-holder modal-title='写文章' modal-class='new-passage-modal'>
 		<div slot='modal-body' class='modal-body'>
 			<message-box :message-content='registerMessage' :message-type='messageType' :closable='true' v-if='bShowMessage' v-on:close-message-box='closeMessageBox'></message-box>
-			<input type='text' placeholder='用户名' class='register-input' v-model='registerObj.username' />
-			<input type='password' placeholder='密码' class='register-input' v-model='registerObj.password' />
-			<input type='text' placeholder='识别码' class='register-input' v-model='registerObj.secretCode' />
+			<input type='text' placeholder='标题' class='new-passage-input' v-model='registerObj.username' />
+			<input type='text' placeholder='标签，用;分隔' class='new-passage-input' v-model='registerObj.username' />
+			<textarea class='new-passage-content' rows='20'></textarea>
 			<button class='register-btn' v-on:click='register'>确 认</button>
 		</div>
 	</modal-holder>
@@ -33,31 +33,7 @@ module.exports = {
 	},
 	methods: {
 		register: function(){
-			// front-end check secret code
-			if(this.registerObj.secretCode === 'vBlog')
-			{
-				this.$http.post('/api/userModels', this.registerObj).then(function(resp){
-					this.$data.bShowMessage = true;
-					this.$data.messageType = 'message';
-					this.$data.registerMessage = resp.data.message;
-					var that = this;
-					setTimeout(function() {
-						that.$dispatch('close-modal');
-					}, 1000);
-				}, function(err){
-					this.$data.bShowMessage = true;
-					this.$data.messageType = 'error';
-					if(err.status === 422){
-						this.$data.registerMessage = '用户名已存在';
-					} else {
-						this.$data.registerMessage = '服务器崩了';
-					}
-				});
-			} else {
-				this.$data.bShowMessage = true;
-				this.$data.messageType = 'error';
-				this.$data.registerMessage = '识别码错误，需要账号请联系gloomy_wind@hotmail.com';
-			}
+			
 		},
 		closeMessageBox: function(){
 			this.$data.bShowMessage = false;
@@ -73,10 +49,10 @@ module.exports = {
 @import '../../variables.scss';
 @import '../../common.scss';
 
-.register-modal {
+.new-passage-modal {
 	.modal{
-		width: 38rem;
-		margin-left: -19rem;
+		width: 80rem;
+		margin-left: -40rem;
 	}
 	.modal-closer {
 		margin-top: 0.5rem;
@@ -94,25 +70,32 @@ module.exports = {
 	.show-modal-transition {
 		transition: all .3s ease;
 		opacity: 1;
-		top: 19rem;
+		top: 6rem;
 	}
-	.show-modal-enter, .show-modal-leave {
-		top: 17rem;
+	.show-modal-enter,
+	.show-modal-leave {
+		top: 4rem;
 	  	opacity: 0;
 	}
 	.register-btn {
 		@extend %blog-btn;
 		background-color: $basic-blue;
 		color: #fff;
-		width: 100%;
 		margin: 2rem 0 0 0;
 	}
 }
 
-.register-input {
+.new-passage-input {
 	padding: 1rem;
 	margin-top: 1rem;
 	width: 100%;
 	@include border-radius(4px);
+}
+
+.new-passage-content {
+	width: 100%;
+	@include border-radius(4px);
+	margin-top: 1rem;
+	padding: 0.5rem;
 }
 </style>

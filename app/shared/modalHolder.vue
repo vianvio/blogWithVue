@@ -31,11 +31,18 @@ module.exports = {
 	},
 	methods:{
 		close: function(){
-			this.$dispatch('close-modal');
+			this.$data.bShowModal = false;
 		}
 	},
 	ready: function(){
 		this.$data.bShowModal = true;
+	},
+	transitions: {
+		showModal: {
+			afterLeave: function(el){
+				this.$dispatch('close-modal');
+			}
+		}
 	}
 };
 </script>
@@ -50,9 +57,10 @@ module.exports = {
 	top: 0;
 	left: 0;
 	z-index: 999;
+	overflow: auto;
 	&:before { 
 		content: '';
-		position: absolute;
+		position: fixed;
 		top: 0;
 		left: 0;
 		opacity: 0.4;
@@ -71,6 +79,9 @@ module.exports = {
 	padding: 0.5rem 0;
 	@include border-radius(4px);
 	overflow: hidden;
+	transition: all .3s ease;
+	opacity: 1;
+	top: 8rem;
 }
 
 .modal-header {
@@ -93,12 +104,10 @@ module.exports = {
 }
 
 .show-modal-transition {
-	transition: all .3s ease;
-	opacity: 1;
-	top: 8rem;
-}
+	}
 
-.show-modal-enter, .show-modal-leave {
+.show-modal-enter, 
+.show-modal-leave {
 	top: 6rem;
   	opacity: 0;
 }

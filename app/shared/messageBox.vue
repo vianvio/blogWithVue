@@ -1,8 +1,8 @@
 <template>
 	<div class='message-box-holder' v-bind:class='messageBoxClass'>
+		<div class='fa fa-remove message-box-closer float-right' v-if='closable' v-on:click='close'></div>
 		<slot name='message-content'>
 			{{messageContent}}
-			<div class='fa fa-remove message-box-closer float-right' v-if='closable' v-on:click='close'></div>
 		</slot>
 	</div>
 </template>
@@ -68,7 +68,6 @@ module.exports = {
 	font-size: 12px;
 	text-align: center;
 	padding-top: 0.2rem;
-	/*line-height: 15px;*/
 	color: $light-dark;
 	&:hover {
 		@include border-radius(50%);

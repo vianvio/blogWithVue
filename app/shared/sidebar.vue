@@ -17,28 +17,12 @@ module.exports = {
 	},
 	data: function(){
 		return {
-			contentTree: {
-				name: '',
-				forceOpen: true,
-				open: true,
-				nodeClass: 'root-node',
-				nodes: [{
-					name: 'test2',
-					nodes: [{
-						name: 'test2,1',
-						nodes: []
-					}]
-				},
-				{
-					name: 'test3',
-					nodes: []
-				}]
-			}
+			contentTree: {}
 		}
 	},
 	events: {
-		'update-content-title': function(contentTitle){
-			this.$data.contentTree.name = contentTitle;
+		'update-tree': function(treeObj){
+			this.$data.contentTree = treeObj;
 		}
 	}
 };
@@ -67,5 +51,14 @@ module.exports = {
 .side-bar .root-node{
 	font-weight: bold;
 	border-bottom: none;
+}
+
+.side-bar .child-node {
+	cursor: pointer;
+	padding-left: 2rem;
+	font-size: 14px;
+	&:hover{
+		background-color: $hover-dark;
+	}
 }
 </style>

@@ -18,6 +18,10 @@ module.exports = {
 			if(!this.node.forceOpen){
 				this.$set('node.open', !this.node.open);
 			}
+			if(this.node.fnc){
+				// call defined click method
+				this.node.fnc();
+			}
 		}
 	}
 };
