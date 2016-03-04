@@ -1,9 +1,9 @@
 <template>
-	<sidebar v-show='!bLoginPage'></sidebar>
 	<div class='content-holder' v-bind:class='bLoginPage ? "content-holder-noside" : ""'>
 		<navbar></navbar>
 		<router-view></router-view>
 	</div>
+	<sidebar v-show='!bLoginPage'></sidebar>
 </template>
 
 <script>
@@ -42,7 +42,7 @@ module.exports = {
 @import '../common.scss';
 
 .content-holder {
-	padding-left: $side-width;
+	/*padding-left: $side-width;*/
 	overflow-x: hidden;
 	overflow-y: auto;
 }

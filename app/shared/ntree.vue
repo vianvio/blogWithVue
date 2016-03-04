@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class='tree-node-holder'>
 		<div class='tree-node' v-bind:class='node.nodeClass' v-on:click='openChild'>
 			{{node.name}}
 		</div>
@@ -31,10 +31,4 @@ module.exports = {
 @import '../variables.scss';
 @import '../common.scss';
 
-.tree-node {
-	border-bottom: 1px solid $shadow-dark;
-	padding: 1rem 1rem;
-	line-height: 2rem;
-	overflow: hidden;
-}
 </style>

@@ -13,6 +13,7 @@ module.exports = {
   // define 2 entries, one for app, one for venders
   entry: {
     fontAwesome: "font-awesome-webpack!./font-awesome.config.js",
+    // bootstrap: "bootstrap-loader",
     vblog: path.resolve(APP_PATH, 'index.js'),
     vendor: ['vue', 'vue-router', 'lodash'], //['vue', 'vue-router', 'jquery', 'lodash', 'bootstrap', 'materialize-css'],
   },
@@ -53,9 +54,6 @@ module.exports = {
     }, {
       test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       loader: "file-loader"
-    }, {
-      test: /\.js$/,
-      loader: 'strict'
     }]
   },
   plugins: [

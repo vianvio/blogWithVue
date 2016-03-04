@@ -1,15 +1,15 @@
 <template>
-	<div class='modal-holder full-height' v-bind:class='modalClass'>
-		<div class='modal' v-if='bShowModal' transition='show-modal'>
+	<div class='vn-modal-holder full-height' v-bind:class='modalClass'>
+		<div class='vn-modal' v-if='bShowModal' transition='show-modal'>
 			<slot name='modal-header'>
-				<div class='modal-header'>
-					<span class='modal-title'>{{modalTitle}}</span>
-					<div class='fa fa-remove modal-closer float-right' v-on:click='close'></div>
+				<div class='vn-modal-header'>
+					<span class='vn-modal-title'>{{modalTitle}}</span>
+					<div class='fa fa-remove vn-modal-closer float-right' v-on:click='close'></div>
 				</div>
 			</slot>
 			<slot name='modal-body'></slot>
 			<slot name='modal-footer'>
-				<div class='modal-footer'>
+				<div class='nv-modal-footer'>
 					
 				</div>
 			</slot>
@@ -51,7 +51,7 @@ module.exports = {
 @import '../variables.scss';
 @import '../common.scss';
 
-.modal-holder {
+.vn-modal-holder {
 	position: fixed;
 	width: 100%;
 	top: 0;
@@ -70,7 +70,7 @@ module.exports = {
 	}
 }
 
-.modal {
+.vn-modal {
 	position: absolute;
 	width: 60rem;
 	left: 50%;
@@ -79,19 +79,16 @@ module.exports = {
 	padding: 0.5rem 0;
 	@include border-radius(4px);
 	overflow: hidden;
-	transition: all .3s ease;
-	opacity: 1;
-	top: 8rem;
 }
 
-.modal-header {
+.vn-modal-header {
 	min-height: 3rem;
 	font-size: 20px;
 	padding: 0 1rem;
 	border-bottom: 1px solid $shadow-dark;
 }
 
-.modal-closer {
+.vn-modal-closer {
 	cursor: pointer;
 	height: 25px;
 	width: 25px;
@@ -101,15 +98,6 @@ module.exports = {
 		@include border-radius(50%);
 		background-color: $shadow-dark;
 	}
-}
-
-.show-modal-transition {
-	}
-
-.show-modal-enter, 
-.show-modal-leave {
-	top: 6rem;
-  	opacity: 0;
 }
 
 </style>

@@ -1,11 +1,24 @@
 <template>
 	<modal-holder modal-title='写文章' modal-class='new-passage-modal'>
-		<div slot='modal-body' class='modal-body'>
+		<div slot='modal-body' class='vn-modal-body'>
 			<message-box :message-content='registerMessage' :message-type='messageType' :closable='true' v-if='bShowMessage' v-on:close-message-box='closeMessageBox'></message-box>
-			<input type='text' placeholder='标题' class='new-passage-input' v-model='registerObj.username' />
-			<input type='text' placeholder='标签，用;分隔' class='new-passage-input' v-model='registerObj.username' />
-			<textarea class='new-passage-content' rows='20'></textarea>
-			<button class='register-btn' v-on:click='register'>确 认</button>
+			<input type='text' placeholder='标题' class='new-passage-input' v-model='newPassage.username' />
+			<input type='text' placeholder='标签，用;分隔' class='new-passage-input' v-model='newPassage.username' />
+			<dropdown dropdownid='passage'>
+			  <button type="button" class="select-btn" data-toggle="dropdown">
+			    {{selectedType ? selectedType : '选择分类'}}
+			    <span class="caret" v-show='!selectedType'></span>
+			  </button>
+			  <ul name="dropdown-menu" class="dropdown-menu">
+			    <li><a v-on:click='selectType($event, "test")'>Action</a></li>
+			    <li><a v-on:click.prevent='selectType($event, "test")'>Another action</a></li>
+			    <li><a v-on:click.prevent='selectType($event, "test")'>Something else here</a></li>
+			    <li role="separator" class="divider"></li>
+			    <li><a v-on:click.prevent='selectType($event, "test")'>Separated link</a></li>
+			  </ul>
+			</dropdown>
+			<textarea class='new-passage-content' rows='12'></textarea>
+			<button class='create-btn' v-on:click='create'>确 认</button>
 		</div>
 	</modal-holder>
 </template>
@@ -13,30 +26,38 @@
 <script>
 var modalHolder = require('../modalHolder.vue');
 var messageBox = require('../messageBox.vue');
+var dropdown = require('vue-strap').dropdown;
 
 module.exports = {
 	components: {
 		modalHolder,
-		messageBox
+		messageBox,
+		dropdown
 	},
 	data: function(){
 		return {
-			registerObj: {
+			newPassage: {
 				username: '',
 				password: '',
 				secretCode: ''
 			},
 			bShowMessage: false,
 			registerMessage: '',
-			messageType: 'message'
+			messageType: 'message',
+			selectedType: ''
 		}
 	},
 	methods: {
-		register: function(){
+		create: function(){
 			
 		},
 		closeMessageBox: function(){
 			this.$data.bShowMessage = false;
+		},
+		selectType: function(event, _type){
+			this.$data.selectedType = _type;
+			this.$broadcast('dropdown');
+			// event.target.parentElement.parentElement.parentElement.classList.remove('open');
 		}
 	},
 	ready: function(){
@@ -50,38 +71,36 @@ module.exports = {
 @import '../../common.scss';
 
 .new-passage-modal {
-	.modal{
+	@include modalDisplayTransition(.3s, 4rem, 6rem);
+	.vn-modal {
 		width: 80rem;
 		margin-left: -40rem;
 	}
-	.modal-closer {
-		margin-top: 0.5rem;
-	}
-	.modal-title{
+	.vn-modal-title {
 		font-weight: bold;
-		font-size: 20px;
+		font-size: 22px;
 		color: $dark-coffee;
-		padding: 0.5rem 0 1rem 1rem;
+		padding: 1rem 0 1rem 1rem;
 		display: inline-block;
 	}
-	.modal-body{
+	.vn-modal-closer {
+		margin-top: 1.2rem;
+		margin-right: 0.2rem;
+	}
+	.vn-modal-body {
 		padding: 1.5rem;
 	}
-	.show-modal-transition {
-		transition: all .3s ease;
-		opacity: 1;
-		top: 6rem;
-	}
-	.show-modal-enter,
-	.show-modal-leave {
-		top: 4rem;
-	  	opacity: 0;
-	}
-	.register-btn {
+	.create-btn {
 		@extend %blog-btn;
 		background-color: $basic-blue;
 		color: #fff;
 		margin: 2rem 0 0 0;
+	}
+	.select-btn {
+		@extend %blog-btn;
+		background-color: $basic-blue;
+		color: #fff;
+		margin: 1rem 0 0 0;
 	}
 }
 

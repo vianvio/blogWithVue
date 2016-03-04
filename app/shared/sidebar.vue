@@ -1,9 +1,5 @@
 <template>
 	<div class='side-bar full-height'>
-		<div class='info-holder'>
-			<img src="../images/logo.png">
-		</div>
-		<hr/>
 		<ntree :node='contentTree'></ntree>
 	</div>
 </template>
@@ -34,31 +30,29 @@ module.exports = {
 
 .side-bar {
 	position: fixed;
-	top: 0;
+	top: $nav-height + 1rem;
 	left: 0;
 	width: $side-width;
-	@include box-shadow(2px 0 2px $shadow-dark);
-}
-
-.info-holder{ 
-	text-align: center;
-	img {
-		display: inline-block;
-		cursor: pointer;
+	padding-left: 5rem;
+	.tree-node-holder{
+		height: 3rem;
+		line-height: 3rem;
 	}
-}
-
-.side-bar .root-node{
-	font-weight: bold;
-	border-bottom: none;
+	.root-node{
+		font-weight: bold;
+	}
+	.tree-node {
+		display: inline-block;
+	}
 }
 
 .side-bar .child-node {
 	cursor: pointer;
-	padding-left: 2rem;
+	margin-left: 1.5rem;
 	font-size: 14px;
+	color: $shadow-dark;
 	&:hover{
-		background-color: $hover-dark;
+		color: $basic-blue;
 	}
 }
 </style>

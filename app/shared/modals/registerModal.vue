@@ -1,6 +1,6 @@
 <template>
 	<modal-holder modal-title='注 册' modal-class='register-modal'>
-		<div slot='modal-body' class='modal-body'>
+		<div slot='modal-body' class='vn-modal-body'>
 			<message-box :message-content='registerMessage' :message-type='messageType' :closable='true' v-if='bShowMessage' v-on:close-message-box='closeMessageBox'></message-box>
 			<input type='text' placeholder='用户名' class='register-input' v-model='registerObj.username' />
 			<input type='password' placeholder='密码' class='register-input' v-model='registerObj.password' />
@@ -74,31 +74,24 @@ module.exports = {
 @import '../../common.scss';
 
 .register-modal {
-	.modal{
+	@include modalDisplayTransition(.3s, 17rem, 19rem);
+	.vn-modal {
 		width: 38rem;
 		margin-left: -19rem;
 	}
-	.modal-closer {
-		margin-top: 0.5rem;
-	}
-	.modal-title{
+	.vn-modal-title{
 		font-weight: bold;
-		font-size: 20px;
+		font-size: 22px;
 		color: $dark-coffee;
-		padding: 0.5rem 0 1rem 1rem;
+		padding: 1rem 0 1rem 1rem;
 		display: inline-block;
 	}
-	.modal-body{
+	.vn-modal-closer {
+		margin-top: 1.2rem;
+		margin-right: 0.2rem;
+	}
+	.vn-modal-body{
 		padding: 1.5rem;
-	}
-	.show-modal-transition {
-		transition: all .3s ease;
-		opacity: 1;
-		top: 19rem;
-	}
-	.show-modal-enter, .show-modal-leave {
-		top: 17rem;
-	  	opacity: 0;
 	}
 	.register-btn {
 		@extend %blog-btn;

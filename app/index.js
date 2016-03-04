@@ -1,4 +1,5 @@
 require('./index.scss');
+require('../node_modules/bootstrap/dist/css/bootstrap.css');
 
 var Vue = require('vue');
 var Router = require('vue-router');
