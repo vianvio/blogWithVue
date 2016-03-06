@@ -12,7 +12,7 @@
 
 <script>
 var newPassageModal = require('../shared/modals/newPassageModal.vue');
-var appConfig = require('../config.service.js');
+// var appConfig = require('../config.service.js');
 
 module.exports = {
 	components: {
@@ -36,7 +36,7 @@ module.exports = {
 	},
 	route: {
 		activate: function(transition){
-			if(!!!appConfig.authInfo.bAuthed){
+			if(!sessionStorage.getItem('token')){
 				this.$route.router.go('/login');
 			}
 			transition.next();

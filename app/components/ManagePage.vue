@@ -3,12 +3,13 @@
 </template>
 
 <script>
-var appConfig = require('../config.service.js');
+// var appConfig = require('../config.service.js');
+var appModel = require('../app.model.js');
 
 module.exports = {
 	data: function(){
 		return {
-			
+			appModel: appModel
 		}
 	},
 	methods:{
@@ -19,11 +20,11 @@ module.exports = {
 	},
 	route: {
 		activate: function(transition){
-			if(!!!appConfig.authInfo.bAuthed){
+			if(!sessionStorage.getItem('token')){
 				this.$route.router.go('/login');
 			}
 			var that = this;
-			var _treeObj = {
+			this.$data.appModel.sideBarModel = {
 				name: '内容列表',
 				forceOpen: true,
 				open: true,
@@ -32,6 +33,7 @@ module.exports = {
 					{
 						name: '文章',
 						nodeClass: 'child-node',
+						selectable: true,
 						fnc: function(){
 							that.$route.router.go('/manage/passage');
 						},
@@ -40,12 +42,22 @@ module.exports = {
 					{
 						name: '简历',
 						nodeClass: 'child-node',
+						selectable: true,
+						nodes: []
+					},
+					{
+						name: '系统设置',
+						nodeClass: 'child-node',
+						selectable: true,
+						fnc: function(){
+							that.$route.router.go('/manage/systemConfig');
+						},
 						nodes: []
 					}
 				]
 			};
-			this.$dispatch('nav-route-change', 'manage', _treeObj);
-			this.$dispatch('show-hide-side-nav');
+			this.$data.appModel.bAuthed = !!sessionStorage.getItem('token');
+			this.$data.appModel.navBarModel.currentTab = 'manage';
 			transition.next();
 		}
 	}

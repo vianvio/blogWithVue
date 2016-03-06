@@ -1,11 +1,12 @@
 <template>
 	<div class='side-bar full-height'>
-		<ntree :node='contentTree'></ntree>
+		<ntree :node='appModel.sideBarModel'></ntree>
 	</div>
 </template>
 
 <script>
 var ntree = require('../shared/ntree.vue');
+var appModel = require('../app.model.js');
 
 module.exports = {
 	components:{
@@ -13,12 +14,15 @@ module.exports = {
 	},
 	data: function(){
 		return {
-			contentTree: {}
+			appModel: appModel
 		}
 	},
 	events: {
-		'update-tree': function(treeObj){
-			this.$data.contentTree = treeObj;
+		'tree-node-init': function(){
+			// [].slice.call(this.$el.querySelectorAll('.tree-node')) convert NodeList to Array
+			[].slice.call(this.$el.querySelectorAll('.tree-node')).forEach(function(node){
+				node.classList.remove('tree-node-selected');
+			});
 		}
 	}
 };

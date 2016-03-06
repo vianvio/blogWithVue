@@ -16,13 +16,20 @@ module.exports = {
 	methods:{
 		openChild: function(){
 			if(!this.node.forceOpen){
-				this.$set('node.open', !this.node.open);
+				this.$data.node.open = !this.node.open;
+			}
+			if(this.node.selectable){
+				this.$dispatch('tree-node-init');
+				this.$data.node.nodeClass += ' tree-node-selected';
 			}
 			if(this.node.fnc){
 				// call defined click method
 				this.node.fnc();
 			}
 		}
+	},
+	ready: function(){
+		this.$el.querySelector('.tree-node').classList.remove('tree-node-selected');
 	}
 };
 </script>
@@ -30,5 +37,9 @@ module.exports = {
 <style lang='sass'>
 @import '../variables.scss';
 @import '../common.scss';
+
+.tree-node.tree-node-selected {
+	color: $basic-blue;
+}
 
 </style>

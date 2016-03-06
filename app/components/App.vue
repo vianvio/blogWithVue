@@ -3,13 +3,14 @@
 		<navbar></navbar>
 		<router-view></router-view>
 	</div>
-	<sidebar v-show='!bLoginPage'></sidebar>
+	<sidebar v-show='!appModel.bLoginPage'></sidebar>
 </template>
 
 <script>
 
 var sidebar = require('../shared/sidebar.vue');
 var navbar = require('../shared/navbar.vue');
+var appModel = require('../app.model.js');
 
 module.exports = {
 	components: {
@@ -18,21 +19,10 @@ module.exports = {
 	},
 	data: function() {
 		return {
-			bLoginPage: false
+			appModel: appModel
 		}
 	},
 	events: {
-		'nav-route-change': function(tabName, treeObj) {
-			this.$broadcast('nav-tab-swich', tabName);
-			this.$broadcast('update-tree', treeObj);
-		},
-		'show-hide-side-nav': function() {
-			if(this.$route.path === '/login') {
-				this.$set('bLoginPage', true);
-			} else {
-				this.$set('bLoginPage', false);
-			}
-		}
 	}
 };
 </script>

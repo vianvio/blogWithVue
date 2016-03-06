@@ -21,7 +21,6 @@
 <script>
 var registerModal = require('../shared/modals/registerModal.vue');
 var messageBox = require('../shared/messageBox.vue');
-var appConfig = require('../config.service.js');
 
 module.exports = {
 	components: {
@@ -52,12 +51,10 @@ module.exports = {
 			this.$http.post('/api/userModels/login', this.loginObj).then(function(resp){
 				// set token
 				that.$http.headers.common['Authorization'] = resp.data.id;
-				appConfig.authInfo.bAuthed = true;
-				appConfig.authInfo.token = resp.data.id;
-				appConfig.authInfo.userId = resp.data.userId;
-				appConfig.authInfo.userName = resp.data.username;
 				sessionStorage.clear();
 				sessionStorage.setItem('token', resp.data.id);
+				sessionStorage.setItem('userId', resp.data.userId);
+				sessionStorage.setItem('userName', resp.data.userName);
 				that.$route.router.go('/manage');
 			}, function(err){
 				this.$data.bShowMessage = true;
@@ -77,11 +74,7 @@ module.exports = {
 	},
 	route: {
 		activate: function(transition){
-			appConfig.authInfo.bAuthed = false;
-			appConfig.authInfo.token = '';
-			appConfig.authInfo.userId = '';
-			appConfig.authInfo.username = '';
-			this.$dispatch('show-hide-side-nav');
+			sessionStorage.clear();
 			transition.next();
 		}
 	}

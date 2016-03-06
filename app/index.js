@@ -14,6 +14,8 @@ var Login = require('./components/Login.vue');
 var PassageList = require('./components/PassageList.vue');
 var ManagePage = require('./components/ManagePage.vue');
 var PassageEdit = require('./components/PassageEdit.vue');
+var SystemConfig = require('./components/SystemConfig.vue');
+var appModel = require('./app.model.js');
 
 // register filters globally
 // Vue.filter('fromNow', fromNow);
@@ -34,6 +36,9 @@ router.map({
     subRoutes: {
       '/passage': {
         component: PassageEdit
+      },
+      '/systemConfig': {
+        component: SystemConfig
       }
     }
   }
@@ -42,6 +47,14 @@ router.map({
 router.beforeEach(function() {
   window.scrollTo(0, 0);
 });
+
+router.afterEach(function (transition) {
+  if(transition.to.path === '/login') {
+    appModel.bLoginPage = true;
+  } else {
+    appModel.bLoginPage = false;
+  }
+})
 
 router.redirect({
   '*': '/login'
