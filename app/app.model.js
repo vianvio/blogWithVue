@@ -6,5 +6,7 @@ module.exports = {
 	navBarModel: {
 		currentTab: ''
 	},
-	bLoginPage: false
+	bLoginPage: false,
+	treeNodeSelected: '',
+	bLoading: false
 }

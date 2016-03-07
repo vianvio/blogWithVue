@@ -3,8 +3,8 @@
 </template>
 
 <script>
-var appConfig = require('../config.service.js');
-var appModel = require('../app.model.js');
+var appConfig = require('../../config.service.js');
+var appModel = require('../../app.model.js');
 
 module.exports = {
 	data: function(){
@@ -36,7 +36,7 @@ module.exports = {
 </script>
 
 <style lang='sass'>
-@import '../variables.scss';
-@import '../common.scss';
+@import '../../variables.scss';
+@import '../../common.scss';
 
 </style>

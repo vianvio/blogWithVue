@@ -4,8 +4,12 @@
 			<message-box :message-content='registerMessage' :message-type='messageType' :closable='true' v-if='bShowMessage' v-on:close-message-box='closeMessageBox'></message-box>
 			<input type='text' placeholder='用户名' class='register-input' v-model='registerObj.username' />
 			<input type='password' placeholder='密码' class='register-input' v-model='registerObj.password' />
-			<input type='text' placeholder='识别码' class='register-input' v-model='registerObj.secretCode' />
-			<button class='register-btn' v-on:click='register'>确 认</button>
+			<input type='text' placeholder='识别码' class='register-input' v-model='secretCode' />
+			<button class='register-btn' v-on:click='register' disabled="{{showLoading}}">确 认
+				<div v-if="showLoading">
+                    <div class="cssload-ball btn-loader"></div>
+                </div>
+            </button>
 		</div>
 	</modal-holder>
 </template>
@@ -23,20 +27,22 @@ module.exports = {
 		return {
 			registerObj: {
 				username: '',
-				password: '',
-				secretCode: ''
+				password: ''
 			},
+			secretCode: '',
 			bShowMessage: false,
 			registerMessage: '',
-			messageType: 'message'
+			messageType: 'message',
+			showLoading: false
 		}
 	},
 	methods: {
 		register: function(){
 			// front-end check secret code
-			if(this.registerObj.secretCode === 'vBlog')
-			{
+			if(this.secretCode === 'vBlog') {
+				this.$data.showLoading = true;
 				this.$http.post('/api/userModels', this.registerObj).then(function(resp){
+					this.$data.showLoading = false;
 					this.$data.bShowMessage = true;
 					this.$data.messageType = 'message';
 					this.$data.registerMessage = resp.data.message;
@@ -45,6 +51,7 @@ module.exports = {
 						that.$dispatch('close-modal');
 					}, 1000);
 				}, function(err){
+					this.$data.showLoading = false;
 					this.$data.bShowMessage = true;
 					this.$data.messageType = 'error';
 					if(err.status === 422){

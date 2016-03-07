@@ -1,7 +1,7 @@
 <template>
 	<div class='passage-edit-holder'>
 		<div class='tool-bar float-left'>
-			<button class='new-passage-btn float-right' v-on:click='showCreatePassage'>新 建</button>
+			<button class='new-passage-btn float-left' v-on:click='showCreatePassage'>新建日志</button>
 		</div>
 		<div class='content float-left'>
 			
@@ -11,8 +11,8 @@
 </template>
 
 <script>
-var newPassageModal = require('../shared/modals/newPassageModal.vue');
-// var appConfig = require('../config.service.js');
+var newPassageModal = require('../../../shared/modals/newPassageModal.vue');
+// var appConfig = require('../../../config.service.js');
 
 module.exports = {
 	components: {
@@ -46,11 +46,11 @@ module.exports = {
 </script>
 
 <style lang='sass'>
-@import '../variables.scss';
-@import '../common.scss';
+@import '../../../variables.scss';
+@import '../../../common.scss';
 
 .passage-edit-holder{
-	padding: 1rem 1rem 0 1rem;
+	@extend %content-holder;
 	.tool-bar {
 		padding-bottom: 1.5rem;
 		width: 100%;

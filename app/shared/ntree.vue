@@ -1,6 +1,6 @@
 <template>
 	<div class='tree-node-holder'>
-		<div class='tree-node' v-bind:class='node.nodeClass' v-on:click='openChild'>
+		<div class='tree-node' v-bind:class='computedNodeClass'  v-on:click='openChild'>
 			{{node.name}}
 		</div>
 		<ntree v-for='childNode in node.nodes' :node='childNode' v-if='node.open'></ntree>
@@ -8,10 +8,25 @@
 </template>
 
 <script>
+var appModel = require('../app.model.js');
 module.exports = {
 	name: 'ntree',
+	data: function() {
+		return {
+			appModel: appModel
+		}
+	},
 	props: {
 		'node': Object
+	},
+	computed: {
+		computedNodeClass: function() {
+			if(this.$data.appModel.treeNodeSelected === this.node.name){
+				return this.$data.node.nodeClass + ' tree-node-selected';
+			}else{
+				return this.$data.node.nodeClass;
+			}
+		}
 	},
 	methods:{
 		openChild: function(){
@@ -19,8 +34,8 @@ module.exports = {
 				this.$data.node.open = !this.node.open;
 			}
 			if(this.node.selectable){
-				this.$dispatch('tree-node-init');
-				this.$data.node.nodeClass += ' tree-node-selected';
+				this.$data.appModel.treeNodeSelected = this.node.name;
+
 			}
 			if(this.node.fnc){
 				// call defined click method
@@ -29,7 +44,6 @@ module.exports = {
 		}
 	},
 	ready: function(){
-		this.$el.querySelector('.tree-node').classList.remove('tree-node-selected');
 	}
 };
 </script>

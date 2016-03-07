@@ -1,9 +1,13 @@
 <template>
-	<div class='content-holder' v-bind:class='bLoginPage ? "content-holder-noside" : ""'>
-		<navbar></navbar>
+	<div class='page-loading' v-show='appModel.bLoading'>
+        <div class='cssload-ball'></div>
+    </div>
+	<navbar></navbar>
+	<div class='content-holder'>
+		<sidebar v-show='!appModel.bLoginPage'></sidebar>
 		<router-view></router-view>
 	</div>
-	<sidebar v-show='!appModel.bLoginPage'></sidebar>
+	</div>
 </template>
 
 <script>
@@ -15,7 +19,8 @@ var appModel = require('../app.model.js');
 module.exports = {
 	components: {
 		navbar,
-		sidebar
+		sidebar,
+		appModel
 	},
 	data: function() {
 		return {
@@ -32,13 +37,7 @@ module.exports = {
 @import '../common.scss';
 
 .content-holder {
-	/*padding-left: $side-width;*/
-	overflow-x: hidden;
-	overflow-y: auto;
-}
-
-.content-holder.content-holder-noside {
-	padding-left: 0;
+	margin-top: 1rem;
 }
 
 </style>

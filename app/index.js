@@ -10,11 +10,11 @@ Vue.use(Resource);
 
 // components
 var App = require('./components/App.vue');
-var Login = require('./components/Login.vue');
-var PassageList = require('./components/PassageList.vue');
-var ManagePage = require('./components/ManagePage.vue');
-var PassageEdit = require('./components/PassageEdit.vue');
-var SystemConfig = require('./components/SystemConfig.vue');
+var Login = require('./components/Login/Login.vue');
+var PassageList = require('./components/Passage/PassageList.vue');
+var ManagePage = require('./components/Manage/ManagePage.vue');
+var PassageEdit = require('./components/Manage/Passage/PassageEdit.vue');
+var SystemConfig = require('./components/SystemConfig/SystemConfig.vue');
 var appModel = require('./app.model.js');
 
 // register filters globally

@@ -12,15 +12,21 @@
 			<span class='fa fa-lock login-input-icon'></span>
 			<input type='password' class='login-input' v-model='loginObj.password' v-on:keyup.13='login' />
 		</div>
-		<button class='login-btn float-left' v-on:click='login'>确 认</button>
+		<button class='login-btn float-left' v-on:click='login' disabled="{{showLoading}}">确 认
+			<div v-if="showLoading">
+                <div class="cssload-ball btn-loader"></div>
+            </div>
+		</button>
 		<button class='register-btn float-right' v-on:click='showRegisterModal'>注 册</button>
 	</div>
 	<register-modal v-if='bShowRegisterModal' v-on:close-modal='closeModal'></register-modal>
 </template>
 
 <script>
-var registerModal = require('../shared/modals/registerModal.vue');
-var messageBox = require('../shared/messageBox.vue');
+var registerModal = require('../../shared/modals/registerModal.vue');
+var messageBox = require('../../shared/messageBox.vue');
+var loginService = require('./login.service.js');
+// var appModel = require('../../app.model.js');
 
 module.exports = {
 	components: {
@@ -36,7 +42,8 @@ module.exports = {
 			},
 			bShowMessage: false,
 			loginMessage: '',
-			messageType: 'message'
+			messageType: 'message',
+			showLoading: false
 		}
 	},
 	methods: {
@@ -47,27 +54,30 @@ module.exports = {
 			this.$data.bShowRegisterModal = false;
 		},
 		login: function(){
+			this.$data.showLoading = true;
 			var that = this;
-			this.$http.post('/api/userModels/login', this.loginObj).then(function(resp){
-				// set token
-				that.$http.headers.common['Authorization'] = resp.data.id;
-				sessionStorage.clear();
-				sessionStorage.setItem('token', resp.data.id);
-				sessionStorage.setItem('userId', resp.data.userId);
-				sessionStorage.setItem('userName', resp.data.userName);
-				that.$route.router.go('/manage');
-			}, function(err){
-				this.$data.bShowMessage = true;
-				this.$data.messageType = 'error';
-				if(err.status === 401){
-					this.$data.loginMessage = '用户名或密码错误';
-				} else if(err.status === 400){
-					this.$data.loginMessage = '不要留空';
-				} else {
-					this.$data.loginMessage = '服务器崩了';
-				}
-			});
-		},
+		    this.$http.post('/api/userModels/login', this.loginObj).then(function(resp) {
+		      that.$data.showLoading = false;
+		      // set token
+		      that.$http.headers.common['Authorization'] = resp.data.id;
+		      sessionStorage.clear();
+		      sessionStorage.setItem('token', resp.data.id);
+		      sessionStorage.setItem('userId', resp.data.userId);
+		      sessionStorage.setItem('userName', resp.data.userName);
+		      that.$route.router.go('/manage');
+		    }, function(err) {
+		      that.$data.showLoading = false;
+		      that.$data.bShowMessage = true;
+		      that.$data.messageType = 'error';
+		      if (err.status === 401) {
+		        that.$data.loginMessage = '用户名或密码错误';
+		      } else if (err.status === 400) {
+		        that.$data.loginMessage = '不要留空';
+		      } else {
+		        that.$data.loginMessage = '服务器崩了';
+		      }
+		    });
+    	},
 		closeMessageBox: function(){
 			this.$data.bShowMessage = false;
 		}
@@ -82,8 +92,8 @@ module.exports = {
 </script>
 
 <style lang='sass'>
-@import '../variables.scss';
-@import '../common.scss';
+@import '../../variables.scss';
+@import '../../common.scss';
 
 .login-holder {
 	width: 40rem;

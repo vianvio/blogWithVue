@@ -18,12 +18,7 @@ module.exports = {
 		}
 	},
 	events: {
-		'tree-node-init': function(){
-			// [].slice.call(this.$el.querySelectorAll('.tree-node')) convert NodeList to Array
-			[].slice.call(this.$el.querySelectorAll('.tree-node')).forEach(function(node){
-				node.classList.remove('tree-node-selected');
-			});
-		}
+
 	}
 };
 </script>
@@ -33,9 +28,7 @@ module.exports = {
 @import '../common.scss';
 
 .side-bar {
-	position: fixed;
-	top: $nav-height + 1rem;
-	left: 0;
+	float: left;
 	width: $side-width;
 	padding-left: 5rem;
 	.tree-node-holder{

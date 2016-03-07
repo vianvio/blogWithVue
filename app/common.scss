@@ -97,4 +97,27 @@ $prefix-for-spec: true !default;
     &:active{
         box-shadow: none;
     }
+    &:disabled {
+        opacity: 0.8;
+    }
+    .cssload-ball {
+        border-color: $white;
+        position: static;
+        margin-top: -2.1rem;
+        margin-left: 10px;
+        height: 2rem;
+        width: 2rem;
+        border-radius: 2rem;
+        &:after{
+            width: 0.5rem;
+            height: 0.5rem;
+            background-color: $white;
+        }
+    }
+}
+
+%content-holder {
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0 1rem;
 }
