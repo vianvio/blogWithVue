@@ -5,11 +5,7 @@
 			<input type='text' placeholder='用户名' class='register-input' v-model='registerObj.username' />
 			<input type='password' placeholder='密码' class='register-input' v-model='registerObj.password' />
 			<input type='text' placeholder='识别码' class='register-input' v-model='secretCode' />
-			<button class='register-btn' v-on:click='register' disabled="{{showLoading}}">确 认
-				<div v-if="showLoading">
-                    <div class="cssload-ball btn-loader"></div>
-                </div>
-            </button>
+			<nbutton btn-class='register-btn' :nbutton-click='register' :show-loading.sync='showLoading' >确 认</nbutton>
 		</div>
 	</modal-holder>
 </template>
@@ -17,11 +13,13 @@
 <script>
 var modalHolder = require('../modalHolder.vue');
 var messageBox = require('../messageBox.vue');
+var nbutton = require('../nbutton.vue');
 
 module.exports = {
 	components: {
 		modalHolder,
-		messageBox
+		messageBox,
+		nbutton
 	},
 	data: function(){
 		return {
@@ -101,7 +99,7 @@ module.exports = {
 		padding: 1.5rem;
 	}
 	.register-btn {
-		@extend %blog-btn;
+		
 		background-color: $basic-blue;
 		color: #fff;
 		width: 100%;

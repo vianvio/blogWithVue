@@ -1,12 +1,18 @@
 module.exports = {
-	sideBarModel: {
+  sideBarModel: {
 
-	},
-	bAuthed: false,
-	navBarModel: {
-		currentTab: ''
-	},
-	bLoginPage: false,
-	treeNodeSelected: '',
-	bLoading: false
+  },
+  bAuthed: false,
+  navBarModel: {
+    currentTab: ''
+  },
+  bLoginPage: false,
+  treeNodeSelected: '',
+  bLoading: false,
+  newPassage: {
+    title: '',
+    label: '',
+    content: '',
+    selectedTypeId: ''
+  }
 }

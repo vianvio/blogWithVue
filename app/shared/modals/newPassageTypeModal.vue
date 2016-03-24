@@ -3,11 +3,7 @@
 		<div slot='modal-body' class='vn-modal-body'>
 			<message-box :message-content='message' :message-type='messageType' :closable='true' v-if='bShowMessage' v-on:close-message-box='closeMessageBox'></message-box>
 			<input type='text' placeholder='类型名称' class='new-passage-type-input' v-model='newPassageType.name' />
-			<button class='create-btn' v-on:click.stop='create' disabled="{{showLoading}}">确 认
-				<div v-if="showLoading">
-                    <div class="cssload-ball btn-loader"></div>
-                </div>
-			</button>
+			<nbutton btn-class='create-btn' :nbutton-click='create' :show-loading.sync='showLoading' >确 认</nbutton>
 		</div>
 	</modal-holder>
 </template>
@@ -15,11 +11,13 @@
 <script>
 var modalHolder = require('../modalHolder.vue');
 var messageBox = require('../messageBox.vue');
+var nbutton = require('../nbutton.vue');
 
 module.exports = {
 	components: {
 		modalHolder,
-		messageBox
+		messageBox,
+		nbutton
 	},
 	data: function(){
 		return {

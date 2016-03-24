@@ -12,11 +12,7 @@
 			<span class='fa fa-lock login-input-icon'></span>
 			<input type='password' class='login-input' v-model='loginObj.password' v-on:keyup.13='login' />
 		</div>
-		<button class='login-btn float-left' v-on:click='login' disabled="{{showLoading}}">确 认
-			<div v-if="showLoading">
-                <div class="cssload-ball btn-loader"></div>
-            </div>
-		</button>
+		<nbutton btn-class='login-btn float-left' :nbutton-click='login' :show-loading.sync='showLoading'>确 认</nbutton>
 		<button class='register-btn float-right' v-on:click='showRegisterModal'>注 册</button>
 	</div>
 	<register-modal v-if='bShowRegisterModal' v-on:close-modal='closeModal'></register-modal>
@@ -26,12 +22,14 @@
 var registerModal = require('../../shared/modals/registerModal.vue');
 var messageBox = require('../../shared/messageBox.vue');
 var loginService = require('./login.service.js');
+var nbutton = require('../../shared/nbutton.vue');
 // var appModel = require('../../app.model.js');
 
 module.exports = {
 	components: {
 		registerModal,
-		messageBox
+		messageBox,
+		nbutton
 	},
 	data: function(){
 		return {
@@ -99,6 +97,7 @@ module.exports = {
 	width: 40rem;
 	min-height: 28rem;
 	margin: 10rem auto;
+	margin-bottom: 0;
 	padding: 3rem 3rem 7rem 3rem;
 	@extend %material-shadow;
 	.login-btn {

@@ -1,34 +1,69 @@
 <template>
 	<div class='passage-edit-holder'>
-		<div class='tool-bar float-left'>
-			<button class='new-passage-btn float-left' v-on:click='showCreatePassage'>新建日志</button>
+		<message-box :message-content='registerMessage' :message-type='messageType' :closable='true' v-if='bShowMessage' v-on:close-message-box='closeMessageBox'></message-box>
+		<input type='text' placeholder='标题' class='new-passage-input' v-model='appModel.newPassage.title' />
+		<dropdown dropdown-id='passage' class='new-passage-dropdown'>
+		  <button type="button" class="select-btn" data-toggle="dropdown">
+		    {{selectedType ? selectedType : '选择分类'}}
+		    <span class="caret" v-show='!selectedType'></span>
+		  </button>
+		  <ul name="dropdown-menu" class="dropdown-menu">
+		    <li><a v-on:click='selectType($event, "test")'>Action</a></li>
+		    <li><a v-on:click.prevent='selectType($event, "test")'>Another action</a></li>
+		    <li><a v-on:click.prevent='selectType($event, "test")'>Something else here</a></li>
+		    <li><a v-on:click.prevent='selectType($event, "test")'>Separated link</a></li>
+		  </ul>
+		</dropdown>
+		<div class='new-passage-label-holder'>
+			<input type='text' placeholder='标签，用;分隔' class='new-passage-input' v-model='appModel.newPassage.label' />
 		</div>
-		<div class='content float-left'>
-			
-		</div>
+		<textarea class='new-passage-content' v-model='appModel.newPassage.content' rows='18'></textarea>
+		<nbutton btn-class='create-btn float-right' :nbutton-click='create' :show-loading.sync='showLoading'>确 认</nbutton>
+		<nbutton btn-class='preview-btn float-right' :nbutton-click='showCreatePassage'>预 览</nbutton>
 	</div>
-	<new-passage-modal v-if='bShowCreatePassageModal' v-on:close-modal='closeModal'></new-passage-modal>
+	<new-passage-modal v-if='bShowPreviewModal' v-on:close-modal='closeModal'></new-passage-modal>
 </template>
 
 <script>
 var newPassageModal = require('../../../shared/modals/newPassageModal.vue');
-// var appConfig = require('../../../config.service.js');
+var messageBox = require('../../../shared/messageBox.vue');
+var dropdown = require('vue-strap').dropdown;
+var marked = require('marked');
+var nbutton = require('../../../shared/nbutton.vue');
+var appModel = require('../../../app.model.js');
 
 module.exports = {
 	components: {
-		newPassageModal
+		newPassageModal,
+		messageBox,
+		dropdown,
+		nbutton
 	},
 	data: function(){
 		return {
-			bShowCreatePassageModal: false
+			bShowPreviewModal: false,
+			registerMessage: '',
+			messageType: 'message',
+			selectedType: '',
+			showLoading: false,
+			bShowMessage: false,
+			appModel: appModel
 		}
 	},
 	methods:{
 		showCreatePassage: function(){
-			this.$data.bShowCreatePassageModal = true;
+			this.$data.bShowPreviewModal = true;
 		},
 		closeModal: function(){
-			this.$data.bShowCreatePassageModal = false;
+			this.$data.bShowPreviewModal = false;
+		},
+		closeMessageBox: function(){
+			this.$data.bShowMessage = false;
+		},
+		selectType: function(event, _type){
+			this.$data.selectedType = _type;
+			this.$broadcast('toggleDropdown', 'passage');
+			// event.target.parentElement.parentElement.parentElement.classList.remove('open');
 		}
 	},
 	created: function(){
@@ -51,21 +86,45 @@ module.exports = {
 
 .passage-edit-holder{
 	@extend %content-holder;
-	.tool-bar {
-		padding-bottom: 1.5rem;
-		width: 100%;
-		display: table-cell;
-		vertical-align: middle;
+	.create-btn {
+		@extend %blog-btn;
+		background-color: $basic-blue;
+		color: #fff;
 	}
-	.content{
-		width: 100%;
+	.preview-btn {
+		@extend %blog-btn;
+		background-color: $light-coffee;
+		color: #fff;
+		margin-right: 1rem;
 	}
-}
+	.select-btn {
+		@extend %blog-btn;
+		height: 4.3rem;
+		width: 15rem;
+		background-color: $basic-blue;
+		color: #fff;
+		margin: 1rem 0 0 0;
+		float: left;
+	}
+	.new-passage-dropdown{
+		float: left;
+		margin-right: 0.4rem;
+	}
 
-.new-passage-btn{
-	@extend %blog-btn;
-	width: 10rem;
-	background-color: $basic-blue;
-	color: #fff;
+	.new-passage-label-holder{
+		overflow: hidden;
+	}
+
+	.new-passage-input {
+		padding: 1rem;
+		margin-top: 1rem;
+		width: 100%;
+		@include border-radius(4px);
+	}
+	.new-passage-content{
+		margin-top: 1rem;
+		width: 100%;
+		padding: 1rem;
+	}
 }
 </style>

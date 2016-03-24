@@ -1,6 +1,6 @@
 <template>
 	<div class='system-config-holder'>
-		<button class='new-passage-type-btn' v-on:click='showCreatePassageType'>新增日志类型</button>
+		<nbutton btn-class='new-passage-type-btn' :nbutton-click='showCreatePassageType' :show-loading.sync='showLoading' >新增日志类型</nbutton>
 		<table class="table table-striped table-hover">
 			<thead>
 				<td>名称</td>
@@ -20,10 +20,12 @@
 <script>
 var appModel = require('../../app.model.js');
 var newPassageTypeModal = require('../../shared/modals/newPassageTypeModal.vue');
+var nbutton = require('../../shared/nbutton.vue');
 
 module.exports = {
 	components: {
-		newPassageTypeModal
+		newPassageTypeModal,
+		nbutton
 	},
 	data: function(){
 		return {
@@ -78,8 +80,6 @@ module.exports = {
 	@extend %content-holder;
 	.new-passage-type-btn{
 		@extend %blog-btn;
-		width: auto;
-		padding: 0 1.5rem;
 		background-color: $basic-blue;
 		color: #fff;
 	}

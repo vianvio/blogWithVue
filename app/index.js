@@ -35,10 +35,13 @@ router.map({
     component: ManagePage,
     subRoutes: {
       '/passage': {
-        component: PassageEdit
+        component: PassageList
       },
       '/systemConfig': {
         component: SystemConfig
+      },
+      '/newPassage': {
+        component: PassageEdit
       }
     }
   }

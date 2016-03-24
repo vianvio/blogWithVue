@@ -33,11 +33,18 @@ module.exports = {
       "/api/*": "http://localhost:3000"
     }
   },
+  devtool: 'eval-source-map',
   module: {
     loaders: [{
       test: /\.vue$/,
       loader: 'vue'
-    }, {
+    }, 
+    // {
+    //   test: /\.js$/,
+    //   loader: 'babel',
+    //   exclude: /node_modules/
+    // }, 
+    {
       test: /\.scss$/,
       loaders: ['style', 'css', 'sass'],
       include: APP_PATH
@@ -79,6 +86,7 @@ if (process.env.NODE_ENV === 'production') {
       sass: ExtractTextPlugin.extract('css!sass')
     }
   };
+  module.exports.devtool = 'source-map';
   // not able to use array.concat, use push instead
   module.exports.plugins.push(
     new webpack.DefinePlugin({

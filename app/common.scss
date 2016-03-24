@@ -88,7 +88,8 @@ $prefix-for-spec: true !default;
 }
 
 %blog-btn {
-    width: 15rem;
+    width: auto;
+    padding: 0 1.5rem;
     height: 4rem;
     @include border-radius(4px);
     &:hover{
