@@ -92,6 +92,7 @@ $prefix-for-spec: true !default;
     padding: 0 1.5rem;
     height: 4rem;
     @include border-radius(4px);
+    position: relative;
     &:hover{
         @extend %material-shadow;
     }
@@ -103,9 +104,9 @@ $prefix-for-spec: true !default;
     }
     .cssload-ball {
         border-color: $white;
-        position: static;
-        margin-top: -2.1rem;
-        margin-left: 10px;
+        position: absolute;
+        left: 10px;
+        top: 10px;
         height: 2rem;
         width: 2rem;
         border-radius: 2rem;

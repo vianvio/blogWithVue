@@ -93,6 +93,7 @@ module.exports = {
 		background-color: $basic-blue;
 		color: #fff;
 		display: block;
+		width: 15rem;
 		margin: 2rem auto 0 auto;
 	}
 }

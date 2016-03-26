@@ -13,6 +13,8 @@ module.exports = {
     title: '',
     label: '',
     content: '',
-    selectedTypeId: ''
-  }
+    passageTypeId: ''
+  },
+  arrPassageTypes: [],
+  arrPassages: []
 }

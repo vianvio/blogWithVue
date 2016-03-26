@@ -4,21 +4,18 @@
 		<input type='text' placeholder='标题' class='new-passage-input' v-model='appModel.newPassage.title' />
 		<dropdown dropdown-id='passage' class='new-passage-dropdown'>
 		  <button type="button" class="select-btn" data-toggle="dropdown">
-		    {{selectedType ? selectedType : '选择分类'}}
+		    {{selectedName ? selectedName : '选择分类'}}
 		    <span class="caret" v-show='!selectedType'></span>
 		  </button>
 		  <ul name="dropdown-menu" class="dropdown-menu">
-		    <li><a v-on:click='selectType($event, "test")'>Action</a></li>
-		    <li><a v-on:click.prevent='selectType($event, "test")'>Another action</a></li>
-		    <li><a v-on:click.prevent='selectType($event, "test")'>Something else here</a></li>
-		    <li><a v-on:click.prevent='selectType($event, "test")'>Separated link</a></li>
+		    <li v-for='passageType in appModel.arrPassageTypes' track-by='$index'><a v-on:click='selectType($event, passageType.id, passageType.name)'>{{passageType.name}}</a></li>
 		  </ul>
 		</dropdown>
 		<div class='new-passage-label-holder'>
 			<input type='text' placeholder='标签，用;分隔' class='new-passage-input' v-model='appModel.newPassage.label' />
 		</div>
 		<textarea class='new-passage-content' v-model='appModel.newPassage.content' rows='18'></textarea>
-		<nbutton btn-class='create-btn float-right' :nbutton-click='create' :show-loading.sync='showLoading'>确 认</nbutton>
+		<nbutton btn-class='create-btn float-right' :nbutton-click='save' :show-loading.sync='showLoading'>保 存</nbutton>
 		<nbutton btn-class='preview-btn float-right' :nbutton-click='showCreatePassage'>预 览</nbutton>
 	</div>
 	<new-passage-modal v-if='bShowPreviewModal' v-on:close-modal='closeModal'></new-passage-modal>
@@ -31,6 +28,7 @@ var dropdown = require('vue-strap').dropdown;
 var marked = require('marked');
 var nbutton = require('../../../shared/nbutton.vue');
 var appModel = require('../../../app.model.js');
+var appAction = require('../../../app.action.js');
 
 module.exports = {
 	components: {
@@ -44,7 +42,7 @@ module.exports = {
 			bShowPreviewModal: false,
 			registerMessage: '',
 			messageType: 'message',
-			selectedType: '',
+			selectedName: '',
 			showLoading: false,
 			bShowMessage: false,
 			appModel: appModel
@@ -60,10 +58,31 @@ module.exports = {
 		closeMessageBox: function(){
 			this.$data.bShowMessage = false;
 		},
-		selectType: function(event, _type){
-			this.$data.selectedType = _type;
+		selectType: function(event, selectedId, selectedName){
+			this.$data.appModel.newPassage.passageTypeId = selectedId;
+			this.$data.selectedName = selectedName;
 			this.$broadcast('toggleDropdown', 'passage');
 			// event.target.parentElement.parentElement.parentElement.classList.remove('open');
+		},
+		save: function(){
+			if(this.$route.path === '/manage/newPassage') {
+				// new
+				this.$http.post('/api/passages', this.$data.appModel.newPassage).then(function(res){
+					this.$data.appModel.newPassage = {
+					    title: '',
+					    label: '',
+					    content: '',
+					    passageTypeId: ''
+					};
+					this.$route.router.go('/manage/passage');
+				}, function(error){
+					if(error.status === 401){
+						this.$route.router.go('/login');
+					}
+				});
+			} else {
+				// edit
+			}
 		}
 	},
 	created: function(){
@@ -75,6 +94,9 @@ module.exports = {
 				this.$route.router.go('/login');
 			}
 			transition.next();
+		},
+		data: function(transition){
+			appAction.GET_PASSAGE_TYPES();
 		}
 	}
 };
@@ -90,9 +112,11 @@ module.exports = {
 		@extend %blog-btn;
 		background-color: $basic-blue;
 		color: #fff;
+		width: 12rem;
 	}
 	.preview-btn {
 		@extend %blog-btn;
+		width: 12rem;
 		background-color: $light-coffee;
 		color: #fff;
 		margin-right: 1rem;

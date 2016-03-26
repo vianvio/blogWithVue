@@ -102,12 +102,14 @@ module.exports = {
 	@extend %material-shadow;
 	.login-btn {
 		@extend %blog-btn;
+		width: 16rem;
 		background-color: $basic-blue;
 		color: #fff;
 	}
 
 	.register-btn {
 		@extend %blog-btn;
+		width: 16rem;
 		background-color: $light-coffee;
 		color: #fff;
 	}

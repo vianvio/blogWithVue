@@ -7,7 +7,7 @@
 				<td>失效</td>
 			</thead>
 			<tbody>
-				<tr v-for='passageType in arrPassageTypes'>
+				<tr v-for='passageType in appModel.arrPassageTypes'>
 					<td>{{passageType.name}}</td>
 					<td><input type='checkbox' v-model='passageType.bDisabled' disabled="true" /></td>
 				</tr>
@@ -21,6 +21,7 @@
 var appModel = require('../../app.model.js');
 var newPassageTypeModal = require('../../shared/modals/newPassageTypeModal.vue');
 var nbutton = require('../../shared/nbutton.vue');
+var appAction = require('../../app.action.js');
 
 module.exports = {
 	components: {
@@ -29,7 +30,6 @@ module.exports = {
 	},
 	data: function(){
 		return {
-			arrPassageTypes: [],
 			bShowCreatePassageTypeModal: false,
 			appModel: appModel
 		}
@@ -41,11 +41,7 @@ module.exports = {
 		closeModal: function(){
 			this.$data.bShowCreatePassageTypeModal = false;
 			// refresh data
-			this.$data.appModel.bLoading = true;
-			this.$http.get('/api/passageTypes').then(function(res){
-				this.$data.appModel.bLoading = false;
-				this.$data.arrPassageTypes = res.data;
-			});
+			appAction.GET_PASSAGE_TYPES();
 		}
 	},
 	created: function(){
@@ -59,14 +55,7 @@ module.exports = {
 			transition.next();
 		},
 		data: function(transition) {
-	 	  // var userId = transition.to.params.userId
-	 	  this.$data.appModel.bLoading = true;
-		  return this.$http.get('/api/passageTypes').then(function(res){
-		  	this.$data.appModel.bLoading = false;
-	      	return {
-	      		arrPassageTypes: res.data
-	      	}
-	      });
+	 	    appAction.GET_PASSAGE_TYPES();
 		}
 	}
 };
