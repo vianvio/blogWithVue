@@ -4,15 +4,15 @@
 		<input type='text' placeholder='标题' class='new-passage-input' v-model='appModel.newPassage.title' />
 		<dropdown dropdown-id='passage' class='new-passage-dropdown'>
 		  <button type="button" class="select-btn" data-toggle="dropdown">
-		    {{selectedName ? selectedName : '选择分类'}}
-		    <span class="caret" v-show='!selectedType'></span>
+		    {{appModel.passageRelatedInfo.passageType ? appModel.passageRelatedInfo.passageType : '选择分类'}}
+		    <span class="caret" v-show='!appModel.passageRelatedInfo.passageType'></span>
 		  </button>
 		  <ul name="dropdown-menu" class="dropdown-menu">
 		    <li v-for='passageType in appModel.arrPassageTypes' track-by='$index'><a v-on:click='selectType($event, passageType.id, passageType.name)'>{{passageType.name}}</a></li>
 		  </ul>
 		</dropdown>
 		<div class='new-passage-label-holder'>
-			<input type='text' placeholder='标签，用;分隔' class='new-passage-input' v-model='appModel.newPassage.label' />
+			<input type='text' placeholder='标签，用;分隔' class='new-passage-input' v-model='appModel.newPassage.tag' />
 		</div>
 		<textarea class='new-passage-content' v-model='appModel.newPassage.content' rows='18'></textarea>
 		<nbutton btn-class='create-btn float-right' :nbutton-click='save' :show-loading.sync='showLoading'>保 存</nbutton>
@@ -42,7 +42,6 @@ module.exports = {
 			bShowPreviewModal: false,
 			registerMessage: '',
 			messageType: 'message',
-			selectedName: '',
 			showLoading: false,
 			bShowMessage: false,
 			appModel: appModel
@@ -60,7 +59,7 @@ module.exports = {
 		},
 		selectType: function(event, selectedId, selectedName){
 			this.$data.appModel.newPassage.passageTypeId = selectedId;
-			this.$data.selectedName = selectedName;
+			this.$data.appModel.passageRelatedInfo.passageType = selectedName;
 			this.$broadcast('toggleDropdown', 'passage');
 			// event.target.parentElement.parentElement.parentElement.classList.remove('open');
 		},
@@ -74,6 +73,7 @@ module.exports = {
 					    content: '',
 					    passageTypeId: ''
 					};
+					this.$data.appModel.passageRelatedInfo.passageType = '';
 					this.$route.router.go('/manage/passage');
 				}, function(error){
 					if(error.status === 401){

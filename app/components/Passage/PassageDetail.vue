@@ -1,11 +1,11 @@
 <template>
-	<div class='passage-list-holder'>
+	<div class='passage-detail-holder'>
 		<div class='tool-bar float-left' v-if='appModel.bAuthed'>
-			<button class='new-passage-btn float-left' v-on:click='newPassage'>修改日志</button>
+			<button class='edit-passage-btn float-left' v-on:click='newPassage'>修改日志</button>
 		</div>
 		<div class='content float-left'>
-			<h4>{{appModel.newPassage.content}}</h4>
-			<div v-html='appModel.newPassage.content'></div>
+			<h4>{{appModel.newPassage.title}}</h4>
+			<div v-html='appModel.newPassage.content | marked'></div>
 			<!-- <div v-for='passage in appModel.arrPassages' track-by='$index' class='passage-holder'>
 				<h4 class='passage-title'>{{passage.title}}</h4>
 				<div class='passage-content' v-html='passage.content | newMarked'></div>
@@ -39,47 +39,12 @@ module.exports = {
 		
 	},
 	route: {
-		activate: function(transition) {
-			if(transition.to.path !== '/manage/passage'){
-				var that = this;
-				appAction.GET_PASSAGE_TYPES().then(function(res){
-					var _childNodes = [];
-					res.data.forEach(function(type){
-						_childNodes.push({
-							name: type.name,
-							nodeClass: 'child-node',
-							selectable: true,
-							fnc: function(){
-								appAction.GET_PASSAGE_LIST_BY_TYPE(type.id);
-							},
-							nodes: []
-						})
-					});
-					that.$data.appModel.sideBarModel = {
-						name: '文章目录',
-						forceOpen: true,
-						open: true,
-						nodeClass: 'root-node',
-						nodes: _childNodes
-					};
-					that.$data.appModel.bAuthed = !!sessionStorage.getItem('token');
-					that.$data.appModel.navBarModel.currentTab = 'passage';
-				})
-			}
-			transition.next();
-		},
 		data: function(transition){
-			if(transition.to.path === '/manage/passage'){
-				appAction.GET_PASSAGE_LIST();
-			}else{
-				this.$data.appModel.arrPassages = [];
-			}
+			appAction.GET_PASSAGE_BY_ID(this.$route.params.passageId);
 		}
 	},
 	filters: {
-	    newMarked: function(content){
-	    	return marked(content).replace(/<[^>]+>/g, '');
-	    },
+	    marked: marked,
 	    moment: function (date) {
 		    return moment(date).format('YYYY-MM-DD');
 		}
@@ -91,7 +56,7 @@ module.exports = {
 @import '../../variables.scss';
 @import '../../common.scss';
 
-.passage-list-holder{
+.passage-detail-holder{
 	@extend %content-holder;
 	.tool-bar {
 		width: 100%;
@@ -101,7 +66,7 @@ module.exports = {
 	.content{
 		width: 100%;
 	}
-	.new-passage-btn {
+	.edit-passage-btn {
 		@extend %blog-btn;
 		background-color: $basic-blue;
 		color: #fff; 

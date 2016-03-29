@@ -4,7 +4,7 @@
 			<button class='new-passage-btn float-left' v-on:click='newPassage'>新建日志</button>
 		</div>
 		<div class='content float-left'>
-			<div v-for='passage in appModel.arrPassages' track-by='$index' class='passage-holder'>
+			<div v-for='passage in appModel.arrPassages' track-by='$index' class='passage-holder' v-on:click='showPassage(passage.id)'>
 				<h4 class='passage-title'>{{passage.title}}</h4>
 				<div class='passage-content' v-html='passage.content | newMarked'></div>
 				<div class='passage-date-holder'>
@@ -31,6 +31,9 @@ module.exports = {
 	methods:{
 		newPassage: function(){
 			this.$route.router.go('/manage/newPassage');
+		},
+		showPassage: function(passageId){
+			this.$route.router.go('/passages/' + passageId);
 		}
 	},
 	created: function(){
@@ -38,6 +41,7 @@ module.exports = {
 	},
 	route: {
 		activate: function(transition) {
+			appAction.GET_PASSAGE_LIST();
 			if(transition.to.path !== '/manage/passage'){
 				var that = this;
 				appAction.GET_PASSAGE_TYPES().then(function(res){
@@ -48,7 +52,9 @@ module.exports = {
 							nodeClass: 'child-node',
 							selectable: true,
 							fnc: function(){
-								appAction.GET_PASSAGE_LIST_BY_TYPE(type.id);
+								appAction.GET_PASSAGE_LIST_BY_TYPE(type.id).then(function(){
+									that.$route.router.go('/passages');
+								});
 							},
 							nodes: []
 						})
@@ -67,11 +73,6 @@ module.exports = {
 			transition.next();
 		},
 		data: function(transition){
-			if(transition.to.path === '/manage/passage'){
-				appAction.GET_PASSAGE_LIST();
-			}else{
-				this.$data.appModel.arrPassages = [];
-			}
 		}
 	},
 	filters: {

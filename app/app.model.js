@@ -11,9 +11,14 @@ module.exports = {
   bLoading: false,
   newPassage: {
     title: '',
-    label: '',
+    tag: '',
     content: '',
     passageTypeId: ''
+  },
+  passageRelatedInfo: {
+  	createdAt: '',
+  	updatedAt: '',
+  	passageType: ''
   },
   arrPassageTypes: [],
   arrPassages: []
