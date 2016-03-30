@@ -5,6 +5,7 @@
 		</div>
 		<div class='content float-left'>
 			<h4>{{appModel.newPassage.title}}</h4>
+			<hr/>
 			<div v-html='appModel.newPassage.content | marked'></div>
 			<!-- <div v-for='passage in appModel.arrPassages' track-by='$index' class='passage-holder'>
 				<h4 class='passage-title'>{{passage.title}}</h4>
@@ -32,7 +33,7 @@ module.exports = {
 	},
 	methods:{
 		newPassage: function(){
-			this.$route.router.go('/manage/newPassage');
+			this.$route.router.go('/manage/editPassage');
 		}
 	},
 	created: function(){

@@ -59,6 +59,7 @@ module.exports = {
       appModel.bLoading = false;
       console.log(res);
 
+      appModel.newPassage.id = res.data.id;
       appModel.newPassage.title = res.data.title;
       appModel.newPassage.tag = res.data.tag;
       appModel.newPassage.content = res.data.content;
@@ -66,6 +67,7 @@ module.exports = {
       appModel.passageRelatedInfo.createdAt = res.data.createdAt;
       appModel.passageRelatedInfo.updatedAt = res.data.updatedAt;
       appModel.passageRelatedInfo.passageType = res.data.passageType.name;
+
 
       deferred.resolve(res);
     }, function(error) {

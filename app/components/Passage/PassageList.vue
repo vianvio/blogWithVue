@@ -4,13 +4,13 @@
 			<button class='new-passage-btn float-left' v-on:click='newPassage'>新建日志</button>
 		</div>
 		<div class='content float-left'>
-			<div v-for='passage in appModel.arrPassages' track-by='$index' class='passage-holder' v-on:click='showPassage(passage.id)'>
-				<h4 class='passage-title'>{{passage.title}}</h4>
-				<div class='passage-content' v-html='passage.content | newMarked'></div>
+			<div v-for='passage in appModel.arrPassages' track-by='$index' class='passage-holder'>
+				<h4 class='passage-title' v-on:click='showPassage(passage.id)'>{{passage.title}}</h4>
 				<div class='passage-date-holder'>
 					<span>创建日期: {{passage.createdAt | moment}}</span>
 					<span>最后更新: {{passage.updatedAt | moment}}</span>
 				</div>
+				<div class='passage-content' v-html='passage.content | marked'></div>
 			</div>
 		</div>
 	</div>
@@ -40,8 +40,7 @@ module.exports = {
 		
 	},
 	route: {
-		activate: function(transition) {
-			appAction.GET_PASSAGE_LIST();
+		data: function(transition){
 			if(transition.to.path !== '/manage/passage'){
 				var that = this;
 				appAction.GET_PASSAGE_TYPES().then(function(res){
@@ -69,13 +68,13 @@ module.exports = {
 					that.$data.appModel.bAuthed = !!sessionStorage.getItem('token');
 					that.$data.appModel.navBarModel.currentTab = 'passage';
 				})
+			}else{
+				appAction.GET_PASSAGE_LIST();
 			}
-			transition.next();
-		},
-		data: function(transition){
 		}
 	},
 	filters: {
+		marked: marked,
 	    newMarked: function(content){
 	    	return marked(content).replace(/<[^>]+>/g, '');
 	    },
@@ -92,6 +91,7 @@ module.exports = {
 
 .passage-list-holder{
 	@extend %content-holder;
+	padding: 0 15rem;
 	.tool-bar {
 		width: 100%;
 		display: table-cell;
@@ -106,21 +106,23 @@ module.exports = {
 		color: #fff; 
 	}
 	.passage-holder{
+		margin-top: 3rem;
+		padding-bottom: 1.5rem;
 		border-bottom: 1px solid $shadow-dark;
-		cursor: pointer;
 	}
 	.passage-title{
+		cursor: pointer;
 		color: $basic-blue;
+		font-size: 25px;
 	}
 	.passage-content{
-		font-size: 13px;
+		margin-top: 1.5rem;
 	}
 	.passage-date-holder{
 		color: $shadow-dark;
-		text-align: right;
 		span {
 			font-size: 12px;
-			margin: 0 2rem;
+			margin: 0 2rem 0 0;
 		}
 	}
 }

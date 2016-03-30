@@ -82,6 +82,20 @@ module.exports = {
 				});
 			} else {
 				// edit
+				this.$http.put('/api/passages', this.$data.appModel.newPassage).then(function(res){
+					this.$data.appModel.newPassage = {
+					    title: '',
+					    label: '',
+					    content: '',
+					    passageTypeId: ''
+					};
+					this.$data.appModel.passageRelatedInfo.passageType = '';
+					this.$route.router.go('/manage/passage');
+				}, function(error){
+					if(error.status === 401){
+						this.$route.router.go('/login');
+					}
+				});
 			}
 		}
 	},

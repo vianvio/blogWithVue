@@ -46,6 +46,9 @@ router.map({
       },
       '/newPassage': {
         component: PassageEdit
+      },
+      '/editPassage': {
+        component: PassageEdit
       }
     }
   }

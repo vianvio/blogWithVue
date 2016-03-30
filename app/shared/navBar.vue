@@ -7,7 +7,7 @@
 			<a v-link='' class='float-right nav-tab' v-bind:class='appModel.navBarModel.currentTab === "babyRecord" ? "current-tab": ""'>成长记录</a>
 			<a v-link="" class='float-right nav-tab' v-bind:class='appModel.navBarModel.currentTab === "test" ? "current-tab": ""'>试验田</a>
 			<a v-link="" class='float-right nav-tab' v-bind:class='appModel.navBarModel.currentTab === "resume" ? "current-tab": ""'>简历</a>
-			<a v-link='"/passages"' class='float-right nav-tab' v-bind:class='appModel.navBarModel.currentTab === "passage" ? "current-tab": ""'>日志</a>
+			<a v-link='"/passages"' class='float-right nav-tab' v-bind:class='appModel.navBarModel.currentTab === "passage" ? "current-tab": ""' v-on:click='clickPassages()'>日志</a>
 			<a v-link='"/manage"' class='float-right nav-tab' v-if='appModel.bAuthed' v-bind:class='appModel.navBarModel.currentTab === "manage" ? "current-tab": ""'>管理</a>
 		</nav>
 	</div>
@@ -15,6 +15,7 @@
 
 <script>
 var appModel = require('../app.model.js');
+var appAction = require('../app.action.js');
 
 module.exports = {
 	data: function(){
@@ -23,6 +24,10 @@ module.exports = {
 		}
 	},
 	methods:{
+		clickPassages: function(){
+			this.$data.appModel.treeNodeSelected = '';
+			appAction.GET_PASSAGE_LIST();
+		}
 	},
 	events:{
 	},

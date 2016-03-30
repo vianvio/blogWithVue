@@ -53,13 +53,12 @@ module.exports = {
 		margin-right: 0.2rem;
 	}
 	.vn-modal-body {
-		padding: 1.5rem;
-		padding-right: 0;
 	}
 	.new-passage-preview{
 		min-height: 30rem;
 		max-height: 50rem;
 		overflow: auto;
+		padding: 1.5rem;
 	}
 }
 </style>

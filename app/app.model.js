@@ -10,6 +10,7 @@ module.exports = {
   treeNodeSelected: '',
   bLoading: false,
   newPassage: {
+  	id: '',
     title: '',
     tag: '',
     content: '',
