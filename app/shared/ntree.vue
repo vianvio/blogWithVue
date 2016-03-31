@@ -1,9 +1,9 @@
 <template>
 	<div class='tree-node-holder'>
-		<div class='tree-node' v-bind:class='computedNodeClass'  v-on:click='openChild'>
-			{{node.name}}
+		<div class='tree-node' v-bind:class='computedNodeClass'  v-on:click.stop='openChild'>
+			<span class='tree-node-text'>{{node.name}}</span>
+			<ntree v-for='childNode in node.nodes' :node='childNode' v-if='node.open'></ntree>
 		</div>
-		<ntree v-for='childNode in node.nodes' :node='childNode' v-if='node.open'></ntree>
 	</div>
 </template>
 

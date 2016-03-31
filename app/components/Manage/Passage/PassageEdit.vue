@@ -68,6 +68,7 @@ module.exports = {
 				// new
 				this.$http.post('/api/passages', this.$data.appModel.newPassage).then(function(res){
 					this.$data.appModel.newPassage = {
+						id: '',
 					    title: '',
 					    label: '',
 					    content: '',

@@ -32,7 +32,7 @@ module.exports = {
 	width: $side-width;
 	padding-left: 5rem;
 	.tree-node-holder{
-		height: 3rem;
+		min-height: 3rem;
 		line-height: 3rem;
 	}
 	.root-node{
@@ -48,7 +48,7 @@ module.exports = {
 	margin-left: 1.5rem;
 	font-size: 14px;
 	color: $shadow-dark;
-	&:hover{
+	.tree-node-text:hover{
 		color: $basic-blue;
 	}
 }
