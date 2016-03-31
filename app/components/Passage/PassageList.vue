@@ -91,7 +91,6 @@ module.exports = {
 
 .passage-list-holder{
 	@extend %content-holder;
-	padding: 0 10rem;
 	.tool-bar {
 		width: 100%;
 		display: table-cell;

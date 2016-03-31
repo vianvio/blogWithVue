@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class='nav-holder'>
 		<div class='info-holder'>
 			<img src="../images/logo.png">
 		</div>

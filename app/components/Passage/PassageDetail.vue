@@ -118,13 +118,32 @@ module.exports = {
 						forceOpen: true,
 						open: true,
 						fnc: function(){
-							console.log(ele.id);
+							// scroll function
+							var targetScroll = document.getElementById(ele.id).offsetTop;
+							var currentScroll = document.body.scrollTop;
+							var scrollPerTime = Math.abs(currentScroll - targetScroll) / 50;
+							var tryCount = 0;
+							var scrollInterval = setInterval(function(){
+								if(Math.abs(document.body.scrollTop - targetScroll) > scrollPerTime){
+									if(currentScroll < targetScroll){
+										document.body.scrollTop += scrollPerTime;
+									} else {
+										document.body.scrollTop -= scrollPerTime;
+									}
+									tryCount++;
+									if(tryCount === 60){
+										clearInterval(scrollInterval);
+									}
+								} else {
+									document.body.scrollTop = targetScroll;
+									clearInterval(scrollInterval);
+								}
+							}, 1);
 						},
 						nodes: []
 					}
 					_insertNode(_currentNode, parseInt(/\d+/.exec(ele.tagName)));
 				});
-				console.log(_childNodes);
 				that.$data.appModel.sideBarModel = {
 					name: '目录',
 					forceOpen: true,
@@ -150,7 +169,6 @@ module.exports = {
 
 .passage-detail-holder{
 	@extend %content-holder;
-	padding: 0 10rem;
 	.tool-bar {
 		width: 100%;
 		display: table-cell;

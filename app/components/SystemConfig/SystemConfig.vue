@@ -67,6 +67,7 @@ module.exports = {
 
 .system-config-holder{
 	@extend %content-holder;
+	padding: 1rem 1rem 0 $side-width;
 	.new-passage-type-btn{
 		@extend %blog-btn;
 		background-color: $basic-blue;

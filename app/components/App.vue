@@ -3,10 +3,8 @@
         <div class='cssload-ball'></div>
     </div>
 	<navbar></navbar>
-	<div class='content-holder'>
-		<sidebar v-show='!appModel.bLoginPage'></sidebar>
-		<router-view></router-view>
-	</div>
+	<sidebar v-show='!appModel.bLoginPage'></sidebar>
+	<router-view></router-view>
 	</div>
 </template>
 
@@ -35,9 +33,5 @@ module.exports = {
 <style lang='sass'>
 @import '../variables.scss';
 @import '../common.scss';
-
-.content-holder {
-	margin-top: 1rem;
-}
 
 </style>

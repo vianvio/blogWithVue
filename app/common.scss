@@ -121,5 +121,5 @@ $prefix-for-spec: true !default;
 %content-holder {
     overflow-x: hidden;
     overflow-y: auto;
-    padding: 0 1rem;
+    padding: 1rem 10rem 0 $side-width + 10rem;
 }

@@ -1,5 +1,5 @@
 <template>
-	<div class='side-bar full-height'>
+	<div class='side-bar'>
 		<ntree :node='appModel.sideBarModel'></ntree>
 	</div>
 </template>
@@ -28,9 +28,11 @@ module.exports = {
 @import '../common.scss';
 
 .side-bar {
-	float: left;
+	position: absolute;
+	top: $nav-height;
 	width: $side-width;
 	padding-left: 5rem;
+	padding-top: 1rem;
 	.tree-node-holder{
 		min-height: 3rem;
 		line-height: 3rem;
@@ -41,6 +43,13 @@ module.exports = {
 	.tree-node {
 		display: inline-block;
 	}
+}
+
+.side-bar-fix {
+	top: 0;
+	position: fixed;
+	height: 100%;
+	overflow: auto;
 }
 
 .side-bar .child-node {
