@@ -6,8 +6,8 @@
 		<div class='content float-left'>
 			<h4 class='passage-title'>{{appModel.newPassage.title}}</h4>
 			<div class='passage-date-holder'>
-				<span>创建日期: {{appModel.newPassage.createdAt | moment}}</span>
-				<span>最后更新: {{appModel.newPassage.updatedAt | moment}}</span>
+				<span>创建日期: {{appModel.passageRelatedInfo.createdAt | moment}}</span>
+				<span>最后更新: {{appModel.passageRelatedInfo.updatedAt | moment}}</span>
 				<br/>
 				<span>作者: Vian | gloomy_wind@hotmail.com</span>
 			</div>
