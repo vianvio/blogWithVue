@@ -96,13 +96,13 @@ module.exports = {
     });
     return deferred.promise;
   },
-  GET_EDUCATION_LIST: function() {
+  GET_EDUCATION_LIST: function(bWithLoading) {
     var deferred = Q.defer();
 
-    appModel.bLoading = true;
+    appModel.bLoading = bWithLoading ? true : appModel.bLoading;
     appModel.arrEducation = [];
     Vue.http.get('/api/educations?filter[where][resumeId]=' + appModel.newResume.id).then(function(res) {
-      appModel.bLoading = false;
+      appModel.bLoading = bWithLoading ? false : appModel.bLoading;
 
       appModel.arrEducation = res.data;
 
@@ -129,12 +129,12 @@ module.exports = {
     });
     return deferred.promise;
   },
-  GET_RESUME_BY_ID: function(resumeId) {
+  GET_RESUME_BY_ID: function(resumeId, bWithLoading) {
     var deferred = Q.defer();
 
-    appModel.bLoading = true;
+    appModel.bLoading = bWithLoading ? true : appModel.bLoading;
     Vue.http.get('/api/resumes/' + resumeId).then(function(res) {
-      appModel.bLoading = false;
+      appModel.bLoading = bWithLoading ? false : appModel.bLoading;
 
       appModel.newResume.id = res.data.id;
       appModel.newResume.title = res.data.title;
@@ -174,13 +174,13 @@ module.exports = {
     });
     return deferred.promise;
   },
-  GET_JOB_LIST: function() {
+  GET_JOB_LIST: function(bWithLoading) {
     var deferred = Q.defer();
 
-    appModel.bLoading = true;
+    appModel.bLoading = bWithLoading ? true : appModel.bLoading;
     appModel.arrJob = [];
     Vue.http.get('/api/jobs?filter[where][resumeId]=' + appModel.newResume.id).then(function(res) {
-      appModel.bLoading = false;
+      appModel.bLoading = bWithLoading ? false : appModel.bLoading;
       
       appModel.arrJob = res.data;
 
@@ -213,13 +213,13 @@ module.exports = {
     });
     return deferred.promise;
   },
-  GET_PROJECT_LIST: function() {
+  GET_PROJECT_LIST: function(bWithLoading) {
     var deferred = Q.defer();
 
-    appModel.bLoading = true;
+    appModel.bLoading = bWithLoading ? true : appModel.bLoading;
     appModel.arrProject = [];
     Vue.http.get('/api/projects?filter[where][resumeId]=' + appModel.newResume.id).then(function(res) {
-      appModel.bLoading = false;
+      appModel.bLoading = bWithLoading ? false : appModel.bLoading;
       
       appModel.arrProject = res.data;
 

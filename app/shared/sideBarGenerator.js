@@ -14,10 +14,17 @@ var _indexObj = {},
 
 module.exports = {
   initChildNodes: function(childNodes) {
-    _childNodes = childNodes;
+    _childNodes = [];
   },
   initIndexObj: function(indexObj) {
-    _indexObj = indexObj;
+    _indexObj = {
+      _level1: { index: -1, tagLevel: 7 },
+      _level2: { index: -1, tagLevel: 7 },
+      _level3: { index: -1, tagLevel: 7 },
+      _level4: { index: -1, tagLevel: 7 },
+      _level5: { index: -1, tagLevel: 7 },
+      _level6: { index: -1, tagLevel: 7 }
+    };
   },
   getChildNodes: function() {
     return _childNodes;

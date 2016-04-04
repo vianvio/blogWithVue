@@ -1,18 +1,6 @@
 <template>
-	<div class='passage-detail-holder'>
-		<div class='tool-bar float-left' v-if='appModel.bAuthed'>
-			<button class='edit-passage-btn float-left' v-on:click='newPassage'>修改日志</button>
-		</div>
-		<div class='content float-left'>
-			<h4 class='passage-title'>{{appModel.newPassage.title}}</h4>
-			<div class='passage-date-holder'>
-				<span>创建日期: {{appModel.passageRelatedInfo.createdAt | moment}}</span>
-				<span>最后更新: {{appModel.passageRelatedInfo.updatedAt | moment}}</span>
-				<br/>
-				<span>作者: Vian | gloomy_wind@hotmail.com</span>
-			</div>
-			<hr/>
-			<div class='passage-content' v-html='appModel.newPassage.content | marked'></div>
+	<div class='resume-holder'>
+		<div class='resume-basic-holder'>
 		</div>
 	</div>
 </template>
@@ -23,6 +11,7 @@ var appAction = require('../../app.action.js');
 var marked = require('marked');
 var moment = require('moment');
 var sideBarGenerator = require('../../shared/sideBarGenerator.js');
+var Q = require('q');
 
 module.exports = {
 	data: function(){
@@ -31,9 +20,6 @@ module.exports = {
 		}
 	},
 	methods:{
-		newPassage: function(){
-			this.$route.router.go('/manage/editPassage');
-		}
 	},
 	ready: function(){
 	},
@@ -42,8 +28,10 @@ module.exports = {
 			var that = this;
 			sideBarGenerator.initChildNodes();
 			sideBarGenerator.initIndexObj();
-			appAction.GET_PASSAGE_BY_ID(this.$route.params.passageId).then(function(){
-				[].slice.apply(document.querySelectorAll('.passage-content h1,.passage-content h2,.passage-content h3,.passage-content h4,.passage-content h5,.passage-content h6')).forEach(function(ele){
+			appModel.bLoading = true;
+			Q.all([appAction.GET_RESUME_BY_ID(this.$route.params.resumeId), appAction.GET_EDUCATION_LIST(), appAction.GET_JOB_LIST(), appAction.GET_PROJECT_LIST()]).then(function(){
+				appModel.bLoading = false;
+				[].slice.apply(document.querySelectorAll('.resume-content h1,.resume-content h2,.resume-content h3,.resume-content h4,.resume-content h5,.resume-content h6')).forEach(function(ele){
 					// construct current object
 					var _currentNode = {
 						name: ele.innerText,
@@ -57,7 +45,7 @@ module.exports = {
 					sideBarGenerator.insertNode(_currentNode, parseInt(/\d+/.exec(ele.tagName)));
 				});
 				that.$data.appModel.sideBarModel = {
-					name: '目录',
+					name: '简历',
 					forceOpen: true,
 					open: true,
 					nodeClass: 'root-node',
@@ -81,14 +69,7 @@ module.exports = {
 
 .passage-detail-holder{
 	@extend %content-holder;
-	.tool-bar {
-		width: 100%;
-		display: table-cell;
-		vertical-align: middle;
-	}
-	.content{
-		width: 100%;
-	}
+
 	.edit-passage-btn {
 		@extend %blog-btn;
 		background-color: $basic-blue;

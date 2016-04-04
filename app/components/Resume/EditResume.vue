@@ -1,5 +1,5 @@
 <template>
-	<div class='resume-holder'>
+	<div class='resume-edit-holder'>
 		<message-box :message-content='message' :message-type='messageType' :closable='true' v-if='bShowMessage' v-on:close-message-box='closeMessageBox'></message-box>
 		<input type='text' placeholder='简历名称' class='resume-input' v-model='appModel.newResume.title' />
 		<h4>基础信息</h4>
@@ -178,11 +178,11 @@ module.exports = {
 				// edit
 				// set id before callback
 				appModel.newResume.id = this.$route.params.resumeId;
-				appAction.GET_RESUME_BY_ID(this.$route.params.resumeId);
+				appAction.GET_RESUME_BY_ID(this.$route.params.resumeId, true);
 			}
-			appAction.GET_EDUCATION_LIST();
-			appAction.GET_JOB_LIST();
-			appAction.GET_PROJECT_LIST();
+			appAction.GET_EDUCATION_LIST(true);
+			appAction.GET_JOB_LIST(true);
+			appAction.GET_PROJECT_LIST(true);
 		}
 	},
 	ready: function(){
@@ -203,7 +203,7 @@ module.exports = {
 @import '../../variables.scss';
 @import '../../common.scss';
 
-.resume-holder{
+.resume-edit-holder{
 	@extend %content-holder;
 	padding: 1rem 1rem 0 $side-width;
 	.save-btn {
