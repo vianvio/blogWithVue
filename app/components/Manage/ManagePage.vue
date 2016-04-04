@@ -3,7 +3,6 @@
 </template>
 
 <script>
-// var appConfig = require('../../config.service.js');
 var appModel = require('../../app.model.js');
 
 module.exports = {
@@ -43,6 +42,9 @@ module.exports = {
 						name: '简历',
 						nodeClass: 'child-node',
 						selectable: true,
+						fnc: function(){
+							that.$route.router.go('/manage/resumeList');
+						},
 						nodes: []
 					},
 					{

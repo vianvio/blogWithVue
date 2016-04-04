@@ -22,65 +22,7 @@ var appModel = require('../../app.model.js');
 var appAction = require('../../app.action.js');
 var marked = require('marked');
 var moment = require('moment');
-
-var _childNodes, _indexObj;
-
-var _initIndexObjByLevel = function(level){
-	for(var key in _indexObj){
-		if(parseInt(/\d/.exec(key)) > level){
-			_indexObj[key] = {
-				index: -1,
-				tagLevel: 7
-			};
-		}
-	}
-}
-
-var _insertNode = function(currentNode, currentNodeTagLevel){
-	for(var key in _indexObj){
-		if(_indexObj[key].tagLevel >= currentNodeTagLevel){
-			switch(key){
-				case '_level1':
-					_childNodes.push(currentNode);
-					_indexObj._level1.index = _childNodes.length - 1;
-					_indexObj._level1.tagLevel = currentNodeTagLevel;
-					_initIndexObjByLevel(1);
-					break;
-				case '_level2':
-					_childNodes[_indexObj._level1.index].nodes.push(currentNode);
-					_indexObj._level2.index = _childNodes[_indexObj._level1.index].nodes.length - 1;
-					_indexObj._level2.tagLevel = currentNodeTagLevel;
-					_initIndexObjByLevel(2);
-					break;
-				case '_level3':
-					_childNodes[_indexObj._level1.index].nodes[_indexObj._level2.index].nodes.push(currentNode);
-					_indexObj._level3.index = _childNodes[_indexObj._level1.index].nodes[_indexObj._level2.index].nodes.length - 1;
-					_indexObj._level3.tagLevel = currentNodeTagLevel;
-					_initIndexObjByLevel(3);
-					break;
-				case '_level4':
-					_childNodes[_indexObj._level1.index].nodes[_indexObj._level2.index].nodes[_indexObj._level3.index].nodes.push(currentNode);
-					_indexObj._level4.index = _childNodes[_indexObj._level1.index].nodes[_indexObj._level2.index].nodes[_indexObj._level3.index].nodes.length - 1;
-					_indexObj._level4.tagLevel = currentNodeTagLevel;
-					_initIndexObjByLevel(4);
-					break;
-				case '_level5':
-					_childNodes[_indexObj._level1.index].nodes[_indexObj._level2.index].nodes[_indexObj._level3.index].nodes[_indexObj._level4.index].nodes.push(currentNode);
-					_indexObj._level5.index = _childNodes[_indexObj._level1.index].nodes[_indexObj._level2.index].nodes[_indexObj._level3.index].nodes[_indexObj._level4.index].nodes.length - 1;
-					_indexObj._level5.tagLevel = currentNodeTagLevel;
-					_initIndexObjByLevel(5);
-					break;
-				case '_level6':
-					_childNodes[_indexObj._level1.index].nodes[_indexObj._level2.index].nodes[_indexObj._level3.index].nodes[_indexObj._level4.index].nodes[_indexObj._level5.index].nodes.push(currentNode);
-					_indexObj._level6.index = _childNodes[_indexObj._level1.index].nodes[_indexObj._level2.index].nodes[_indexObj._level3.index].nodes[_indexObj._level4.index].nodes[_indexObj._level5.index].nodes.length - 1;
-					_indexObj._level6.tagLevel = currentNodeTagLevel;
-					_initIndexObjByLevel(6);
-					break;
-			}
-			break;
-		}
-	} 
-}
+var sideBarGenerator = require('../../shared/sideBarGenerator.js');
 
 module.exports = {
 	data: function(){
@@ -98,18 +40,17 @@ module.exports = {
 	route: {
 		data: function(transition){
 			var that = this;
-			_childNodes = [];
-			_indexObj = {
+			sideBarGenerator.initChildNodes([]);
+			sideBarGenerator.initIndexObj({
 			  _level1: {index: -1, tagLevel: 7},
 			  _level2: {index: -1, tagLevel: 7},
 			  _level3: {index: -1, tagLevel: 7},
 			  _level4: {index: -1, tagLevel: 7},
 			  _level5: {index: -1, tagLevel: 7},
 			  _level6: {index: -1, tagLevel: 7}
-			};
+			});
 			appAction.GET_PASSAGE_BY_ID(this.$route.params.passageId).then(function(){
 				[].slice.apply(document.querySelectorAll('.passage-content h1,.passage-content h2,.passage-content h3,.passage-content h4,.passage-content h5,.passage-content h6')).forEach(function(ele){
-					console.log('test');
 					// construct current object
 					var _currentNode = {
 						name: ele.innerText,
@@ -117,39 +58,17 @@ module.exports = {
 						selectable: true,
 						forceOpen: true,
 						open: true,
-						fnc: function(){
-							// scroll function
-							var targetScroll = document.getElementById(ele.id).offsetTop;
-							var currentScroll = document.body.scrollTop;
-							var scrollPerTime = Math.abs(currentScroll - targetScroll) / 50;
-							var tryCount = 0;
-							var scrollInterval = setInterval(function(){
-								if(Math.abs(document.body.scrollTop - targetScroll) > scrollPerTime){
-									if(currentScroll < targetScroll){
-										document.body.scrollTop += scrollPerTime;
-									} else {
-										document.body.scrollTop -= scrollPerTime;
-									}
-									tryCount++;
-									if(tryCount === 60){
-										clearInterval(scrollInterval);
-									}
-								} else {
-									document.body.scrollTop = targetScroll;
-									clearInterval(scrollInterval);
-								}
-							}, 1);
-						},
+						fnc: sideBarGenerator.scrollMethod(ele),
 						nodes: []
 					}
-					_insertNode(_currentNode, parseInt(/\d+/.exec(ele.tagName)));
+					sideBarGenerator.insertNode(_currentNode, parseInt(/\d+/.exec(ele.tagName)));
 				});
 				that.$data.appModel.sideBarModel = {
 					name: '目录',
 					forceOpen: true,
 					open: true,
 					nodeClass: 'root-node',
-					nodes: _childNodes
+					nodes: sideBarGenerator.getChildNodes()
 				};
 			});
 		}

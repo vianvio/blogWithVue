@@ -30,6 +30,7 @@ module.exports = {
 	},
 	methods:{
 		newPassage: function(){
+			this.$data.appModel.newPassage.id = '';
 			this.$route.router.go('/manage/newPassage');
 		},
 		showPassage: function(passageId){

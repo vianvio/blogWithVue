@@ -16,6 +16,8 @@ var PassageDetail = require('./components/Passage/PassageDetail.vue');
 var ManagePage = require('./components/Manage/ManagePage.vue');
 var PassageEdit = require('./components/Manage/Passage/PassageEdit.vue');
 var SystemConfig = require('./components/SystemConfig/SystemConfig.vue');
+var EditResume = require('./components/Resume/EditResume.vue');
+var ResumeList = require('./components/Resume/ResumeList.vue');
 var appModel = require('./app.model.js');
 
 // register filters globally
@@ -49,6 +51,15 @@ router.map({
       },
       '/editPassage': {
         component: PassageEdit
+      },
+      '/resumeList': {
+        component: ResumeList
+      },
+      '/editResume/:resumeId': {
+        component: EditResume
+      },
+      '/newResume': {
+        component: EditResume
       }
     }
   }
@@ -67,7 +78,7 @@ router.afterEach(function(transition) {
 })
 
 router.redirect({
-  '*': '/login'
+  '*': '/passages'
 });
 
 router.start(App, '#app');

@@ -1,6 +1,6 @@
 <template>
 	<div class='passage-edit-holder'>
-		<message-box :message-content='registerMessage' :message-type='messageType' :closable='true' v-if='bShowMessage' v-on:close-message-box='closeMessageBox'></message-box>
+		<message-box :message-content='message' :message-type='messageType' :closable='true' v-if='bShowMessage' v-on:close-message-box='closeMessageBox'></message-box>
 		<input type='text' placeholder='标题' class='new-passage-input' v-model='appModel.newPassage.title' />
 		<dropdown dropdown-id='passage' class='new-passage-dropdown'>
 		  <button type="button" class="select-btn" data-toggle="dropdown">
@@ -30,6 +30,16 @@ var nbutton = require('../../../shared/nbutton.vue');
 var appModel = require('../../../app.model.js');
 var appAction = require('../../../app.action.js');
 
+var _initNewPassage = function(){
+	appModel.newPassage = {
+		id: '',
+	    title: '',
+	    label: '',
+	    content: '',
+	    passageTypeId: ''
+	};
+};
+
 module.exports = {
 	components: {
 		newPassageModal,
@@ -40,7 +50,7 @@ module.exports = {
 	data: function(){
 		return {
 			bShowPreviewModal: false,
-			registerMessage: '',
+			message: '',
 			messageType: 'message',
 			showLoading: false,
 			bShowMessage: false,
@@ -64,40 +74,23 @@ module.exports = {
 			// event.target.parentElement.parentElement.parentElement.classList.remove('open');
 		},
 		save: function(){
-			if(this.$route.path === '/manage/newPassage') {
-				// new
-				this.$http.post('/api/passages', this.$data.appModel.newPassage).then(function(res){
-					this.$data.appModel.newPassage = {
-						id: '',
-					    title: '',
-					    label: '',
-					    content: '',
-					    passageTypeId: ''
-					};
-					this.$data.appModel.passageRelatedInfo.passageType = '';
-					this.$route.router.go('/manage/passage');
-				}, function(error){
-					if(error.status === 401){
-						this.$route.router.go('/login');
-					}
-				});
-			} else {
-				// edit
-				this.$http.put('/api/passages', this.$data.appModel.newPassage).then(function(res){
-					this.$data.appModel.newPassage = {
-					    title: '',
-					    label: '',
-					    content: '',
-					    passageTypeId: ''
-					};
-					this.$data.appModel.passageRelatedInfo.passageType = '';
-					this.$route.router.go('/manage/passage');
-				}, function(error){
-					if(error.status === 401){
-						this.$route.router.go('/login');
-					}
-				});
-			}
+			var _methods = this.$route.path === '/manage/newPassage' ? 'post' : 'put';
+			this.$data.showLoading = true;
+			this.$http[_methods]('/api/passages', this.$data.appModel.newPassage).then(function(res){
+				this.$data.showLoading = false;
+				_initNewPassage();
+				this.$data.appModel.passageRelatedInfo.passageType = '';
+				this.$route.router.go('/manage/passage');
+			}, function(error){
+				this.$data.showLoading = false;
+				this.$data.bShowMessage = true;
+				this.$data.messageType = 'error';
+				if(error.status === 401){
+					this.$route.router.go('/login');
+				}else{
+					this.$data.message = '出错了';
+				}
+			});
 		}
 	},
 	created: function(){
@@ -112,6 +105,11 @@ module.exports = {
 		},
 		data: function(transition){
 			appAction.GET_PASSAGE_TYPES();
+		}
+	},
+	ready: function(){
+		if(!this.$data.appModel.newPassage.id){
+			_initNewPassage();
 		}
 	}
 };

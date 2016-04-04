@@ -9,18 +9,58 @@ module.exports = {
   bLoginPage: false,
   treeNodeSelected: '',
   bLoading: false,
+  passageRelatedInfo: {
+    createdAt: '',
+    updatedAt: '',
+    passageType: ''
+  },
+  arrPassageTypes: [],
+  arrPassages: [],
+  arrResume: [],
+  arrEducation: [],
+  arrJob: [],
+  arrProject: [],
+  newResume: {
+    id: '',
+    title: '',
+    name: '',
+    birthday: '',
+    phone: '',
+    email: '',
+    wechat: '',
+    qq: '',
+    selfAssignment: ''
+  },
   newPassage: {
-  	id: '',
+    id: '',
     title: '',
     tag: '',
     content: '',
     passageTypeId: ''
   },
-  passageRelatedInfo: {
-  	createdAt: '',
-  	updatedAt: '',
-  	passageType: ''
+  newEducation: {
+    id: '',
+    from: '',
+    to: '',
+    name: '',
+    major: '',
+    description: ''
   },
-  arrPassageTypes: [],
-  arrPassages: []
+  newJob: {
+    id: '',
+    from: '',
+    to: '',
+    name: '',
+    title: '',
+    description: ''
+  },
+  newProject: {
+    id: '',
+    from: '',
+    to: '',
+    name: '',
+    technology: '',
+    description: '',
+    responsibility: ''
+  }
 }

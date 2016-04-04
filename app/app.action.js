@@ -57,7 +57,6 @@ module.exports = {
     appModel.bLoading = true;
     Vue.http.get('/api/passages/' + passageId + '?filter[include]=passageType').then(function(res) {
       appModel.bLoading = false;
-      console.log(res);
 
       appModel.newPassage.id = res.data.id;
       appModel.newPassage.title = res.data.title;
@@ -68,6 +67,161 @@ module.exports = {
       appModel.passageRelatedInfo.updatedAt = res.data.updatedAt;
       appModel.passageRelatedInfo.passageType = res.data.passageType.name;
 
+
+      deferred.resolve(res);
+    }, function(error) {
+      _checkAuth(error, this);
+      deferred.reject(error);
+    });
+    return deferred.promise;
+  },
+  GET_EDUCATION_BY_ID: function(educationId) {
+    var deferred = Q.defer();
+
+    appModel.bLoading = true;
+    Vue.http.get('/api/educations/' + educationId + '?filter[where][resumeId]=' + appModel.newResume.id).then(function(res) {
+      appModel.bLoading = false;
+
+      appModel.newEducation.id = res.data.id;
+      appModel.newEducation.from = res.data.from;
+      appModel.newEducation.to = res.data.to;
+      appModel.newEducation.name = res.data.name;
+      appModel.newEducation.major = res.data.major;
+      appModel.newEducation.description = res.data.description;
+
+      deferred.resolve(res);
+    }, function(error) {
+      _checkAuth(error, this);
+      deferred.reject(error);
+    });
+    return deferred.promise;
+  },
+  GET_EDUCATION_LIST: function() {
+    var deferred = Q.defer();
+
+    appModel.bLoading = true;
+    appModel.arrEducation = [];
+    Vue.http.get('/api/educations?filter[where][resumeId]=' + appModel.newResume.id).then(function(res) {
+      appModel.bLoading = false;
+
+      appModel.arrEducation = res.data;
+
+      deferred.resolve(res);
+    }, function(error) {
+      _checkAuth(error, this);
+      deferred.reject(error);
+    });
+    return deferred.promise;
+  },
+  GET_RESUME_LIST: function() {
+    var deferred = Q.defer();
+
+    appModel.bLoading = true;
+    Vue.http.get('/api/resumes').then(function(res) {
+      appModel.bLoading = false;
+
+      appModel.arrResume = res.data;
+
+      deferred.resolve(res);
+    }, function(error) {
+      _checkAuth(error, this);
+      deferred.reject(error);
+    });
+    return deferred.promise;
+  },
+  GET_RESUME_BY_ID: function(resumeId) {
+    var deferred = Q.defer();
+
+    appModel.bLoading = true;
+    Vue.http.get('/api/resumes/' + resumeId).then(function(res) {
+      appModel.bLoading = false;
+
+      appModel.newResume.id = res.data.id;
+      appModel.newResume.title = res.data.title;
+      appModel.newResume.name = res.data.name;
+      appModel.newResume.birthday = res.data.birthday;
+      appModel.newResume.phone = res.data.phone;
+      appModel.newResume.email = res.data.email;
+      appModel.newResume.wechat = res.data.wechat;
+      appModel.newResume.qq = res.data.qq;
+      appModel.newResume.selfAssignment = res.data.selfAssignment;
+
+      deferred.resolve(res);
+    }, function(error) {
+      _checkAuth(error, this);
+      deferred.reject(error);
+    });
+    return deferred.promise;
+  },
+  GET_JOB_BY_ID: function(jobId) {
+    var deferred = Q.defer();
+
+    appModel.bLoading = true;
+    Vue.http.get('/api/jobs/' + jobId + '?filter[where][resumeId]=' + appModel.newResume.id).then(function(res) {
+      appModel.bLoading = false;
+
+      appModel.newJob.id = res.data.id;
+      appModel.newJob.from = res.data.from;
+      appModel.newJob.to = res.data.to;
+      appModel.newJob.name = res.data.name;
+      appModel.newJob.title = res.data.title;
+      appModel.newJob.description = res.data.description;
+
+      deferred.resolve(res);
+    }, function(error) {
+      _checkAuth(error, this);
+      deferred.reject(error);
+    });
+    return deferred.promise;
+  },
+  GET_JOB_LIST: function() {
+    var deferred = Q.defer();
+
+    appModel.bLoading = true;
+    appModel.arrJob = [];
+    Vue.http.get('/api/jobs?filter[where][resumeId]=' + appModel.newResume.id).then(function(res) {
+      appModel.bLoading = false;
+      
+      appModel.arrJob = res.data;
+
+      deferred.resolve(res);
+    }, function(error) {
+      _checkAuth(error, this);
+      deferred.reject(error);
+    });
+    return deferred.promise;
+  },
+  GET_PROJECT_BY_ID: function(jobId) {
+    var deferred = Q.defer();
+
+    appModel.bLoading = true;
+    Vue.http.get('/api/projects/' + jobId + '?filter[where][resumeId]=' + appModel.newResume.id).then(function(res) {
+      appModel.bLoading = false;
+
+      appModel.newProject.id = res.data.id;
+      appModel.newProject.from = res.data.from;
+      appModel.newProject.to = res.data.to;
+      appModel.newProject.name = res.data.name;
+      appModel.newProject.technology = res.data.technology;
+      appModel.newProject.description = res.data.description;
+      appModel.newProject.responsibility = res.data.responsibility;
+
+      deferred.resolve(res);
+    }, function(error) {
+      _checkAuth(error, this);
+      deferred.reject(error);
+    });
+    return deferred.promise;
+  },
+  GET_PROJECT_LIST: function() {
+    var deferred = Q.defer();
+
+    appModel.bLoading = true;
+    appModel.arrProject = [];
+    Vue.http.get('/api/projects?filter[where][resumeId]=' + appModel.newResume.id).then(function(res) {
+      appModel.bLoading = false;
+      
+      appModel.arrProject = res.data;
 
       deferred.resolve(res);
     }, function(error) {
