@@ -132,9 +132,9 @@ module.exports = {
 			this.$data.bShowMessage = false;
 		},
 		saveBasicInfo: function(){
-			var _method = this.$data.appModel.newResume.id ? 'put' : 'post';
+			var _method = appModel.newResume.id ? 'put' : 'post';
 			this.$data.showLoading = true;
-			this.$http[_method]('/api/resumes', this.$data.appModel.newResume).then(function(res){
+			this.$http[_method]('/api/resumes', appModel.newResume).then(function(res){
 				this.$data.showLoading = false;
 				this.$data.bShowMessage = true;
 				this.$data.messageType = 'message';
@@ -186,7 +186,7 @@ module.exports = {
 		}
 	},
 	ready: function(){
-		if(!this.$data.appModel.newResume.id){
+		if(!appModel.newResume.id){
 			_initNewResume();
 		}
 	},

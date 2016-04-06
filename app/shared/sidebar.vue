@@ -1,6 +1,6 @@
 <template>
 	<div class='side-bar'>
-		<ntree :node='appModel.sideBarModel'></ntree>
+		<ntree :node='rootNodes' v-for='rootNodes in appModel.sideBarModel' track-by='$index'></ntree>
 	</div>
 </template>
 
@@ -42,6 +42,13 @@ module.exports = {
 	}
 	.tree-node {
 		display: inline-block;
+	}
+	.node-btn {
+		@extend %blog-btn;
+		background-color: $basic-blue;
+		color: #fff;
+		line-height: 4rem;
+		margin-bottom: 1rem;
 	}
 }
 

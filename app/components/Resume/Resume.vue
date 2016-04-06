@@ -1,6 +1,56 @@
 <template>
 	<div class='resume-holder'>
 		<div class='resume-basic-holder'>
+			<div class='basic-left float-left'>
+				<img src="../../images/gopher.png" class='resume-avatar float-left' alt='Vian-Shen' />
+				<div class='resume-name resume-row float-left'><i class='fa fa-user'></i>{{appModel.newResume.name}}</div>
+				<div class='resume-row float-left'><i class='fa fa-calendar'></i>{{appModel.newResume.birthday}}</div>
+				<div class='resume-row float-left'><i class='fa fa-inbox'></i>{{appModel.newResume.email}}</div>
+				<div class='resume-row float-left'>{{appModel.newResume.id === 1 ? '详细联系方式请邮箱私信' : 'For detail information, please send mail'}}</div>
+			</div>
+			<div class='basic-right'>
+				<h3 id='self-assignment'>{{appModel.newResume.id === 1 ? '自我简介' : 'SELF ASSIGNMENT'}}</h3>
+				<hr/>
+				<div v-html='appModel.newResume.selfAssignment | marked'></div>
+			</div>
+		</div>
+		<hr/>
+		<div class='resume-education-holder'>
+			<h3 id='education-exp'>{{appModel.newResume.id === 1 ? '教育经历' : 'EDUCATION'}}</h3>
+			<hr/>
+			<div v-for='education in appModel.arrEducation' track-by='$index'>
+				<div>
+					<span class='col-xs-4'>{{education.from}} - {{education.to}}</span>
+					<span class='col-xs-4'>{{education.name}}</span>
+					<span class='col-xs-4'>{{education.major}}</span>
+				</div>
+				<div v-html='education.description | marked'></div>
+			</div>
+		</div>
+		<div class='resume-job-holder'>
+			<h3 id='job-exp'>{{appModel.newResume.id === 1 ? '工作经历' : 'JOB'}}</h3>
+			<hr/>
+			<div v-for='job in appModel.arrJob' track-by='$index'>
+				<div>
+					<span class='col-xs-4'>{{job.from}} - {{job.to}}</span>
+					<span class='col-xs-4'>{{job.name}}</span>
+					<span class='col-xs-4'>{{job.title}}</span>
+				</div>
+				<div v-html='job.description | marked'></div>
+			</div>
+		</div>
+		<div class='resume-project-holder'>
+			<h3 id='project-exp'>{{appModel.newResume.id === 1 ? '项目经历' : 'PROJECT'}}</h3>
+			<hr/>
+			<div v-for='project in appModel.arrProject' track-by='$index'>
+				<div>
+					<span class='col-xs-4'>{{project.from}} - {{project.to}}</span>
+					<span class='col-xs-4'>{{project.name}}</span>
+					<span class='col-xs-4'>{{project.technology}}</span>
+				</div>
+				<div v-html='project.description | marked'></div>
+				<div v-html='project.responsibility | marked'></div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -28,10 +78,14 @@ module.exports = {
 			var that = this;
 			sideBarGenerator.initChildNodes();
 			sideBarGenerator.initIndexObj();
+
+			// set resumeid for list queries
+			appModel.newResume.id = this.$route.params.resumeId;
+
 			appModel.bLoading = true;
 			Q.all([appAction.GET_RESUME_BY_ID(this.$route.params.resumeId), appAction.GET_EDUCATION_LIST(), appAction.GET_JOB_LIST(), appAction.GET_PROJECT_LIST()]).then(function(){
 				appModel.bLoading = false;
-				[].slice.apply(document.querySelectorAll('.resume-content h1,.resume-content h2,.resume-content h3,.resume-content h4,.resume-content h5,.resume-content h6')).forEach(function(ele){
+				[].slice.apply(document.querySelectorAll('.resume-holder h1,.resume-holder h2,.resume-holder h3,.resume-holder h4,.resume-holder h5,.resume-holder h6')).forEach(function(ele){
 					// construct current object
 					var _currentNode = {
 						name: ele.innerText,
@@ -44,14 +98,24 @@ module.exports = {
 					}
 					sideBarGenerator.insertNode(_currentNode, parseInt(/\d+/.exec(ele.tagName)));
 				});
-				that.$data.appModel.sideBarModel = {
-					name: '简历',
+				appModel.sideBarModel = [{
+					name: appModel.newResume.id === 1 ? '查看英文简历' : 'Switch to Chinese',
+					forceOpen: true,
+					nodeClass: 'node-btn',
+					fnc: function(){
+						var targetResume = appModel.newResume.id === 1 ? 2 : 1;
+						that.$route.router.go('/resume/' + targetResume);
+					},
+					nodes: []
+				},{
+					name: appModel.newResume.id === 1 ? '简历' : 'Resume',
 					forceOpen: true,
 					open: true,
 					nodeClass: 'root-node',
 					nodes: sideBarGenerator.getChildNodes()
-				};
+				}];
 			});
+			appModel.navBarModel.currentTab = 'resume';
 		}
 	},
 	filters: {
@@ -67,34 +131,35 @@ module.exports = {
 @import '../../variables.scss';
 @import '../../common.scss';
 
-.passage-detail-holder{
+.resume-holder{
 	@extend %content-holder;
-
-	.edit-passage-btn {
-		@extend %blog-btn;
-		background-color: $basic-blue;
-		color: #fff; 
+	h3{
+		color: $light-blue;
 	}
-	.passage-holder{
-		border-bottom: 1px solid $shadow-dark;
-		cursor: pointer;
-	}
-	.passage-title{
-		color: $basic-blue;
-		font-size: 35px;
-		text-align: center;
-		margin-top: 5rem;
-	}
-	.passage-content{
-		margin-top: 5rem;
-	}
-	.passage-date-holder{
-		color: $shadow-dark;
-		text-align: center;
-		margin-bottom: 5rem;
-		span {
-			font-size: 12px;
-			margin: 0 1rem 0 1rem;
+	.resume-basic-holder{
+		display: table;
+		.basic-left {
+			width: 40%;
+			padding: 1rem 0;
+			.resume-avatar {
+				width: 30%;
+			}
+			.resume-row {
+				font-size: 12px;
+				padding: 1rem 1.5rem 0 5rem;
+				width: 70%;
+				color: $shadow-dark;
+				i {
+					margin-right: 1rem;
+				}
+			}
+			.resume-row.resume-name {
+				color: $basic-blue;
+				font-size: 25px;
+			}
+		}
+		.basic-right {
+			overflow: hidden;
 		}
 	}
 }

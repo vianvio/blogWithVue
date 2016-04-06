@@ -38,7 +38,7 @@ router.map({
   '/passages/:passageId': {
     component: PassageDetail
   },
-  '/resume':{
+  '/resume/:resumeId':{
     component: Resume
   },
   '/manage': {

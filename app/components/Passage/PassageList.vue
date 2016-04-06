@@ -30,7 +30,7 @@ module.exports = {
 	},
 	methods:{
 		newPassage: function(){
-			this.$data.appModel.newPassage.id = '';
+			appModel.newPassage.id = '';
 			this.$route.router.go('/manage/newPassage');
 		},
 		showPassage: function(passageId){
@@ -59,15 +59,15 @@ module.exports = {
 							nodes: []
 						})
 					});
-					that.$data.appModel.sideBarModel = {
+					appModel.sideBarModel = [{
 						name: '文章目录',
 						forceOpen: true,
 						open: true,
 						nodeClass: 'root-node',
 						nodes: _childNodes
-					};
-					that.$data.appModel.bAuthed = !!sessionStorage.getItem('token');
-					that.$data.appModel.navBarModel.currentTab = 'passage';
+					}];
+					appModel.bAuthed = !!sessionStorage.getItem('token');
+					appModel.navBarModel.currentTab = 'passage';
 				})
 			}else{
 				appAction.GET_PASSAGE_LIST();

@@ -56,13 +56,13 @@ module.exports = {
 					}
 					sideBarGenerator.insertNode(_currentNode, parseInt(/\d+/.exec(ele.tagName)));
 				});
-				that.$data.appModel.sideBarModel = {
+				appModel.sideBarModel = [{
 					name: '目录',
 					forceOpen: true,
 					open: true,
 					nodeClass: 'root-node',
 					nodes: sideBarGenerator.getChildNodes()
-				};
+				}];
 			});
 		}
 	},

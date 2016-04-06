@@ -68,18 +68,18 @@ module.exports = {
 			this.$data.bShowMessage = false;
 		},
 		selectType: function(event, selectedId, selectedName){
-			this.$data.appModel.newPassage.passageTypeId = selectedId;
-			this.$data.appModel.passageRelatedInfo.passageType = selectedName;
+			appModel.newPassage.passageTypeId = selectedId;
+			appModel.passageRelatedInfo.passageType = selectedName;
 			this.$broadcast('toggleDropdown', 'passage');
 			// event.target.parentElement.parentElement.parentElement.classList.remove('open');
 		},
 		save: function(){
 			var _methods = this.$route.path === '/manage/newPassage' ? 'post' : 'put';
 			this.$data.showLoading = true;
-			this.$http[_methods]('/api/passages', this.$data.appModel.newPassage).then(function(res){
+			this.$http[_methods]('/api/passages', appModel.newPassage).then(function(res){
 				this.$data.showLoading = false;
 				_initNewPassage();
-				this.$data.appModel.passageRelatedInfo.passageType = '';
+				appModel.passageRelatedInfo.passageType = '';
 				this.$route.router.go('/manage/passage');
 			}, function(error){
 				this.$data.showLoading = false;
@@ -108,7 +108,7 @@ module.exports = {
 		}
 	},
 	ready: function(){
-		if(!this.$data.appModel.newPassage.id){
+		if(!appModel.newPassage.id){
 			_initNewPassage();
 		}
 	}

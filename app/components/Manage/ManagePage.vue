@@ -23,7 +23,7 @@ module.exports = {
 				this.$route.router.go('/login');
 			}
 			var that = this;
-			this.$data.appModel.sideBarModel = {
+			appModel.sideBarModel = [{
 				name: '内容列表',
 				forceOpen: true,
 				open: true,
@@ -57,9 +57,9 @@ module.exports = {
 						nodes: []
 					}
 				]
-			};
-			this.$data.appModel.bAuthed = !!sessionStorage.getItem('token');
-			this.$data.appModel.navBarModel.currentTab = 'manage';
+			}];
+			appModel.bAuthed = !!sessionStorage.getItem('token');
+			appModel.navBarModel.currentTab = 'manage';
 			transition.next();
 		}
 	}
