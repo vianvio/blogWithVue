@@ -50,6 +50,13 @@ module.exports = {
 		line-height: 4rem;
 		margin-bottom: 1rem;
 	}
+	.node-btn-coffee {
+		@extend %blog-btn;
+		background-color: $light-coffee;
+		color: #fff;
+		line-height: 4rem;
+		margin-bottom: 1rem;
+	}
 }
 
 .side-bar-fix {

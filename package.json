@@ -43,6 +43,7 @@
     "font-awesome": "^4.5.0",
     "font-awesome-webpack": "0.0.4",
     "imports-loader": "^0.6.5",
+    "jspdf": "^1.2.61",
     "lodash": "^3.10.1",
     "marked": "^0.3.5",
     "moment": "^2.12.0",

@@ -1,10 +1,10 @@
 <template>
-	<div class='resume-holder'>
+	<div id='resume-pdf' class='resume-holder'>
 		<div class='resume-basic-holder'>
 			<div class='basic-left float-left'>
 				<img src="../../images/gopher.png" class='resume-avatar float-left' alt='Vian-Shen' />
 				<div class='resume-name resume-row float-left'><i class='fa fa-user'></i>{{appModel.newResume.name}}</div>
-				<div class='resume-row float-left'><i class='fa fa-calendar'></i>{{appModel.newResume.birthday}}</div>
+				<div class='resume-row float-left'><i class='fa fa-calendar'></i>{{appModel.newResume.birthday | moment}}</div>
 				<div class='resume-row float-left'><i class='fa fa-inbox'></i>{{appModel.newResume.email}}</div>
 				<div class='resume-row float-left'>{{appModel.newResume.id === 1 ? '详细联系方式请邮箱私信' : 'For detail information, please send mail'}}</div>
 			</div>
@@ -14,42 +14,43 @@
 				<div v-html='appModel.newResume.selfAssignment | marked'></div>
 			</div>
 		</div>
-		<hr/>
 		<div class='resume-education-holder'>
 			<h3 id='education-exp'>{{appModel.newResume.id === 1 ? '教育经历' : 'EDUCATION'}}</h3>
 			<hr/>
 			<div v-for='education in appModel.arrEducation' track-by='$index'>
-				<div>
-					<span class='col-xs-4'>{{education.from}} - {{education.to}}</span>
-					<span class='col-xs-4'>{{education.name}}</span>
-					<span class='col-xs-4'>{{education.major}}</span>
+				<div class='exp-left'>
+					<div>{{education.from}} - {{education.to}}</div>
+					<div>{{education.name}}</div>
+					<div>{{education.major}}</div>
 				</div>
-				<div v-html='education.description | marked'></div>
+				<div class='exp-right' v-html='education.description | marked'></div>
 			</div>
 		</div>
 		<div class='resume-job-holder'>
 			<h3 id='job-exp'>{{appModel.newResume.id === 1 ? '工作经历' : 'JOB'}}</h3>
 			<hr/>
 			<div v-for='job in appModel.arrJob' track-by='$index'>
-				<div>
-					<span class='col-xs-4'>{{job.from}} - {{job.to}}</span>
-					<span class='col-xs-4'>{{job.name}}</span>
-					<span class='col-xs-4'>{{job.title}}</span>
+				<div class='exp-left'>
+					<div>{{job.from}} - {{job.to}}</div>
+					<div>{{job.name}}</div>
+					<div>{{job.title}}</div>
 				</div>
-				<div v-html='job.description | marked'></div>
+				<div class='exp-right' v-html='job.description | marked'></div>
 			</div>
 		</div>
 		<div class='resume-project-holder'>
 			<h3 id='project-exp'>{{appModel.newResume.id === 1 ? '项目经历' : 'PROJECT'}}</h3>
 			<hr/>
 			<div v-for='project in appModel.arrProject' track-by='$index'>
-				<div>
-					<span class='col-xs-4'>{{project.from}} - {{project.to}}</span>
-					<span class='col-xs-4'>{{project.name}}</span>
-					<span class='col-xs-4'>{{project.technology}}</span>
+				<div class='exp-left'>
+					<div>{{project.from}} - {{project.to}}</div>
+					<div>{{project.name}}</div>
+					<div>{{project.technology}}</div>
 				</div>
-				<div v-html='project.description | marked'></div>
-				<div v-html='project.responsibility | marked'></div>
+				<div class='exp-right'>
+					<div v-html='project.description | marked'></div>
+					<div v-html='project.responsibility | marked'></div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -62,6 +63,8 @@ var marked = require('marked');
 var moment = require('moment');
 var sideBarGenerator = require('../../shared/sideBarGenerator.js');
 var Q = require('q');
+// need to clone the repository and build localy
+var jsPDF = require('jspdf');
 
 module.exports = {
 	data: function(){
@@ -113,6 +116,17 @@ module.exports = {
 					open: true,
 					nodeClass: 'root-node',
 					nodes: sideBarGenerator.getChildNodes()
+				},{
+					name: appModel.newResume.id === 1 ? '导出简历' : 'Export Resume',
+					forceOpen: true,
+					nodeClass: 'node-btn-coffee',
+					fnc: function(){
+						var doc = new jsPDF('p','pt','a4');
+						doc.addHTML(document.getElementById('resume-pdf'), -140, 50, function(dispose){
+							doc.output('dataurlnewwindow');
+						});
+					},
+					nodes: []
 				}];
 			});
 			appModel.navBarModel.currentTab = 'resume';
@@ -133,6 +147,7 @@ module.exports = {
 
 .resume-holder{
 	@extend %content-holder;
+	background-color: $white;
 	h3{
 		color: $light-blue;
 	}
@@ -161,6 +176,14 @@ module.exports = {
 		.basic-right {
 			overflow: hidden;
 		}
+	}
+	.exp-left {
+		float: left;
+		width: 26%;
+		padding: 0 2rem;
+	}
+	.exp-right {
+		overflow: hidden;
 	}
 }
 
