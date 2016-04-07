@@ -103,8 +103,6 @@ module.exports = {
 			message: '',
 			messageType: 'message',
 			showLoading: false,
-			showEducationLoading: false,
-			showJobLoading: false,
 			bShowMessage: false,
 			appModel: appModel,
 			bShowEducationModal: false,
@@ -174,11 +172,13 @@ module.exports = {
 			transition.next();
 		},
 		data: function(transition){
-			if(this.$route.params.resumeId) {
+			if(transition.to.path !== '/manage/newResume') {
 				// edit
 				// set id before callback
 				appModel.newResume.id = this.$route.params.resumeId;
 				appAction.GET_RESUME_BY_ID(this.$route.params.resumeId, true);
+			} else {
+				_initNewResume();
 			}
 			appAction.GET_EDUCATION_LIST(true);
 			appAction.GET_JOB_LIST(true);
@@ -186,9 +186,7 @@ module.exports = {
 		}
 	},
 	ready: function(){
-		if(!appModel.newResume.id){
-			_initNewResume();
-		}
+
 	},
 	filters: {
 	    marked: marked,

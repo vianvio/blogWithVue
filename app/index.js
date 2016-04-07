@@ -14,11 +14,13 @@ var Login = require('./components/Login/Login.vue');
 var PassageList = require('./components/Passage/PassageList.vue');
 var PassageDetail = require('./components/Passage/PassageDetail.vue');
 var ManagePage = require('./components/Manage/ManagePage.vue');
-var PassageEdit = require('./components/Manage/Passage/PassageEdit.vue');
+var PassageEdit = require('./components/Passage/PassageEdit.vue');
 var SystemConfig = require('./components/SystemConfig/SystemConfig.vue');
 var EditResume = require('./components/Resume/EditResume.vue');
 var ResumeList = require('./components/Resume/ResumeList.vue');
 var Resume = require('./components/Resume/Resume.vue');
+var BabyRecordList = require('./components/BabyRecord/BabyRecordList.vue');
+var EditBabyRecord = require('./components/BabyRecord/EditBabyRecord.vue');
 var appModel = require('./app.model.js');
 
 // register filters globally
@@ -44,16 +46,16 @@ router.map({
   '/manage': {
     component: ManagePage,
     subRoutes: {
-      '/passage': {
-        component: PassageList
-      },
       '/systemConfig': {
         component: SystemConfig
+      },
+      '/passageList': {
+        component: PassageList
       },
       '/newPassage': {
         component: PassageEdit
       },
-      '/editPassage': {
+      '/editPassage/:passageId': {
         component: PassageEdit
       },
       '/resumeList': {
@@ -64,6 +66,15 @@ router.map({
       },
       '/newResume': {
         component: EditResume
+      },
+      '/recordList': {
+        component: BabyRecordList
+      },
+      '/editRecord/:recordId': {
+        component: EditBabyRecord
+      },
+      '/newRecord': {
+        component: EditBabyRecord
       }
     }
   }
@@ -86,6 +97,9 @@ router.redirect({
 });
 
 router.start(App, '#app');
+
+// keep login when refresh
+Vue.http.headers.common['Authorization'] = sessionStorage.getItem('token');
 
 window.addEventListener('scroll', function() {
   var top = document.body.scrollTop

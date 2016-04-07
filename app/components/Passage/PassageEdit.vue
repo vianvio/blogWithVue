@@ -22,13 +22,13 @@
 </template>
 
 <script>
-var newPassageModal = require('../../../shared/modals/newPassageModal.vue');
-var messageBox = require('../../../shared/messageBox.vue');
+var newPassageModal = require('../../shared/modals/newPassageModal.vue');
+var messageBox = require('../../shared/messageBox.vue');
 var dropdown = require('vue-strap').dropdown;
 var marked = require('marked');
-var nbutton = require('../../../shared/nbutton.vue');
-var appModel = require('../../../app.model.js');
-var appAction = require('../../../app.action.js');
+var nbutton = require('../../shared/nbutton.vue');
+var appModel = require('../../app.model.js');
+var appAction = require('../../app.action.js');
 
 var _initNewPassage = function(){
 	appModel.newPassage = {
@@ -38,6 +38,7 @@ var _initNewPassage = function(){
 	    content: '',
 	    passageTypeId: ''
 	};
+	appModel.passageRelatedInfo.passageType = '';
 };
 
 module.exports = {
@@ -78,9 +79,7 @@ module.exports = {
 			this.$data.showLoading = true;
 			this.$http[_methods]('/api/passages', appModel.newPassage).then(function(res){
 				this.$data.showLoading = false;
-				_initNewPassage();
-				appModel.passageRelatedInfo.passageType = '';
-				this.$route.router.go('/manage/passage');
+				this.$route.router.go('/passages/' + this.$route.params.passageId);
 			}, function(error){
 				this.$data.showLoading = false;
 				this.$data.bShowMessage = true;
@@ -105,19 +104,22 @@ module.exports = {
 		},
 		data: function(transition){
 			appAction.GET_PASSAGE_TYPES();
+			if(transition.to.path === '/manage/newPassage'){
+				_initNewPassage();	
+			}else{
+				appAction.GET_PASSAGE_BY_ID(this.$route.params.passageId);
+			}
 		}
 	},
 	ready: function(){
-		if(!appModel.newPassage.id){
-			_initNewPassage();
-		}
+
 	}
 };
 </script>
 
 <style lang='sass'>
-@import '../../../variables.scss';
-@import '../../../common.scss';
+@import '../../variables.scss';
+@import '../../common.scss';
 
 .passage-edit-holder{
 	@extend %content-holder;

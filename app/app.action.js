@@ -229,5 +229,40 @@ module.exports = {
       deferred.reject(error);
     });
     return deferred.promise;
+  },
+  GET_RECORD_BY_ID: function(recordId) {
+    var deferred = Q.defer();
+
+    appModel.bLoading = true;
+    Vue.http.get('/api/records/' + recordId).then(function(res) {
+      appModel.bLoading = false;
+
+      appModel.newRecord.id = res.data.id;
+      appModel.newRecord.content = res.data.content;
+      appModel.newRecord.eventDate = res.data.eventDate;
+
+      deferred.resolve(res);
+    }, function(error) {
+      _checkAuth(error, this);
+      deferred.reject(error);
+    });
+    return deferred.promise;
+  },
+  GET_RECORD_LIST: function() {
+    var deferred = Q.defer();
+
+    appModel.bLoading = true
+    appModel.arrRecord = [];
+    Vue.http.get('/api/records').then(function(res) {
+      appModel.bLoading = false
+      
+      appModel.arrRecord = res.data;
+
+      deferred.resolve(res);
+    }, function(error) {
+      _checkAuth(error, this);
+      deferred.reject(error);
+    });
+    return deferred.promise;
   }
 }

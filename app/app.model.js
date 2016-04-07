@@ -62,5 +62,11 @@ module.exports = {
     technology: '',
     description: '',
     responsibility: ''
+  },
+  arrRecord: [],
+  newRecord: {
+    id: '',
+    content: '',
+    eventDate: ''
   }
 }

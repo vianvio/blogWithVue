@@ -34,11 +34,10 @@ module.exports = {
 						nodeClass: 'child-node',
 						selectable: true,
 						fnc: function(){
-							that.$route.router.go('/manage/passage');
+							that.$route.router.go('/manage/passageList');
 						},
 						nodes: []
-					},
-					{
+					},{
 						name: '简历',
 						nodeClass: 'child-node',
 						selectable: true,
@@ -46,8 +45,15 @@ module.exports = {
 							that.$route.router.go('/manage/resumeList');
 						},
 						nodes: []
-					},
-					{
+					},{
+						name: '成长记录',
+						nodeClass: 'child-node',
+						selectable: true,
+						fnc: function(){
+							that.$route.router.go('/manage/recordList');
+						},
+						nodes: []
+					},{
 						name: '系统设置',
 						nodeClass: 'child-node',
 						selectable: true,

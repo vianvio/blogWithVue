@@ -1,7 +1,7 @@
 <template>
 	<div class='passage-detail-holder'>
 		<div class='tool-bar float-left' v-if='appModel.bAuthed'>
-			<button class='edit-passage-btn float-left' v-on:click='newPassage'>修改日志</button>
+			<button class='edit-passage-btn float-left' v-on:click='editPassage'>修改日志</button>
 		</div>
 		<div class='content float-left'>
 			<h4 class='passage-title'>{{appModel.newPassage.title}}</h4>
@@ -31,8 +31,8 @@ module.exports = {
 		}
 	},
 	methods:{
-		newPassage: function(){
-			this.$route.router.go('/manage/editPassage');
+		editPassage: function(){
+			this.$route.router.go('/manage/editPassage/' + this.$route.params.passageId);
 		}
 	},
 	ready: function(){
@@ -64,6 +64,7 @@ module.exports = {
 					nodes: sideBarGenerator.getChildNodes()
 				}];
 			});
+			appModel.navBarModel.currentTab = 'passage';
 		}
 	},
 	filters: {
