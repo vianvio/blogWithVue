@@ -264,5 +264,22 @@ module.exports = {
       deferred.reject(error);
     });
     return deferred.promise;
+  },
+  GET_IMAGE_LIST: function(recordId) {
+    var deferred = Q.defer();
+
+    appModel.bLoading = true
+    appModel.arrRecordImage = [];
+    Vue.http.get('/api/recordImages?filter[where][recordId]=' + recordId).then(function(res) {
+      appModel.bLoading = false
+      
+      appModel.arrRecordImage = res.data;
+
+      deferred.resolve(res);
+    }, function(error) {
+      _checkAuth(error, this);
+      deferred.reject(error);
+    });
+    return deferred.promise;
   }
 }

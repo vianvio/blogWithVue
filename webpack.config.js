@@ -30,7 +30,8 @@ module.exports = {
     progress: true,
     // make api call redirect to other server
     proxy: {
-      "/api/*": "http://localhost:3000"
+      "/api/*": "http://localhost:3000",
+      "*.jpg|*.jpeg|*.JPG|*.JPEG|*.png|*.PNG": "http://localhost:3000"
     }
   },
   devtool: 'eval-source-map',

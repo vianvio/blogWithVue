@@ -68,5 +68,6 @@ module.exports = {
     id: '',
     content: '',
     eventDate: ''
-  }
+  },
+  arrRecordImage: []
 }
