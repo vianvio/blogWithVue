@@ -9,7 +9,7 @@
     "prestart": "NODE_ENV=development webpack",
     "start": "webpack-dev-server --hot --inline --quiet",
     "predeploy": "NODE_ENV=production webpack --progress --hide-modules",
-    "deploy": "mv build/* /Users/vshen008/Documents/Projects/blogWithVueBackend/client/build && mv index.html /Users/vshen008/Documents/Projects/blogWithVueBackend/client"
+    "deploy": "mv build/* /home/ubuntu/blogWithVueBackend/client/build && mv index.html /home/ubuntu/blogWithVueBackend/client"
   },
   "author": "Vian",
   "license": "MIT",
