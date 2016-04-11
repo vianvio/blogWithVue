@@ -11,7 +11,7 @@
 <script>
 
 var sidebar = require('../shared/sidebar.vue');
-var navbar = require('../shared/navbar.vue');
+var navbar = require('../shared/navBar.vue');
 var appModel = require('../app.model.js');
 
 module.exports = {
