@@ -54,6 +54,7 @@ module.exports = {
 		login: function(){
 			this.$data.showLoading = true;
 			var that = this;
+console.log('test');
 		    this.$http.post('/api/userModels/login', this.loginObj).then(function(resp) {
 		      that.$data.showLoading = false;
 		      // set token
