@@ -9,7 +9,6 @@
 
 <script>
 module.exports = {
-	name: 'nButton',
 	data: function() {
 		return {
 		}
