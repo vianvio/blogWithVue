@@ -1,5 +1,6 @@
 # blogWithVue
-build a blog with vue.js
+build a blog with vue.js   
+> running on http://54.238.160.217/
 
 # start
 npm run start
