@@ -14,7 +14,7 @@
 			<input type='file' id='imgUpload' accept='.png,.jpeg,.jpg' multiple v-on:change='chooseImg' />
 			<nbutton btn-class='save-btn' :nbutton-click='upload' :show-loading.sync='showUploadLoading'>上传图片</nbutton>
 			<div>
-				<img :src="img" class='img-preview' v-for='img in imgUpload' />
+				<img :src="img.imgStr" class='img-preview img-ori-{{img.imgOri}}' v-for='img in imgUpload' />
 			</div>
 		</div>
 	</div>
@@ -28,6 +28,7 @@ var datepicker = require('vue-strap').datepicker;
 var nbutton = require('../../shared/nbutton.vue');
 var appModel = require('../../app.model.js');
 var appAction = require('../../app.action.js');
+var EXIF = require('exif-js');
 
 var _initNewRerecord = function(){
     appModel.newRecord.id = '';
@@ -86,7 +87,12 @@ module.exports = {
 			[].slice.apply(document.getElementById('imgUpload').files).forEach(function(file){
 				var reader = new FileReader();
 				reader.onload = function (e) {
-			        that.$data.imgUpload.push(e.target.result.toString());
+			        EXIF.getData(file, function() {
+			        	that.$data.imgUpload.push({
+			        		imgStr: e.target.result.toString(),
+			        		imgOri: this.exifdata.Orientation
+			        	});
+				    });
 			    };
 			    // read the image file as a data URL.
 	    		reader.readAsDataURL(file);
@@ -176,7 +182,7 @@ module.exports = {
 
 .record-edit-holder{
 	@extend %content-holder;
-	padding: 1rem 1rem 0 $side-width;
+	padding: 1rem 1rem 5rem $side-width;
 	min-height: 40rem;
 	.save-btn {
 		@extend %blog-btn;
@@ -238,6 +244,24 @@ module.exports = {
 		line-height: 2rem;
 		cursor: pointer;
 		@extend %material-shadow;
+	}
+	.img-preview.img-ori-6 {
+		height: 15rem;
+		width: auto;
+		margin: 1rem 0;
+		@extend %material-shadow-ori-6;
+		transform: rotate(90deg);
+	}
+	.img-preview.img-ori-8 {
+		height: 15rem;
+		width: auto;
+		margin: 1rem 0;
+		@extend %material-shadow-ori-6;
+		transform: rotate(-90deg);
+	}
+	.img-preview.img-ori-3 {
+		@extend %material-shadow-ori-6;
+		transform: rotate(180deg);
 	}
 }
 </style>

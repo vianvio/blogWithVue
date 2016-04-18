@@ -1,9 +1,12 @@
 <template>
 	<div class='baby-record-detail-holder'>
-		<div class='baby-record-content' v-for='record in appModel.arrRecord'>
-			<img :src="recordImg.imgUrl" class='baby-record-img' v-for='recordImg in record.recordImages' track-by='$index'>
-			<div class=''>
-				<h5 :id='record.id'>{{record.eventDate | moment}}</h5> - {{record.content}}
+		<div class='baby-record-content' v-for='record in appModel.arrRecord' track-by='$index'>
+			<div class='record-content-left'>
+				<img :src="recordImg.imgUrl" class='baby-record-img' v-for='recordImg in record.recordImages'>
+			</div>
+			<div class='record-content-right' v-bind:class='$index === currentFixIndex ? "record-content-fix" : ""'>
+				<h1 :id='record.id'>{{record.eventDate | moment}}</h1>
+				{{record.content}}
 			</div>
 		</div>
 	</div>
@@ -16,16 +19,31 @@ var marked = require('marked');
 var moment = require('moment');
 var sideBarGenerator = require('../../shared/sideBarGenerator.js');
 
+
 module.exports = {
 	data: function(){
 		return {
-			appModel: appModel
+			appModel: appModel,
+			currentFixIndex: -1
 		}
 	},
 	methods:{
-		
 	},
 	ready: function(){
+		this.$watch('appModel.css.bodyScroll', function (val) {
+		  var _arrLeftHolder = [].slice.apply(document.querySelectorAll('.record-content-left'));
+		  var bInit = true;
+		  for(var i = 0; i<_arrLeftHolder.length; i++){
+		  	if(val >= _arrLeftHolder[i].offsetTop && val < _arrLeftHolder[i].offsetTop + _arrLeftHolder[i].offsetHeight - 200){
+		  		this.$data.currentFixIndex = i;
+		  		bInit = false;
+		  		break;
+		  	}
+		  };
+		  if(bInit){
+		  	this.$data.currentFixIndex = -1;
+		  }
+		})
 	},
 	route: {
 		data: function(transition){
@@ -75,15 +93,30 @@ module.exports = {
 	padding-bottom: 1rem;
 	.baby-record-content{
 		float: left;
-		padding: 1.5rem;
+		width: 100%;
 		margin: 1.5rem;
-		@extend %material-shadow;
-		h5 {
-			display: inline;
+	}
+	.record-content-left{
+		float: left;
+		width: 55%;
+		padding: 0 3rem 3rem 3rem;
+		.baby-record-img{
+			border-radius: 3px;
+			@extend %material-shadow;
+			max-width: 100%;
+			padding: 1.5rem;
+			margin: 1.5rem 0;
+			display: block;
 		}
 	}
-	.baby-record-img{
-		padding: 0.5rem;
+	.record-content-right {
+		float: left;
+		width: 40rem;
+	}
+	.record-content-fix{
+		position: fixed;
+		top: 0;
+		right: 13rem;
 	}
 }
 
