@@ -1,8 +1,12 @@
 # blogWithVue
-build a blog with vue.js
+build a blog with vue.js   
+> running on http://54.238.160.217/
 
 # start
 npm run start
+
+# Issues
+* will have issue with nButton if using vue@1.0.21 - currently 1.0.16 is stable
 
 # further steps
 * integrate docker to build seed front-end env

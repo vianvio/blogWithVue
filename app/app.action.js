@@ -181,7 +181,7 @@ module.exports = {
     appModel.arrJob = [];
     Vue.http.get('/api/jobs?filter[where][resumeId]=' + appModel.newResume.id).then(function(res) {
       appModel.bLoading = bWithLoading ? false : appModel.bLoading;
-      
+
       appModel.arrJob = res.data;
 
       deferred.resolve(res);
@@ -220,7 +220,7 @@ module.exports = {
     appModel.arrProject = [];
     Vue.http.get('/api/projects?filter[where][resumeId]=' + appModel.newResume.id).then(function(res) {
       appModel.bLoading = bWithLoading ? false : appModel.bLoading;
-      
+
       appModel.arrProject = res.data;
 
       deferred.resolve(res);
@@ -255,7 +255,7 @@ module.exports = {
     appModel.arrRecord = [];
     Vue.http.get('/api/records').then(function(res) {
       appModel.bLoading = false
-      
+
       appModel.arrRecord = res.data;
 
       deferred.resolve(res);
@@ -272,8 +272,25 @@ module.exports = {
     appModel.arrRecordImage = [];
     Vue.http.get('/api/recordImages?filter[where][recordId]=' + recordId).then(function(res) {
       appModel.bLoading = false
-      
+
       appModel.arrRecordImage = res.data;
+
+      deferred.resolve(res);
+    }, function(error) {
+      _checkAuth(error, this);
+      deferred.reject(error);
+    });
+    return deferred.promise;
+  },
+  GET_RECORD_LIST_WITH_IMAGE: function() {
+    var deferred = Q.defer();
+
+    appModel.bLoading = true
+    appModel.arrRecord = [];
+    Vue.http.get('/api/records?filter[include]=recordImages').then(function(res) {
+      appModel.bLoading = false
+
+      appModel.arrRecord = res.data;
 
       deferred.resolve(res);
     }, function(error) {

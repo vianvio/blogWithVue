@@ -1,4 +1,7 @@
 module.exports = {
+  css:{
+    bodyScroll: 0
+  },
   sideBarModel: {
 
   },

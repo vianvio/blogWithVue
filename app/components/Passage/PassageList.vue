@@ -41,7 +41,7 @@ module.exports = {
 	},
 	route: {
 		data: function(transition){
-			if(transition.to.path !== '/manage/passage'){
+			if(transition.to.path !== '/manage/passageList'){
 				var that = this;
 				appAction.GET_PASSAGE_TYPES().then(function(res){
 					var _childNodes = [];

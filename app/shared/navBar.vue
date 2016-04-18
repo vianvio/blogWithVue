@@ -4,7 +4,7 @@
 			<img src="../images/logo.png">
 		</div>
 		<nav class='nav'>
-			<a v-link='' class='float-right nav-tab' v-bind:class='appModel.navBarModel.currentTab === "babyRecord" ? "current-tab": ""'>成长记录</a>
+			<a v-link='"/babyRecords"' class='float-right nav-tab' v-bind:class='appModel.navBarModel.currentTab === "babyRecord" ? "current-tab": ""'>成长记录</a>
 			<a v-link='' class='float-right nav-tab' v-bind:class='appModel.navBarModel.currentTab === "test" ? "current-tab": ""'>试验田</a>
 			<a v-link='"/resume/1"' class='float-right nav-tab' v-bind:class='appModel.navBarModel.currentTab === "resume" ? "current-tab": ""'>简历</a>
 			<a v-link='"/passages"' class='float-right nav-tab' v-bind:class='appModel.navBarModel.currentTab === "passage" ? "current-tab": ""' v-on:click='clickPassages()'>日志</a>
