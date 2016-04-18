@@ -46,7 +46,7 @@ module.exports = {
 				[].slice.apply(document.querySelectorAll('.passage-content h1,.passage-content h2,.passage-content h3,.passage-content h4,.passage-content h5,.passage-content h6')).forEach(function(ele){
 					// construct current object
 					var _currentNode = {
-						name: ele.innerText,
+						name: ele.innerText || ele.textContent,
 						nodeClass: 'child-node',
 						selectable: true,
 						forceOpen: true,

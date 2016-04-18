@@ -106,8 +106,8 @@ router.start(App, '#app');
 Vue.http.headers.common['Authorization'] = sessionStorage.getItem('token');
 
 window.addEventListener('scroll', function() {
-  appModel.css.bodyScroll = document.body.scrollTop;
-  var top = document.body.scrollTop;
+  appModel.css.bodyScroll = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+  var top = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
   var headerHeight = document.querySelector('.nav-holder').offsetHeight;
   if (top > headerHeight) {
     document.querySelector('.side-bar').classList.add('side-bar-fix');

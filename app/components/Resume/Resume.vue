@@ -91,7 +91,7 @@ module.exports = {
 				[].slice.apply(document.querySelectorAll('.resume-holder h1,.resume-holder h2,.resume-holder h3,.resume-holder h4,.resume-holder h5,.resume-holder h6')).forEach(function(ele){
 					// construct current object
 					var _currentNode = {
-						name: ele.innerText,
+						name: ele.innerText || ele.textContent,
 						nodeClass: 'child-node',
 						selectable: true,
 						forceOpen: true,
