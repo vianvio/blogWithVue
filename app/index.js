@@ -21,6 +21,7 @@ var ResumeList = require('./components/Resume/ResumeList.vue');
 var Resume = require('./components/Resume/Resume.vue');
 var BabyRecordList = require('./components/BabyRecord/BabyRecordList.vue');
 var EditBabyRecord = require('./components/BabyRecord/EditBabyRecord.vue');
+var BabyRecordDetail = require('./components/BabyRecord/BabyRecordDetail.vue');
 var appModel = require('./app.model.js');
 
 // register filters globally
@@ -42,6 +43,9 @@ router.map({
   },
   '/resume/:resumeId':{
     component: Resume
+  },
+  '/babyRecords':{
+    component: BabyRecordDetail
   },
   '/manage': {
     component: ManagePage,
