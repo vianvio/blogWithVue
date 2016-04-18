@@ -54,7 +54,7 @@ module.exports = {
 				[].slice.apply(document.querySelectorAll('.baby-record-content h1,.baby-record-content h2,.baby-record-content h3,.baby-record-content h4,.baby-record-content h5,.baby-record-content h6')).forEach(function(ele){
 					// construct current object
 					var _currentNode = {
-						name: ele.innerText,
+						name: ele.innerText || ele.textContent,
 						nodeClass: 'child-node',
 						selectable: true,
 						forceOpen: true,

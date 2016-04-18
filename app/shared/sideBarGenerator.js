@@ -78,15 +78,19 @@ module.exports = {
     return function() {
       // scroll function
       var targetScroll = document.getElementById(ele.id).offsetTop;
-      var currentScroll = document.body.scrollTop;
+      var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      var bFirefox = !!document.documentElement.scrollTop && document.documentElement.scrollTop != document.body.scrollTop;
       var scrollPerTime = Math.abs(currentScroll - targetScroll) / 50;
       var tryCount = 0;
+      console.log(bFirefox)
       var scrollInterval = setInterval(function() {
-        if (Math.abs(document.body.scrollTop - targetScroll) > scrollPerTime) {
+        if ((!bFirefox && Math.abs(document.body.scrollTop - targetScroll) > scrollPerTime) || (bFirefox && Math.abs(document.documentElement.scrollTop - targetScroll) > scrollPerTime)) {
           if (currentScroll < targetScroll) {
             document.body.scrollTop += scrollPerTime;
+            document.documentElement.scrollTop  += scrollPerTime;
           } else {
             document.body.scrollTop -= scrollPerTime;
+            document.documentElement.scrollTop  -= scrollPerTime;
           }
           tryCount++;
           if (tryCount === 60) {
@@ -94,9 +98,10 @@ module.exports = {
           }
         } else {
           document.body.scrollTop = targetScroll;
+          document.documentElement.scrollTop  = targetScroll;
           clearInterval(scrollInterval);
         }
-      }, 1);
+      }, 2);
     }
   }
 };
