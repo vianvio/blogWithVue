@@ -28,8 +28,9 @@ html {
   }
 }
 
-body {
+html body {
   min-width: 1024px;
+  color: $font-dark;
   @include mobile-screen {
     min-width: auto;
     font-size: 1.6rem !important;

@@ -113,11 +113,12 @@ module.exports = {
 		float: left;
 		width: 40rem;
 		h1 {
-			color: $basic-dark;
+			color: $basic-blue;
 		}
 		.record-content-text{
 			margin-top: 3rem;
 			font-size: 1.6rem;
+			color: $basic-dark;
 		}
 	}
 	.record-content-fix{

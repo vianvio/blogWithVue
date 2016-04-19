@@ -69,8 +69,7 @@ module.exports = {
 }
 
 .nav .current-tab {
-	/*background-color: $basic-blue;*/
-	color: $dark-blue;
+	color: $font-dark;
 	border-bottom: 0.2rem solid $basic-blue;
 }
 
