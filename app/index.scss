@@ -36,7 +36,7 @@ body {
   }
 }
 
-// redefine h1 - h6
+// redefine h1 - h6, pre
 html h1 {
   font-size: 3.6rem;
 }
@@ -59,6 +59,10 @@ html h5 {
 
 html h6 {
   font-size: 1.2rem;
+}
+
+html pre {
+  font-size: 1.3rem;
 }
 
 ul {

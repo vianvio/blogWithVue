@@ -42,10 +42,10 @@ router.map({
   '/passages/:passageId': {
     component: PassageDetail
   },
-  '/resume/:resumeId':{
+  '/resume/:resumeId': {
     component: Resume
   },
-  '/babyRecords':{
+  '/babyRecords': {
     component: BabyRecordDetail
   },
   '/manage': {
@@ -106,19 +106,25 @@ router.start(App, '#app');
 // keep login when refresh
 Vue.http.headers.common['Authorization'] = sessionStorage.getItem('token');
 
-window.addEventListener('scroll', function() {
-  appModel.css.bodyScroll = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-  var top = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-  var headerHeight = document.querySelector('.nav-holder').offsetHeight;
-  if (top > headerHeight) {
-    document.querySelector('.side-bar').classList.add('side-bar-fix');
-  } else {
-    document.querySelector('.side-bar').classList.remove('side-bar-fix');
-  }
-});
+var output = new UA(window.navigator.userAgent);
+appModel.deviceType = output.device.type.toLowerCase();
+appModel.browserName = output.browser.name.toLowerCase();
+
+if (appModel.deviceType === 'desktop') {
+  // only for desktop, reduce cpu cost of mobile
+  window.addEventListener('scroll', function() {
+    appModel.css.bodyScroll = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+    var top = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+    var headerHeight = document.querySelector('.nav-holder').offsetHeight;
+    if (top > headerHeight) {
+      document.querySelector('.side-bar').classList.add('side-bar-fix');
+    } else {
+      document.querySelector('.side-bar').classList.remove('side-bar-fix');
+    }
+  });
+}
 
 // check if ios for mobile
-var output = new UA(window.navigator.userAgent);
-if(output.os.name.toLowerCase() === 'ios'){
+if (output.os.name.toLowerCase() === 'ios' && appModel.deviceType === 'mobile') {
   document.documentElement.classList.add('html-font-ios');
 }
