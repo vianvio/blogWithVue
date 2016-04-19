@@ -20,8 +20,8 @@ module.exports = {
 	},
 	methods:{
 		clickPassages: function(){
-			this.$data.appModel.treeNodeSelected = '';
-			appAction.GET_PASSAGE_LIST();
+			// this.$data.appModel.treeNodeSelected = '';
+			// appAction.GET_PASSAGE_LIST();
 		}
 	},
 	events:{
@@ -49,9 +49,9 @@ module.exports = {
 }
 
 .nav-tab {
-	font-size: 16px;
+	font-size: 1.6rem;
 	padding: 4rem 0.5rem 0.5rem 0.5rem;
-	line-height: 20px;
+	line-height: 2rem;
 	color: $shadow-dark;
 	cursor: pointer;
 	overflow: hidden;
@@ -71,7 +71,7 @@ module.exports = {
 .nav .current-tab {
 	/*background-color: $basic-blue;*/
 	color: $dark-blue;
-	border-bottom: 2px solid $basic-blue;
+	border-bottom: 0.2rem solid $basic-blue;
 }
 
 </style>

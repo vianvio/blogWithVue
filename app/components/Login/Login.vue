@@ -122,7 +122,7 @@ module.exports = {
 }
 
 .login-label {
-	font-size: 30px;
+	font-size: 3rem;
 	color: $dark-coffee;
 }
 
@@ -141,7 +141,7 @@ module.exports = {
 	text-align: center;
 	color: $shadow-dark;
 	border-right: 1px solid $shadow-dark;
-	font-size: 20px;
+	font-size: 2rem;
 }
 
 .login-input {

@@ -68,9 +68,8 @@ module.exports = {
 					appModel.bAuthed = !!sessionStorage.getItem('token');
 					appModel.navBarModel.currentTab = 'passage';
 				})
-			}else{
-				appAction.GET_PASSAGE_LIST();
 			}
+			appAction.GET_PASSAGE_LIST();
 		}
 	},
 	filters: {
@@ -112,7 +111,7 @@ module.exports = {
 	.passage-title{
 		cursor: pointer;
 		color: $basic-blue;
-		font-size: 25px;
+		font-size: 2.5rem;
 	}
 	.passage-content{
 		margin-top: 1.5rem;
@@ -120,7 +119,7 @@ module.exports = {
 	.passage-date-holder{
 		color: $shadow-dark;
 		span {
-			font-size: 12px;
+			font-size: 1.2rem;
 			margin: 0 2rem 0 0;
 		}
 	}

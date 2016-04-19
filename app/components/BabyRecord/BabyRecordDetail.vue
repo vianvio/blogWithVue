@@ -117,7 +117,7 @@ module.exports = {
 		}
 		.record-content-text{
 			margin-top: 3rem;
-			font-size: 16px;
+			font-size: 1.6rem;
 		}
 	}
 	.record-content-fix{
