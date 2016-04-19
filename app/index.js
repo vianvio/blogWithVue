@@ -114,4 +114,9 @@ window.addEventListener('scroll', function() {
   } else {
     document.querySelector('.side-bar').classList.remove('side-bar-fix');
   }
-})
+});
+
+// check if ios for mobile
+if(window.navigator.appVersion.match(/iphone/gi)){
+  document.documentElement.classList.add('html-font-ios');
+}
