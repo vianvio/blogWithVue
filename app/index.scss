@@ -16,8 +16,15 @@ html {
   font-size: 62.5%;
   /*prepare for rem*/
   color: $font-dark;
+}
+.html-font-mobile {
   @include mobile-screen {
-    font-size: 90% !important;
+    font-size: 90%;
+  }
+}
+.html-font-ios {
+  @include mobile-screen {
+    font-size: 180%;
   }
 }
 
