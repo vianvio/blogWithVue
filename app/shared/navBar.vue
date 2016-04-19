@@ -57,7 +57,7 @@ module.exports = {
 			line-height: 5rem;
 			width: 5rem;
 			text-align: center;
-			font-size: 25px;
+			font-size: 2.5rem;
 		}
 	}
 }

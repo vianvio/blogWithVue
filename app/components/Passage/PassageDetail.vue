@@ -101,7 +101,7 @@ module.exports = {
 	}
 	.passage-title{
 		color: $basic-blue;
-		font-size: 35px;
+		font-size: 3.5rem;
 		text-align: center;
 		margin-top: 5rem;
 	}
@@ -113,7 +113,7 @@ module.exports = {
 		text-align: center;
 		margin-bottom: 5rem;
 		span {
-			font-size: 12px;
+			font-size: 1.2rem;
 			margin: 0 1rem 0 1rem;
 		}
 	}

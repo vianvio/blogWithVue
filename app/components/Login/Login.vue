@@ -123,7 +123,7 @@ console.log('test');
 }
 
 .login-label {
-	font-size: 30px;
+	font-size: 3rem;
 	color: $dark-coffee;
 }
 
@@ -142,7 +142,7 @@ console.log('test');
 	text-align: center;
 	color: $shadow-dark;
 	border-right: 1px solid $shadow-dark;
-	font-size: 20px;
+	font-size: 2rem;
 }
 
 .login-input {

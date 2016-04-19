@@ -13,16 +13,19 @@
 }
 
 html {
-  font-size: 16px;
   font-size: 62.5%;
   /*prepare for rem*/
   color: $font-dark;
+  @include mobile-screen {
+    font-size: 90% !important;
+  }
 }
 
 body {
   min-width: 1024px;
   @include mobile-screen {
     min-width: auto;
+    font-size: 1.6rem !important;
   }
 }
 
@@ -58,7 +61,7 @@ a:focus {
 .display-inline-block {
   display: inline-block;
   vertical-align: top;
-  font-size: 16px;
+  font-size: 1.6rem;
   /*usually parent will set font-size 0*/
 }
 
@@ -114,7 +117,7 @@ a:focus {
   border-radius: 5rem;
   border: 1px solid $white;
   left: 35%;
-  left: calc(50% - 18px);
+  left: calc(50% - 1.8rem);
   transform-origin: 50% 50%;
   -o-transform-origin: 50% 50%;
   -ms-transform-origin: 50% 50%;

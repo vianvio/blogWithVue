@@ -104,7 +104,7 @@ module.exports = {
 	}
 	.vn-modal-title {
 		font-weight: bold;
-		font-size: 22px;
+		font-size: 2.2rem;
 		color: $dark-coffee;
 		padding: 1rem 0 1rem 1rem;
 		display: inline-block;

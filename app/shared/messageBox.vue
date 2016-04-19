@@ -46,7 +46,7 @@ module.exports = {
 	border: 1px solid;
 	@include border-radius(4px);
 	padding: 1rem 1.5rem;
-	font-size: 14px;
+	font-size: 1.4rem;
 }
 .box-type-message {
 	border-color: $basic-green;
@@ -65,7 +65,7 @@ module.exports = {
 }
 .message-box-closer {
 	cursor: pointer;
-	font-size: 12px;
+	font-size: 1.2rem;
 	text-align: center;
 	padding-top: 0.2rem;
 	color: $light-dark;

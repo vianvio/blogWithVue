@@ -83,17 +83,17 @@ module.exports = {
 
 .vn-modal-header {
 	min-height: 3rem;
-	font-size: 20px;
+	font-size: 2rem;
 	padding: 0 1rem;
 	border-bottom: 1px solid $shadow-dark;
 }
 
 .vn-modal-closer {
 	cursor: pointer;
-	height: 25px;
-	width: 25px;
+	height: 2.5rem;
+	width: 2.5rem;
 	text-align: center;
-	line-height: 25px;
+	line-height: 2.5rem;
 	&:hover {
 		@include border-radius(50%);
 		background-color: $shadow-dark;

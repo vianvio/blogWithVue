@@ -160,7 +160,7 @@ module.exports = {
 				width: 30%;
 			}
 			.resume-row {
-				font-size: 12px;
+				font-size: 1.2rem;
 				padding: 1rem 1.5rem 0 5rem;
 				width: 70%;
 				color: $shadow-dark;
@@ -170,7 +170,7 @@ module.exports = {
 			}
 			.resume-row.resume-name {
 				color: $basic-blue;
-				font-size: 25px;
+				font-size: 2.5rem;
 			}
 		}
 		.basic-right {

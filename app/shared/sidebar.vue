@@ -105,7 +105,7 @@ module.exports = {
 .side-bar .child-node {
 	cursor: pointer;
 	margin-left: 1.5rem;
-	font-size: 14px;
+	font-size: 1.4rem;
 	color: $shadow-dark;
 	.tree-node-text:hover{
 		color: $basic-blue;
