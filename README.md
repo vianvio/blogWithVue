@@ -1,6 +1,6 @@
 # blogWithVue
 build a blog with vue.js   
-> testing on http://54.238.160.217/
+> testing on http://54.238.160.217/ - mobile version added! >_<
 
 # start
 npm run start
