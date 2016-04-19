@@ -117,6 +117,6 @@ window.addEventListener('scroll', function() {
 });
 
 // check if ios for mobile
-if(window.navigator.appVersion.match(/iphone/gi)){
+if(/iphone/gi.test(window.navigator.appVersion)){
   document.documentElement.classList.add('html-font-ios');
 }
