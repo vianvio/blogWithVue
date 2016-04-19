@@ -82,7 +82,7 @@ module.exports = {
       var bFirefox = !!document.documentElement.scrollTop && document.documentElement.scrollTop != document.body.scrollTop;
       var scrollPerTime = Math.abs(currentScroll - targetScroll) / 50;
       var tryCount = 0;
-      console.log(bFirefox)
+      
       var scrollInterval = setInterval(function() {
         if ((!bFirefox && Math.abs(document.body.scrollTop - targetScroll) > scrollPerTime) || (bFirefox && Math.abs(document.documentElement.scrollTop - targetScroll) > scrollPerTime)) {
           if (currentScroll < targetScroll) {

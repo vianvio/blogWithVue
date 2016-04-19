@@ -6,7 +6,7 @@
 			</div>
 			<div class='record-content-right' v-bind:class='$index === currentFixIndex ? "record-content-fix" : ""'>
 				<h1 :id='record.id'>{{record.eventDate | moment}}</h1>
-				{{record.content}}
+				<div class='record-content-text'>{{record.content}}</div>
 			</div>
 		</div>
 	</div>
@@ -112,6 +112,13 @@ module.exports = {
 	.record-content-right {
 		float: left;
 		width: 40rem;
+		h1 {
+			color: $basic-dark;
+		}
+		.record-content-text{
+			margin-top: 3rem;
+			font-size: 16px;
+		}
 	}
 	.record-content-fix{
 		position: fixed;

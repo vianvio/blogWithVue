@@ -64,8 +64,8 @@ $prefix-for-spec: true !default;
     margin-left: -($selfWith + $horizontalOffset)/2; // self.width/2
 }
 
-@mixin screen($res-min, $res-max) {
-    @media screen and ( min-width: $res-min) and ( max-width: $res-max) {
+@mixin mobile-screen() {
+    @media screen and ( max-width: $res-max) {
         @content;
     }
 }
@@ -127,4 +127,7 @@ $prefix-for-spec: true !default;
     overflow-x: hidden;
     overflow-y: auto;
     padding: 1rem 10rem 0 $side-width + 10rem;
+    @include mobile-screen {
+        padding: 1rem 1.5rem 0 1.5rem;
+    }
 }

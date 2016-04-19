@@ -21,6 +21,9 @@ html {
 
 body {
   min-width: 1024px;
+  @include mobile-screen {
+    min-width: auto;
+  }
 }
 
 ul {
