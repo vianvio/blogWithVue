@@ -4,6 +4,7 @@ require('../node_modules/bootstrap/dist/css/bootstrap.css');
 var Vue = require('vue');
 var Router = require('vue-router');
 var Resource = require('vue-resource');
+var UA = require('ua-device');
 // install router
 Vue.use(Router);
 Vue.use(Resource);
@@ -117,6 +118,7 @@ window.addEventListener('scroll', function() {
 });
 
 // check if ios for mobile
-if(/iphone/gi.test(window.navigator.appVersion)){
+var output = new UA(window.navigator.userAgent);
+if(output.os.name.toLowerCase() === 'ios'){
   document.documentElement.classList.add('html-font-ios');
 }

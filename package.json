@@ -50,6 +50,7 @@
     "moment": "^2.12.0",
     "q": "^1.4.1",
     "resolve-url-loader": "^1.4.3",
+    "ua-device": "^0.1.6",
     "vue": "^1.0.11",
     "vue-resource": "^0.5.1",
     "vue-router": "^0.7.7",
