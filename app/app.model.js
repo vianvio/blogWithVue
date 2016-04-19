@@ -1,6 +1,7 @@
 module.exports = {
   css:{
-    bodyScroll: 0
+    bodyScroll: 0,
+    bShowSide: true
   },
   sideBarModel: {
 

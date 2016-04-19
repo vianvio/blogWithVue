@@ -1,5 +1,6 @@
 <template>
-	<div class='side-bar'>
+	<div class='side-bar' v-show='appModel.css.bShowSide' transition='show-side'>
+		<navlist class='nav-list-display'></navlist>
 		<ntree :node='rootNodes' v-for='rootNodes in appModel.sideBarModel' track-by='$index'></ntree>
 	</div>
 </template>
@@ -7,10 +8,12 @@
 <script>
 var ntree = require('../shared/ntree.vue');
 var appModel = require('../app.model.js');
+var navlist = require('./navList.vue');
 
 module.exports = {
 	components:{
-		ntree
+		ntree,
+		navlist
 	},
 	data: function(){
 		return {
@@ -56,6 +59,39 @@ module.exports = {
 		color: #fff;
 		line-height: 4rem;
 		margin-bottom: 1rem;
+	}
+	.nav-list-display {
+		display: none;
+	}
+	@include mobile-screen {
+		position: fixed;
+		width: 90%;
+		top: 0;
+		padding-top: $nav-height-mobile;
+		padding-right: 1.5rem;
+		padding-left: 1.5rem;
+		height: 100%;
+		z-index: 99;
+		background-color: $white;
+		overflow: auto;
+		/*@extend %material-shadow;*/
+		@include box-shadow(0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12));
+		.nav-list-display {
+			display: block;
+		}
+	}
+}
+
+@include mobile-screen {
+	.show-side-transition {
+	    transition: all 0.5s ease;
+	    opacity: 1;
+	    left: 0;
+	}
+	.show-side-enter,
+	.show-side-leave {
+	    left: -90%;
+	    opacity: 0;
 	}
 }
 
