@@ -1,3 +1,5 @@
+var appModel = require('../app.model.js');
+
 var _initIndexObjByLevel = function(level) {
   for (var key in _indexObj) {
     if (parseInt(/\d/.exec(key)) > level) {
@@ -79,29 +81,42 @@ module.exports = {
       // scroll function
       var targetScroll = document.getElementById(ele.id).offsetTop;
       var currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
-      var bFirefox = !!document.documentElement.scrollTop && document.documentElement.scrollTop != document.body.scrollTop;
       var scrollPerTime = Math.abs(currentScroll - targetScroll) / 50;
       var tryCount = 0;
-      
+      console.log(appModel.browserName);
       var scrollInterval = setInterval(function() {
-        if ((!bFirefox && Math.abs(document.body.scrollTop - targetScroll) > scrollPerTime) || (bFirefox && Math.abs(document.documentElement.scrollTop - targetScroll) > scrollPerTime)) {
-          if (currentScroll < targetScroll) {
-            document.body.scrollTop += scrollPerTime;
-            document.documentElement.scrollTop  += scrollPerTime;
+        if (appModel.browserName === 'chrome' || appModel.browserName === 'safari') {
+          if (Math.abs(document.body.scrollTop - targetScroll) > scrollPerTime) {
+            if (currentScroll < targetScroll) {
+              document.body.scrollTop += scrollPerTime;
+            } else {
+              document.body.scrollTop -= scrollPerTime;
+            }
+            tryCount++;
+            if (tryCount === 60) {
+              clearInterval(scrollInterval);
+            }
           } else {
-            document.body.scrollTop -= scrollPerTime;
-            document.documentElement.scrollTop  -= scrollPerTime;
-          }
-          tryCount++;
-          if (tryCount === 60) {
+            document.body.scrollTop = targetScroll;
             clearInterval(scrollInterval);
           }
         } else {
-          document.body.scrollTop = targetScroll;
-          document.documentElement.scrollTop  = targetScroll;
-          clearInterval(scrollInterval);
+          if (Math.abs(document.documentElement.scrollTop - targetScroll) > scrollPerTime) {
+            if (currentScroll < targetScroll) {
+              document.documentElement.scrollTop += scrollPerTime;
+            } else {
+              document.documentElement.scrollTop -= scrollPerTime;
+            }
+            tryCount++;
+            if (tryCount === 60) {
+              clearInterval(scrollInterval);
+            }
+          } else {
+            document.documentElement.scrollTop = targetScroll;
+            clearInterval(scrollInterval);
+          }
         }
-      }, 2);
+      }, 1);
     }
   }
 };

@@ -1,4 +1,6 @@
 module.exports = {
+  deviceType: 'desktop',
+  browserName: '',
   css:{
     bodyScroll: 0,
     bShowSide: true
