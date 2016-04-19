@@ -51,6 +51,7 @@
     "q": "^1.4.1",
     "resolve-url-loader": "^1.4.3",
     "vue": "1.0.16",
+    "ua-device": "^0.1.6",
     "vue-resource": "^0.5.1",
     "vue-router": "^0.7.7",
     "vue-strap": "^1.0.7",
