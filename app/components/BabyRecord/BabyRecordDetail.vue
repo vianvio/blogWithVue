@@ -1,12 +1,13 @@
 <template>
 	<div class='baby-record-detail-holder'>
 		<div class='baby-record-content' v-for='record in appModel.arrRecord' track-by='$index'>
+			<h3 v-if='!appModel.bDesktop' class='hidden-date' :id='record.id'>{{record.eventDate | moment}}</h3>
 			<div class='record-content-left'>
 				<img :src="recordImg.imgUrl" class='baby-record-img' v-for='recordImg in record.recordImages'>
 			</div>
 			<div class='record-content-right' v-bind:class='$index === currentFixIndex ? "record-content-fix" : ""'>
-				<h1 :id='record.id'>{{record.eventDate | moment}}</h1>
-				<div class='record-content-text'>{{record.content}}</div>
+				<h1 v-if='appModel.bDesktop' :id='record.id'>{{record.eventDate | moment}}</h1>
+				<div class='record-content-text'><span v-if='!appModel.bDesktop'>{{record.eventDate | moment}} - </span>{{record.content}}</div>
 			</div>
 		</div>
 	</div>
@@ -29,18 +30,25 @@ module.exports = {
 	methods:{
 	},
 	ready: function(){
+		if(!appModel.bDesktop){
+			this.$data.currentFixIndex = 0;
+		}
 		this.$watch('appModel.css.bodyScroll', function (val) {
 		  var _arrLeftHolder = [].slice.apply(document.querySelectorAll('.record-content-left'));
 		  var bInit = true;
 		  for(var i = 0; i<_arrLeftHolder.length; i++){
-		  	if(val >= _arrLeftHolder[i].offsetTop && val < _arrLeftHolder[i].offsetTop + _arrLeftHolder[i].offsetHeight - 200){
+		  	if(appModel.bDesktop && val >= _arrLeftHolder[i].offsetTop && val < _arrLeftHolder[i].offsetTop + _arrLeftHolder[i].offsetHeight - 200){
+		  		this.$data.currentFixIndex = i;
+		  		bInit = false;
+		  		break;
+		  	}else if(!appModel.bDesktop && val >= _arrLeftHolder[i].offsetTop - 300 && val <= _arrLeftHolder[i].offsetTop + _arrLeftHolder[i].offsetHeight - 300){
 		  		this.$data.currentFixIndex = i;
 		  		bInit = false;
 		  		break;
 		  	}
 		  };
 		  if(bInit){
-		  	this.$data.currentFixIndex = -1;
+		  	this.$data.currentFixIndex = appModel.bDesktop ? -1 : 0;
 		  }
 		})
 	},
@@ -94,6 +102,9 @@ module.exports = {
 		float: left;
 		width: 100%;
 		margin: 1.5rem;
+		@include mobile-screen{
+			margin: 0;
+		}
 	}
 	.record-content-left{
 		float: left;
@@ -107,6 +118,13 @@ module.exports = {
 			margin: 1.5rem 0;
 			display: block;
 		}
+		@include mobile-screen{
+			width: 100%;
+			padding: 0;
+			.baby-record-img{
+				width: 100%;
+			}
+		}
 	}
 	.record-content-right {
 		float: left;
@@ -119,11 +137,38 @@ module.exports = {
 			font-size: 1.6rem;
 			color: $basic-dark;
 		}
+		@include mobile-screen{
+			display: none;
+		}
 	}
 	.record-content-fix{
 		position: fixed;
 		top: 0;
 		right: 13rem;
+		@include mobile-screen{
+			display: block;
+			width: 100%;
+			right: 0;
+			bottom: 0;
+			top: auto;
+			background-color: rgba(0,0,0,0.7);
+			padding: 1.5rem;
+			h1{
+				color: $white;
+				font-size: 2rem;
+				margin: 0;
+			}
+			.record-content-text{
+				color: $white;
+				font-size: 2rem;
+				margin: 0;
+			}
+		}
+	}
+	.hidden-date{
+		height: 0;
+		overflow: hidden;
+		margin: 0;
 	}
 }
 

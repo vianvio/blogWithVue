@@ -106,23 +106,23 @@ router.start(App, '#app');
 // keep login when refresh
 Vue.http.headers.common['Authorization'] = sessionStorage.getItem('token');
 Vue.http.interceptors.push({
-    request: function (request) {
-        return request;
-    },
-    response: function (response) {
-        if (response.status === 401) {
-          router.go('/login');
-        }
-        return response;
+  request: function(request) {
+    return request;
+  },
+  response: function(response) {
+    if (response.status === 401) {
+      router.go('/login');
     }
+    return response;
+  }
 });
 
 
 var output = new UA(window.navigator.userAgent);
-appModel.deviceType = output.device.type.toLowerCase();
+appModel.bDesktop = output.device.type.toLowerCase() === 'desktop';
 appModel.browserName = output.browser.name.toLowerCase();
 
-if (appModel.deviceType === 'desktop') {
+if (appModel.bDesktop) {
   appModel.css.bShowSide = true;
   // only for desktop, reduce cpu cost of mobile
   window.addEventListener('scroll', function() {
@@ -135,9 +135,13 @@ if (appModel.deviceType === 'desktop') {
       document.querySelector('.side-bar').classList.remove('side-bar-fix');
     }
   });
+} else {
+  window.addEventListener('scroll', function() {
+    appModel.css.bodyScroll = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+  });
 }
 
 // check if ios for mobile
-if (output.os.name.toLowerCase() === 'ios' && appModel.deviceType === 'mobile') {
+if (output.os.name.toLowerCase() === 'ios' && !appModel.bDesktop) {
   document.documentElement.classList.add('html-font-ios');
 }

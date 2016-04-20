@@ -30,6 +30,9 @@ module.exports = {
 	events:{
 	},
 	created: function(){
+	},
+	ready: function(){
+		appModel.css.navHeight = document.querySelector('.nav-holder').offsetHeight;
 	}
 };
 </script>

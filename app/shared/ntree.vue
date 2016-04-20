@@ -42,7 +42,7 @@ module.exports = {
 				this.node.fnc();
 			}
 			// for mobile, close sidebar
-			if(appModel.deviceType === 'mobile'){
+			if(!appModel.bDesktop){
 				appModel.css.bShowSide = false;
 			}
 		}

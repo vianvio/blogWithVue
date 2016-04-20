@@ -118,7 +118,7 @@ module.exports = {
 					nodes: sideBarGenerator.getChildNodes()
 				}];
 
-				if(appModel.deviceType === 'desktop') {
+				if(appModel.bDesktop) {
 					appModel.sideBarModel.push({
 						name: appModel.newResume.id === 1 ? '导出简历' : 'Export Resume',
 						forceOpen: true,

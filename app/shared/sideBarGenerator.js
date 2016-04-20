@@ -84,10 +84,9 @@ module.exports = {
       var scrollPerTime = Math.abs(currentScroll - targetScroll) / 50;
       var tryCount = 0;
 
-      if (appModel.deviceType === 'mobile') {
-        var navEleHeight = document.querySelector('.nav-holder').offsetHeight;
-        document.documentElement.scrollTop = targetScroll - navEleHeight;
-        document.body.scrollTop = targetScroll - navEleHeight;
+      if (!appModel.bDesktop) {
+        document.documentElement.scrollTop = targetScroll - appModel.css.navHeight;
+        document.body.scrollTop = targetScroll - appModel.css.navHeight;
       } else {
         var scrollInterval = setInterval(function() {
           if (appModel.browserName === 'chrome' || appModel.browserName === 'safari') {

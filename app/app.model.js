@@ -1,11 +1,12 @@
 // need refine into several files
 
 module.exports = {
-  deviceType: 'desktop',
+  bDesktop: true,
   browserName: '',
   css:{
     bodyScroll: 0,
-    bShowSide: false
+    bShowSide: false,
+    navHeight: 0
   },
   sideBarModel: {
 
