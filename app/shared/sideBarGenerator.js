@@ -85,8 +85,9 @@ module.exports = {
       var tryCount = 0;
 
       if (appModel.deviceType === 'mobile') {
-        var scrollEle = document.querySelector('.passage-detail-holder');
-        scrollEle.scrollTop = targetScroll - scrollEle.offsetTop;
+        var navEleHeight = document.querySelector('.nav-holder').offsetHeight;
+        document.documentElement.scrollTop = targetScroll - navEleHeight;
+        document.body.scrollTop = targetScroll - navEleHeight;
       } else {
         var scrollInterval = setInterval(function() {
           if (appModel.browserName === 'chrome' || appModel.browserName === 'safari') {

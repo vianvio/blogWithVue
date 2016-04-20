@@ -6,10 +6,9 @@
 		<div class='content float-left'>
 			<h4 class='passage-title'>{{appModel.newPassage.title}}</h4>
 			<div class='passage-date-holder'>
-				<span>创建日期: {{appModel.passageRelatedInfo.createdAt | moment}}</span>
-				<span>最后更新: {{appModel.passageRelatedInfo.updatedAt | moment}}</span>
-				<br/>
-				<span>作者: Vian | gloomy_wind@hotmail.com</span>
+				<span class='passage-info-span'>创建日期: {{appModel.passageRelatedInfo.createdAt | moment}}</span>
+				<span class='passage-info-span'>最后更新: {{appModel.passageRelatedInfo.updatedAt | moment}}</span>
+				<div class='passage-info-span'>作者: Vian | gloomy_wind@hotmail.com</div>
 			</div>
 			<hr/>
 			<div class='passage-content' v-html='appModel.newPassage.content | marked'></div>
@@ -104,17 +103,32 @@ module.exports = {
 		font-size: 3.5rem;
 		text-align: center;
 		margin-top: 5rem;
+		@include mobile-screen{
+			margin-top: 1.5rem;
+		}
 	}
 	.passage-content{
 		margin-top: 5rem;
+		@include mobile-screen{
+			margin-top: 1.5rem;
+		}
+		p {
+			word-break: break-all;
+		}
 	}
 	.passage-date-holder{
 		color: $shadow-dark;
 		text-align: center;
 		margin-bottom: 5rem;
-		span {
+		@include mobile-screen{
+			margin-bottom: 1.5rem;
+		}
+		.passage-info-span{
 			font-size: 1.2rem;
 			margin: 0 1rem 0 1rem;
+			@include mobile-screen{
+				display: block;
+			}
 		}
 	}
 }

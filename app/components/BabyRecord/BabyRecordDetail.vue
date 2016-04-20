@@ -19,7 +19,6 @@ var marked = require('marked');
 var moment = require('moment');
 var sideBarGenerator = require('../../shared/sideBarGenerator.js');
 
-
 module.exports = {
 	data: function(){
 		return {

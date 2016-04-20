@@ -20,7 +20,6 @@ html {
 .html-font-mobile {
   @include mobile-screen {
     font-size: 90%;
-    height: 100%;
   }
 }
 .html-font-ios {
@@ -35,7 +34,6 @@ html body {
   @include mobile-screen {
     min-width: auto;
     font-size: 1.6rem !important;
-    height: 100%;
   }
 }
 

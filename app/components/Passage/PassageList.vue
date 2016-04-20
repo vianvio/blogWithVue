@@ -115,6 +115,9 @@ module.exports = {
 	}
 	.passage-content{
 		margin-top: 1.5rem;
+		p {
+			word-break: break-all;
+		}
 	}
 	.passage-date-holder{
 		color: $shadow-dark;
