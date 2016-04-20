@@ -119,6 +119,7 @@ Vue.http.interceptors.push({
 
 
 var output = new UA(window.navigator.userAgent);
+console.log(output);
 appModel.bDesktop = output.device.type.toLowerCase() === 'desktop';
 appModel.browserName = output.browser.name.toLowerCase();
 
@@ -142,6 +143,6 @@ if (appModel.bDesktop) {
 }
 
 // check if ios for mobile
-if (output.os.name.toLowerCase() === 'ios' && !appModel.bDesktop) {
+if (output.os.name.toLowerCase() === 'ios' && output.device.type.toLowerCase() === 'mobile') {
   document.documentElement.classList.add('html-font-ios');
 }
