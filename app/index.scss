@@ -17,11 +17,13 @@ html {
   /*prepare for rem*/
   color: $font-dark;
 }
+
 .html-font-mobile {
   @include mobile-screen {
     font-size: 90%;
   }
 }
+
 .html-font-ios {
   @include mobile-screen {
     font-size: 180%;
@@ -29,10 +31,11 @@ html {
 }
 
 html body {
-  min-width: 1024px;
+  @include desktop-screen {
+    min-width: 1024px;
+  }
   color: $font-dark;
   @include mobile-screen {
-    min-width: auto;
     font-size: 1.6rem !important;
   }
 }

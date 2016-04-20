@@ -70,6 +70,12 @@ $prefix-for-spec: true !default;
     }
 }
 
+@mixin desktop-screen() {
+    @media screen and ( mix-width: $res-min) {
+        @content;
+    }
+}
+
 @mixin modalDisplayTransition($time, $initTop, $endTop) {
     .show-modal-transition {
         transition: all $time ease;
