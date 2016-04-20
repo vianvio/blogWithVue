@@ -116,18 +116,22 @@ module.exports = {
 					open: true,
 					nodeClass: 'root-node',
 					nodes: sideBarGenerator.getChildNodes()
-				},{
-					name: appModel.newResume.id === 1 ? '导出简历' : 'Export Resume',
-					forceOpen: true,
-					nodeClass: 'node-btn-coffee',
-					fnc: function(){
-						var doc = new jsPDF('p','pt','a4');
-						doc.addHTML(document.getElementById('resume-pdf'), -140, 50, function(dispose){
-							doc.output('dataurlnewwindow');
-						});
-					},
-					nodes: []
 				}];
+
+				if(appModel.deviceType === 'desktop') {
+					appModel.sideBarModel.push({
+						name: appModel.newResume.id === 1 ? '导出简历' : 'Export Resume',
+						forceOpen: true,
+						nodeClass: 'node-btn-coffee',
+						fnc: function(){
+							var doc = new jsPDF('p','pt','a4');
+							doc.addHTML(document.getElementById('resume-pdf'), -140, 50, function(dispose){
+								doc.output('dataurlnewwindow');
+							});
+						},
+						nodes: []
+					});
+				}
 			});
 			appModel.navBarModel.currentTab = 'resume';
 		}

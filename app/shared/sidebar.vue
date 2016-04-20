@@ -1,5 +1,5 @@
 <template>
-	<div class='side-bar' v-show='appModel.css.bShowSide' transition='show-side'>
+	<div class='side-bar' v-show='appModel.css.bShowSide' transition='show-side' v-on:click='hideSideOnMobile'>
 		<navlist class='nav-list-display'></navlist>
 		<ntree :node='rootNodes' v-for='rootNodes in appModel.sideBarModel' track-by='$index'></ntree>
 	</div>
@@ -20,8 +20,12 @@ module.exports = {
 			appModel: appModel
 		}
 	},
-	events: {
-
+	methods: {
+		hideSideOnMobile: function(){
+			if(appModel.deviceType === 'mobile'){
+				appModel.css.bShowSide = false;
+			}
+		}
 	}
 };
 </script>

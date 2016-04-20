@@ -45,10 +45,10 @@ module.exports = {
 	}
 	@include mobile-screen {
 		height: $nav-height-mobile;
-		position: fixed;
+		position: relative;
 		top: 0;
 		z-index: 999;
-		width: 100%;
+		/*width: 100%;*/
 		background-color: $white;
 		.nav-list-btn {
 			display: block;

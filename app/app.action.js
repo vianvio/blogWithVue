@@ -2,12 +2,6 @@ var appModel = require('./app.model.js');
 var Vue = require('vue');
 var Q = require('q');
 
-var _checkAuth = function(error, that) {
-  if (error.status === 401) {
-    that.$route.router.go('/login');
-  }
-};
-
 module.exports = {
   GET_PASSAGE_TYPES: function() {
     var deferred = Q.defer();
@@ -18,9 +12,6 @@ module.exports = {
       appModel.arrPassageTypes = res.data;
 
       deferred.resolve(res);
-    }, function(error) {
-      _checkAuth(error, this);
-      deferred.reject(error);
     });
     return deferred.promise;
   },
@@ -31,9 +22,6 @@ module.exports = {
       appModel.bLoading = false;
       appModel.arrPassages = res.data;
       deferred.resolve(res);
-    }, function(error) {
-      _checkAuth(error, this);
-      deferred.reject(error);
     });
     return deferred.promise;
   },
@@ -45,9 +33,6 @@ module.exports = {
       appModel.bLoading = false;
       appModel.arrPassages = res.data;
       deferred.resolve(res);
-    }, function(error) {
-      _checkAuth(error, this);
-      deferred.reject(error);
     });
     return deferred.promise;
   },
@@ -69,9 +54,6 @@ module.exports = {
 
 
       deferred.resolve(res);
-    }, function(error) {
-      _checkAuth(error, this);
-      deferred.reject(error);
     });
     return deferred.promise;
   },
@@ -90,9 +72,6 @@ module.exports = {
       appModel.newEducation.description = res.data.description;
 
       deferred.resolve(res);
-    }, function(error) {
-      _checkAuth(error, this);
-      deferred.reject(error);
     });
     return deferred.promise;
   },
@@ -107,9 +86,6 @@ module.exports = {
       appModel.arrEducation = res.data;
 
       deferred.resolve(res);
-    }, function(error) {
-      _checkAuth(error, this);
-      deferred.reject(error);
     });
     return deferred.promise;
   },
@@ -123,9 +99,6 @@ module.exports = {
       appModel.arrResume = res.data;
 
       deferred.resolve(res);
-    }, function(error) {
-      _checkAuth(error, this);
-      deferred.reject(error);
     });
     return deferred.promise;
   },
@@ -147,9 +120,6 @@ module.exports = {
       appModel.newResume.selfAssignment = res.data.selfAssignment;
 
       deferred.resolve(res);
-    }, function(error) {
-      _checkAuth(error, this);
-      deferred.reject(error);
     });
     return deferred.promise;
   },
@@ -168,9 +138,6 @@ module.exports = {
       appModel.newJob.description = res.data.description;
 
       deferred.resolve(res);
-    }, function(error) {
-      _checkAuth(error, this);
-      deferred.reject(error);
     });
     return deferred.promise;
   },
@@ -185,9 +152,6 @@ module.exports = {
       appModel.arrJob = res.data;
 
       deferred.resolve(res);
-    }, function(error) {
-      _checkAuth(error, this);
-      deferred.reject(error);
     });
     return deferred.promise;
   },
@@ -207,9 +171,6 @@ module.exports = {
       appModel.newProject.responsibility = res.data.responsibility;
 
       deferred.resolve(res);
-    }, function(error) {
-      _checkAuth(error, this);
-      deferred.reject(error);
     });
     return deferred.promise;
   },
@@ -224,9 +185,6 @@ module.exports = {
       appModel.arrProject = res.data;
 
       deferred.resolve(res);
-    }, function(error) {
-      _checkAuth(error, this);
-      deferred.reject(error);
     });
     return deferred.promise;
   },
@@ -242,9 +200,6 @@ module.exports = {
       appModel.newRecord.eventDate = res.data.eventDate;
 
       deferred.resolve(res);
-    }, function(error) {
-      _checkAuth(error, this);
-      deferred.reject(error);
     });
     return deferred.promise;
   },
@@ -259,9 +214,6 @@ module.exports = {
       appModel.arrRecord = res.data;
 
       deferred.resolve(res);
-    }, function(error) {
-      _checkAuth(error, this);
-      deferred.reject(error);
     });
     return deferred.promise;
   },
@@ -276,9 +228,6 @@ module.exports = {
       appModel.arrRecordImage = res.data;
 
       deferred.resolve(res);
-    }, function(error) {
-      _checkAuth(error, this);
-      deferred.reject(error);
     });
     return deferred.promise;
   },
@@ -293,9 +242,6 @@ module.exports = {
       appModel.arrRecord = res.data;
 
       deferred.resolve(res);
-    }, function(error) {
-      _checkAuth(error, this);
-      deferred.reject(error);
     });
     return deferred.promise;
   }

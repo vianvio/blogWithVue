@@ -41,6 +41,10 @@ module.exports = {
 				// call defined click method
 				this.node.fnc();
 			}
+			// for mobile, close sidebar
+			if(appModel.deviceType === 'mobile'){
+				appModel.css.bShowSide = false;
+			}
 		}
 	},
 	ready: function(){

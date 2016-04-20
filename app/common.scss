@@ -129,5 +129,6 @@ $prefix-for-spec: true !default;
     padding: 1rem 10rem 0 $side-width + 10rem;
     @include mobile-screen {
         padding: $nav-height-mobile + 1rem 1.5rem 0 1.5rem;
+        height: 100%;
     }
 }
