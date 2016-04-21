@@ -5,8 +5,8 @@
 				<img src="../../images/gopher.png" class='resume-avatar float-left' alt='Vian-Shen' />
 				<div class='resume-name resume-row float-left'><i class='fa fa-user'></i>{{appModel.newResume.name}}</div>
 				<div class='resume-row float-left'><i class='fa fa-calendar'></i>{{appModel.newResume.birthday | moment}}</div>
-				<div class='resume-row float-left'><i class='fa fa-inbox'></i>{{appModel.newResume.email}}</div>
-				<div class='resume-row float-left'>{{appModel.newResume.id === 1 ? '详细联系方式请邮箱私信' : 'For detail information, please send mail'}}</div>
+				<div class='resume-row float-left resume-connection'><i class='fa fa-inbox'></i>{{appModel.newResume.email}}</div>
+				<div class='resume-row float-left resume-connection'>{{appModel.newResume.id === 1 ? '详细联系方式请邮箱私信' : 'For detail information, please send mail'}}</div>
 			</div>
 			<div class='basic-right'>
 				<h3 id='self-assignment'>{{appModel.newResume.id === 1 ? '自我简介' : 'SELF ASSIGNMENT'}}</h3>
@@ -19,9 +19,9 @@
 			<hr/>
 			<div v-for='education in appModel.arrEducation' track-by='$index'>
 				<div class='exp-left'>
-					<div>{{education.from}} - {{education.to}}</div>
-					<div>{{education.name}}</div>
-					<div>{{education.major}}</div>
+					<div><i class='fa fa-calendar'></i> {{education.from}} - {{education.to}}</div>
+					<div><i class='fa fa-map'></i> {{education.name}}</div>
+					<div><i class='fa fa-book'></i> {{education.major}}</div>
 				</div>
 				<div class='exp-right' v-html='education.description | marked'></div>
 			</div>
@@ -31,9 +31,9 @@
 			<hr/>
 			<div v-for='job in appModel.arrJob' track-by='$index'>
 				<div class='exp-left'>
-					<div>{{job.from}} - {{job.to}}</div>
-					<div>{{job.name}}</div>
-					<div>{{job.title}}</div>
+					<div><i class='fa fa-calendar'></i> {{job.from}} - {{job.to}}</div>
+					<div><i class='fa fa-map-marker'></i> {{job.name}}</div>
+					<div><i class='fa fa-user'></i> {{job.title}}</div>
 				</div>
 				<div class='exp-right' v-html='job.description | marked'></div>
 			</div>
@@ -43,9 +43,9 @@
 			<hr/>
 			<div v-for='project in appModel.arrProject' track-by='$index'>
 				<div class='exp-left'>
-					<div>{{project.from}} - {{project.to}}</div>
-					<div>{{project.name}}</div>
-					<div>{{project.technology}}</div>
+					<div><i class='fa fa-calendar'></i> {{project.from}} - {{project.to}}</div>
+					<div><i class='fa fa-folder'></i> {{project.name}}</div>
+					<div><i class='fa fa-cog'></i> {{project.technology}}</div>
 				</div>
 				<div class='exp-right'>
 					<div v-html='project.description | marked'></div>
@@ -154,9 +154,13 @@ module.exports = {
 	background-color: $white;
 	h3{
 		color: $light-blue;
+
 	}
 	.resume-basic-holder{
 		display: table;
+		@include mobile-screen{
+			display: block;
+		}
 		.basic-left {
 			width: 40%;
 			padding: 1rem 0;
@@ -176,18 +180,54 @@ module.exports = {
 				color: $basic-blue;
 				font-size: 2.5rem;
 			}
+			@include mobile-screen{
+				width: 100%;
+				padding: 0;
+				margin-bottom: 1.5rem;
+				.resume-avatar {
+					width: 40%;
+				}
+				.resume-row {
+					font-size: 1.2rem;
+					padding: 2rem 1.5rem 0 1.5rem;
+					width: 60%;
+					color: $shadow-dark;
+					i {
+						margin-right: 1rem;
+					}
+				}
+				.resume-row.resume-name {
+					color: $basic-blue;
+					font-size: 1.5rem;
+				}
+				.resume-connection{
+					width: 100%;
+					padding: 1rem 1rem 0 1rem;
+				}
+			}
 		}
 		.basic-right {
 			overflow: hidden;
+			@include mobile-screen{
+				overflow: visible;
+			}
 		}
 	}
 	.exp-left {
 		float: left;
 		width: 26%;
 		padding: 0 2rem;
+		color: $basic-blue;
+		@include mobile-screen{
+			width: 100%;
+			padding: 0 0 1.5rem 0;
+		}
 	}
 	.exp-right {
 		overflow: hidden;
+		@include mobile-screen{
+			overflow: visible;
+		}
 	}
 }
 
