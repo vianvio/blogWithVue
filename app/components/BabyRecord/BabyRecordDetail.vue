@@ -5,9 +5,11 @@
 			<div class='record-content-left'>
 				<img :src="recordImg.imgUrl" class='baby-record-img' v-for='recordImg in record.recordImages'>
 			</div>
-			<div class='record-content-right' v-bind:class='$index === currentFixIndex ? "record-content-fix" : ""'>
+			<div class='record-content-right position-relative' v-bind:class='$index === currentFixIndex ? "record-content-fix" : ""'>
+				<div class='record-content-tool fa fa-close' v-if='bShowContent' v-on:click='bShowContent = !bShowContent'></div>
+				<div class='record-content-tool fa fa-angle-double-up' v-if='!bShowContent' v-on:click='bShowContent = !bShowContent'></div>
 				<h1 v-if='appModel.bDesktop' :id='record.id'>{{record.eventDate | moment}}</h1>
-				<div class='record-content-text'><span v-if='!appModel.bDesktop'>{{record.eventDate | moment}} - </span>{{record.content}}</div>
+				<div class='record-content-text'><div v-bind:class='bShowContent ? "" : "record-content-single-line"' v-if='!appModel.bDesktop'>{{record.eventDate | moment}} - {{record.content}}</div></div>
 			</div>
 		</div>
 	</div>
@@ -24,7 +26,8 @@ module.exports = {
 	data: function(){
 		return {
 			appModel: appModel,
-			currentFixIndex: -1
+			currentFixIndex: -1,
+			bShowContent: true
 		}
 	},
 	methods:{
@@ -125,6 +128,12 @@ module.exports = {
 				width: 100%;
 			}
 		}
+		@include tablet-screen{
+			.baby-record-img{
+				width: 70%;
+				margin: 0 auto;
+			}
+		}
 	}
 	.record-content-right {
 		float: left;
@@ -136,6 +145,9 @@ module.exports = {
 			margin-top: 3rem;
 			font-size: 1.6rem;
 			color: $basic-dark;
+		}
+		.record-content-tool{
+			display: none;
 		}
 		@include mobile-screen{
 			display: none;
@@ -152,16 +164,38 @@ module.exports = {
 			bottom: 0;
 			top: auto;
 			background-color: rgba(0,0,0,0.7);
-			padding: 1.5rem;
 			h1{
 				color: $white;
 				font-size: 2rem;
 				margin: 0;
 			}
 			.record-content-text{
+				max-height: 20rem;
+				overflow: auto;
 				color: $white;
 				font-size: 2rem;
 				margin: 0;
+				div {
+					padding: 1.5rem;
+				}
+			}
+			.record-content-single-line{
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+			.record-content-tool{
+				position: absolute;
+				display: block;
+				top: -5rem;
+				right: 0;
+				height: 5rem;
+				width: 5rem;
+				line-height: 5rem;
+				text-align: center;
+				background-color: rgba(0,0,0,0.7);
+				color: $white;
+				font-size: 2.5rem;
 			}
 		}
 	}
