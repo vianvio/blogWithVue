@@ -164,16 +164,11 @@ module.exports = {
 			bottom: 0;
 			top: auto;
 			background-color: rgba(0,0,0,0.7);
-			h1{
-				color: $white;
-				font-size: 2rem;
-				margin: 0;
-			}
 			.record-content-text{
 				max-height: 20rem;
 				overflow: auto;
 				color: $white;
-				font-size: 2rem;
+				font-size: 1.5rem;
 				margin: 0;
 				div {
 					padding: 1.5rem;
