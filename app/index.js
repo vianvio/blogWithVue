@@ -143,6 +143,6 @@ if (appModel.bDesktop) {
 }
 
 // check if ios for mobile
-if (output.os.name.toLowerCase() === 'ios' && output.device.type.toLowerCase() === 'mobile') {
-  document.documentElement.classList.add('html-font-ios');
+if (output.device.type.toLowerCase() === 'mobile') {
+  document.documentElement.style.fontSize = parseInt(window.innerWidth / 32) + 'px'; // (x / 320) * 10
 }

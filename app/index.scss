@@ -18,17 +18,17 @@ html {
   color: $font-dark;
 }
 
-.html-font-ios {
-  @media screen and ( min-width: $ip4-width) {
-    font-size: 10px;
-  }
-  @media screen and ( min-width: $ip6-width) {
-    font-size: 12px;
-  }
-  @media screen and ( min-width: $ip6p-width) {
-    font-size: 13px;
-  }
-}
+// .html-font-ios {
+//   @media screen and ( min-width: $ip4-width) {
+//     font-size: 10px;
+//   }
+//   @media screen and ( min-width: $ip6-width) {
+//     font-size: 12px;
+//   }
+//   @media screen and ( min-width: $ip6p-width) {
+//     font-size: 13px;
+//   }
+// }
 
 html body {
   @include desktop-screen {
