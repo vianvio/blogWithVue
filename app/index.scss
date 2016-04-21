@@ -20,13 +20,13 @@ html {
 
 .html-font-mobile {
   @include mobile-screen {
-    font-size: 24px;
+    font-size: 16px;
   }
 }
 
 .html-font-ios {
   @include mobile-screen {
-    font-size: 12px;
+    font-size: 10px;
   }
 }
 

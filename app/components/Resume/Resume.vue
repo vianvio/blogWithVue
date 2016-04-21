@@ -192,6 +192,7 @@ module.exports = {
 					padding: 2rem 1.5rem 0 1.5rem;
 					width: 60%;
 					color: $shadow-dark;
+					text-align: center;
 					i {
 						margin-right: 1rem;
 					}
@@ -203,6 +204,7 @@ module.exports = {
 				.resume-connection{
 					width: 100%;
 					padding: 1rem 1rem 0 1rem;
+					text-align: left;
 				}
 			}
 		}
