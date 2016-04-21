@@ -168,7 +168,7 @@ module.exports = {
 				max-height: 20rem;
 				overflow: auto;
 				color: $white;
-				font-size: 1.5rem;
+				font-size: 1.6rem;
 				margin: 0;
 				div {
 					padding: 1.5rem;
