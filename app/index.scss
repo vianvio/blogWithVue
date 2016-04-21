@@ -18,15 +18,15 @@ html {
   color: $font-dark;
 }
 
-.html-font-mobile {
-  @include mobile-screen {
+.html-font-ios {
+  @media screen and ( min-width: $ip4-width) {
     font-size: 10px;
   }
-}
-
-.html-font-ios {
-  @include mobile-screen {
-    font-size: 10px;
+  @media screen and ( min-width: $ip6-width) {
+    font-size: 12px;
+  }
+  @media screen and ( min-width: $ip6p-width) {
+    font-size: 13px;
   }
 }
 
