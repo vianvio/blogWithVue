@@ -65,13 +65,13 @@ $prefix-for-spec: true !default;
 }
 
 @mixin mobile-screen() {
-    @media screen and ( max-width: $res-desktop) {
+    @media screen and ( max-width: $res-tablet-min) {
         @content;
     }
 }
 
 @mixin desktop-screen() {
-    @media screen and ( min-width: $res-tablet-min) {
+    @media screen and ( min-width: $res-tablet-max) {
         @content;
     }
 }
