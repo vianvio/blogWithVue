@@ -1,5 +1,6 @@
 #!/usr/bash
 
+echo "remote connected"
 sudo -s
 cd /home/ubuntu/blogWithVueBackend
 npm run clean
