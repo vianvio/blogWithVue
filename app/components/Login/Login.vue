@@ -1,7 +1,7 @@
 <template>
 	<div class='login-holder'>
 		<div class='login-label-holder'>
-			<STRONG class='login-label'>登 录测试shell</STRONG>
+			<STRONG class='login-label'>登 录</STRONG>
 		</div>
 		<message-box :message-content='loginMessage' :message-type='messageType' :closable='true' v-if='bShowMessage' v-on:close-message-box='closeMessageBox'></message-box>
 		<div class='login-input-holder position-relative'>
