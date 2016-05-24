@@ -4,7 +4,7 @@
   "description": "Blog build by Vue.js",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "clean": "rm -r ./build/* && rm ./index.html",
     "prestart": "NODE_ENV=development webpack",
     "start": "webpack-dev-server --hot --inline --quiet",
@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.6",
+    "chai": "^3.5.0",
     "exif-js": "^2.1.1",
     "exports-loader": "^0.6.3",
     "font-awesome": "^4.5.0",
@@ -47,6 +48,7 @@
     "jspdf": "^1.2.61",
     "lodash": "^3.10.1",
     "marked": "^0.3.5",
+    "mocha": "^2.4.5",
     "moment": "^2.12.0",
     "q": "^1.4.1",
     "resolve-url-loader": "^1.4.3",

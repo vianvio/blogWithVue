@@ -9,7 +9,7 @@
 				<div class='record-content-tool fa fa-close' v-if='bShowContent' v-on:click='bShowContent = !bShowContent'></div>
 				<div class='record-content-tool fa fa-angle-double-up' v-if='!bShowContent' v-on:click='bShowContent = !bShowContent'></div>
 				<h1 v-if='appModel.bDesktop' :id='record.id'>{{record.eventDate | moment}}</h1>
-				<div class='record-content-text'><div v-bind:class='bShowContent ? "" : "record-content-single-line"' v-if='!appModel.bDesktop'>{{record.eventDate | moment}} - {{record.content}}</div></div>
+				<div class='record-content-text'><div v-bind:class='bShowContent ? "" : "record-content-single-line"'>{{record.eventDate | moment}} - {{record.content}}</div></div>
 			</div>
 		</div>
 	</div>
@@ -130,7 +130,7 @@ module.exports = {
 		}
 		@include tablet-screen{
 			.baby-record-img{
-				width: 70%;
+				width: 100%;
 				margin: 0 auto;
 			}
 		}
