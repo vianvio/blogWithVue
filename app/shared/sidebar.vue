@@ -1,5 +1,5 @@
 <template>
-	<div class='side-bar' v-show='appModel.css.bShowSide' transition='show-side' v-on:click='hideSideOnMobile'>
+	<div class='side-bar {{appModel.bDesktop ? "side-force-display" : ""}}' v-show='appModel.css.bShowSide' transition='show-side' v-on:click='hideSideOnMobile'>
 		<navlist class='nav-list-display'></navlist>
 		<ntree :node='rootNodes' v-for='rootNodes in appModel.sideBarModel' track-by='$index'></ntree>
 	</div>
@@ -33,6 +33,10 @@ module.exports = {
 <style lang='sass'>
 @import '../variables.scss';
 @import '../common.scss';
+
+.side-force-display{
+	display: block !important;
+}
 
 .side-bar {
 	position: absolute;
