@@ -1,6 +1,6 @@
 # blogWithVue
 build a blog with vue.js   
-> [Online](http://http://54.238.149.89/) - mobile version added! >_<
+> [Online](http://54.238.149.89/) - mobile version added! >_<
 
 # start
 npm run start
